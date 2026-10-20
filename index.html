@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>해치 크리스마스: 사운드 & 트렌드 에디션</title>
+  <title>해치 크리스마스: 6단계 방탈출 어드벤처</title>
   <link href="https://fonts.googleapis.com/css2?family=DungGeunMo&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -30,7 +30,6 @@
       letter-spacing: 0.5px;
     }
 
-    /* 모바일 스크롤 잘림 현상 해결을 위한 유연한 컨테이너 구조 */
     body {
       background-color: #fce7f3;
       color: var(--text-dark);
@@ -149,8 +148,10 @@
     .chat-avatar {
       width: 38px; height: 38px; border-radius: 4px; background: #fdf2f8;
       border: 2px solid var(--pink-deep); display: flex; justify-content: center;
-      align-items: center; font-size: 20px; flex-shrink: 0;
+      align-items: center; flex-shrink: 0; overflow: hidden;
     }
+    .chat-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
     .chat-body { display: flex; flex-direction: column; gap: 3px; flex: 1; }
     .chat-sender { font-size: 12px; font-weight: bold; color: var(--pink-deep); }
     .chat-bubble {
@@ -175,28 +176,37 @@
     }
     summary { cursor: pointer; font-weight: bold; color: var(--pine-green); }
 
-    /* [미션 1] 사운드 웨이브 주파수 일치 퍼즐 스타일 */
-    .wave-panel { width: 100%; background: #0f172a; border-radius: 8px; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
-    .wave-canvas-box { width: 100%; height: 70px; background: #1e293b; border: 2px solid #334155; border-radius: 4px; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; }
-    .sound-slider { width: 100%; accent-color: #38bdf8; cursor: pointer; }
+    /* 미션 1 (7번): 와이어 전선 연결 스타일 */
+    .wire-container { display: flex; justify-content: space-between; width: 100%; gap: 10px; }
+    .wire-col { display: flex; flex-direction: column; gap: 6px; flex: 1; }
+    .wire-node {
+      background: #fff; border: 2px solid var(--pine-dark); border-radius: 6px;
+      padding: 10px 4px; font-size: 12px; font-weight: bold; cursor: pointer; text-align: center;
+    }
+    .wire-node.selected { background: var(--soft-pink); border-color: var(--crimson-red); }
 
-    /* [미션 2] 오르골 멜로디 청취 연주 퍼즐 스타일 */
-    .music-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 100%; }
-    .music-key { background: #fff; border: 2px solid var(--pink-deep); border-radius: 6px; padding: 14px 0; font-size: 15px; font-weight: bold; color: var(--pink-deep); cursor: pointer; box-shadow: 0 3px 0px var(--pink-primary); }
-    .music-key:active { transform: translateY(3px); box-shadow: none; background: var(--soft-pink); }
+    /* 미션 2 (2번): 3단 휠 다이얼 자물쇠 스타일 */
+    .dial-container { display: flex; gap: 12px; justify-content: center; width: 100%; }
+    .dial-box { display: flex; flex-direction: column; align-items: center; background: #fff; border: 2px solid var(--pink-deep); border-radius: 8px; padding: 10px; width: 70px; }
+    .dial-btn { background: none; border: none; font-size: 20px; cursor: pointer; color: var(--pink-deep); font-weight: bold; }
+    .dial-val { font-size: 22px; font-weight: bold; margin: 6px 0; color: var(--text-dark); }
 
-    /* [미션 3] 디지털 수사대 증거 보관함 스타일 */
-    .evidence-board { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; width: 100%; }
-    .evidence-item { background: #f8fafc; border: 2px solid #cbd5e1; border-radius: 6px; padding: 12px 8px; font-size: 13px; font-weight: bold; cursor: pointer; text-align: center; }
-    .evidence-item.selected { background: var(--soft-pink); border-color: var(--crimson-red); color: var(--crimson-red); }
+    /* 미션 3 (10번): 진실/거짓 스와이프 OX 스타일 */
+    .swipe-card { width: 100%; background: #fff5f8; border: 2px solid var(--pink-primary); border-radius: 8px; padding: 18px; font-size: 15px; font-weight: bold; min-height: 80px; display: flex; align-items: center; justify-content: center; text-align: center; }
 
-    /* [미션 4] 모스 부호 리듬 터치 스타일 */
-    .morse-pad { display: flex; gap: 10px; width: 100%; }
-    .morse-btn { flex: 1; padding: 14px; background: #fff; border: 2px solid var(--pink-deep); border-radius: 6px; font-weight: bold; font-size: 15px; cursor: pointer; color: var(--pink-deep); }
+    /* 미션 4 (12번): 연쇄 전등 스위치 스타일 */
+    .switch-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 220px; margin: 0 auto; }
+    .light-switch { height: 60px; background: #e2e8f0; border: 3px solid #cbd5e1; border-radius: 8px; font-size: 22px; display: flex; justify-content: center; align-items: center; cursor: pointer; }
+    .light-switch.on { background: #fef08a; border-color: #ca8a04; box-shadow: 0 0 10px #fde047; }
 
-    /* [미션 5] 주파수 라디오 노이즈 튜닝 스타일 */
+    /* 미션 5 (18번): 아날로그 라디오 주파수 튜닝 스타일 */
     .radio-panel { width: 100%; background: #0f172a; border-radius: 8px; padding: 14px; display: flex; flex-direction: column; gap: 12px; }
     .radio-screen { height: 45px; background: #1e293b; border: 2px solid #334155; border-radius: 4px; display: flex; justify-content: center; align-items: center; color: #38bdf8; font-family: monospace; font-size: 16px; font-weight: bold; }
+    .sound-slider { width: 100%; accent-color: #38bdf8; cursor: pointer; }
+
+    /* 미션 6 (6번): 오르골 멜로디 연주 스타일 */
+    .music-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 100%; }
+    .music-key { background: #fff; border: 2px solid var(--pink-deep); border-radius: 6px; padding: 14px 0; font-size: 15px; font-weight: bold; color: var(--pink-deep); cursor: pointer; box-shadow: 0 3px 0px var(--pink-primary); }
 
     .modal { display: none; position: absolute; inset: 0; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(4px); z-index: 150; justify-content: center; align-items: center; padding: 22px; }
     .modal-card { background: #ffffff; border: 3px solid var(--pink-deep); border-radius: 12px; padding: 22px 18px; text-align: center; width: 100%; box-shadow: 6px 6px 0px rgba(219, 39, 119, 0.4); }
@@ -210,20 +220,20 @@
   <div id="ending-screen" style="position:absolute; inset:0; display:none; background:var(--pink-bg); z-index:110; flex-direction:column; justify-content:space-between; align-items:center; padding:24px 20px; text-align:center;">
     <div style="margin-top: 20px;">
       <span class="badge" style="background:var(--crimson-red); border-color:#7f1d1d;">MISSION COMPLETE</span>
-      <h1 style="font-size: 20px; color: var(--pink-deep); margin-top: 5px;">오디오 방탈출 완전 탈출 성공!</h1>
+      <h1 style="font-size: 20px; color: var(--pink-deep); margin-top: 5px;">6단계 방탈출 완전 정복 성공!</h1>
     </div>
     <div style="width: 100%; height: 150px; background: rgba(255,255,255,0.6); border: 3px solid var(--pink-deep); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--pink-deep); font-size: 14px;">
-      [ 🎉 크리스마스 오디오 연출 엔딩 ]
+      [ 🎉 크리스마스 축하 엔딩 ]
     </div>
     <div class="interactive-box" style="width: 100%;">
       <div class="quest-title-bar">🎁 축하합니다!</div>
       <div class="quest-inner-content" style="padding: 12px;">
         <div class="chat-wrapper">
           <div class="chat-container">
-            <div class="chat-avatar">🎅</div>
+            <div class="chat-avatar"><img src="haechi.png" alt="해치"></div>
             <div class="chat-body">
-              <span class="chat-sender">아기 산타</span>
-              <div class="chat-bubble">모든 사운드 주파수와 추리 증거를 맞춰 숲에 평화를 되찾았어! 안내 데스크에서 선물을 받아주세요 🎁</div>
+              <span class="chat-sender">해치</span>
+              <div class="chat-bubble">모든 6가지 미션을 완벽하게 풀고 숲에 따뜻한 크리스마스를 되찾았어! 안내 데스크에서 선물을 받아주세요 🎁</div>
             </div>
           </div>
         </div>
@@ -235,47 +245,154 @@
   <!-- 헤더 -->
   <header>
     <div style="display:flex; align-items:center; gap:8px;">
-      <span class="badge" id="stage-badge">★★★★★</span>
-      <span class="pink-tag">SOUND & TREND</span>
+      <span class="badge" id="stage-badge">★★★★★★</span>
+      <span class="pink-tag">SEOUL GALLERY</span>
     </div>
     <button class="reset-btn" onclick="resetGame()">처음으로</button>
   </header>
 
   <div class="content">
-    <!-- [STAGE 1] 최신 트렌드: 사운드 웨이브(음파) 주파수 일치 퍼즐 -->
+    <!-- [STAGE 1] 7번: 와이어 전선 연결 -->
     <div id="stage-1" class="interactive-box">
-      <div class="quest-title-bar">🔔 미션 1: 사운드 웨이브 주파수 동기화</div>
+      <div class="quest-title-bar">🔔 미션 1: 수호대별 상징 색상 연결</div>
       <div class="quest-inner-content">
         <div class="chat-wrapper">
           <div class="chat-container">
-            <div class="chat-avatar">🎅</div>
+            <div class="chat-avatar"><img src="haechi.png" alt="해치"></div>
             <div class="chat-body">
-              <span class="chat-sender">아기 산타</span>
-              <div class="chat-bubble">수신된 무전 오디오의 음파 진폭을 슬라이더로 조절해 목표 파형과 정확히 일치(50Hz)시켜 줘!</div>
+              <span class="chat-sender">해치</span>
+              <div class="chat-bubble">다섯 수호대(청룡, 현무, 주작, 해치, 백호)의 상징 색상과 이름을 올바르게 연결해 줘!</div>
             </div>
           </div>
         </div>
-        <div class="wave-panel">
-          <div class="wave-canvas-box">
-            <canvas id="waveCanvas" width="300" height="60"></canvas>
+        <div class="quest-desc">왼쪽 색상 단자를 고른 뒤, 오른쪽 올바른 수호대 이름을 선택하세요!</div>
+        <div class="wire-container">
+          <div class="wire-col">
+            <div class="wire-node" style="color:#0284c7;" onclick="selectLeftWire(1, this)">🩵 하늘색</div>
+            <div class="wire-node" style="color:#16a34a;" onclick="selectLeftWire(2, this)">🟢 연녹색</div>
+            <div class="wire-node" onclick="selectLeftWire(3, this)">🟠 주황색</div>
+            <div class="wire-node" onclick="selectLeftWire(4, this)">🩷 분홍색</div>
+            <div class="wire-node" onclick="selectLeftWire(5, this)">🤍 흰색</div>
           </div>
-          <input type="range" class="sound-slider" id="waveSlider" min="10" max="90" value="10" oninput="updateWave(this.value)">
+          <div class="wire-col">
+            <div class="wire-node" onclick="selectRightWire(4, this)">해치</div>
+            <div class="wire-node" onclick="selectRightWire(1, this)">청룡</div>
+            <div class="wire-node" onclick="selectRightWire(5, this)">백호</div>
+            <div class="wire-node" onclick="selectRightWire(2, this)">현무</div>
+            <div class="wire-node" onclick="selectRightWire(3, this)">주작</div>
+          </div>
         </div>
-        <button class="action-btn" onclick="checkWaveStage()">음파 동기화 완료</button>
-        <details><summary>💡 힌트 보기</summary>슬라이더를 정확히 중간 부근(50)으로 맞추면 음파가 일치합니다.</details>
+        <div id="wire-status" style="font-weight: bold; color: var(--pine-green);">연결 완료: 0/5 완료</div>
+        <details><summary>💡 힌트 보기</summary>하늘색-청룡, 연녹색-현무, 주황색-주작, 분홍색-해치, 흰색-백호 입니다.</details>
       </div>
     </div>
 
-    <!-- [STAGE 2] 사운드 출력형: 오르골 멜로디 청취 연주 퍼즐 -->
+    <!-- [STAGE 2] 2번: 3단 휠 다이얼 자물쇠 -->
     <div id="stage-2" class="interactive-box" style="display:none;">
-      <div class="quest-title-bar">🔔 미션 2: 오르골 멜로디 청취 및 연주</div>
+      <div class="quest-title-bar">🔔 미션 2: 축복의 3단 다이얼 자물쇠</div>
       <div class="quest-inner-content">
         <div class="chat-wrapper">
           <div class="chat-container">
-            <div class="chat-avatar">🎅</div>
+            <div class="chat-avatar"><img src="haechi.png" alt="해치"></div>
             <div class="chat-body">
-              <span class="chat-sender">아기 산타</span>
-              <div class="chat-bubble">오르골이 연주하는 캐럴 음계 순서 <strong>[도-미-솔-도]</strong>를 듣고 직접 버튼을 눌러 연주해 줘!</div>
+              <span class="chat-sender">해치</span>
+              <div class="chat-bubble">문이 잠겨 있어! 다이얼을 돌려 축복의 단어 <strong>[H-A-P]</strong>를 완성해 줘!</div>
+            </div>
+          </div>
+        </div>
+        <div class="dial-container">
+          <div class="dial-box">
+            <button class="dial-btn" onclick="spinDial(0, 1)">▲</button>
+            <div class="dial-val" id="dial-0">A</div>
+            <button class="dial-btn" onclick="spinDial(0, -1)">▼</button>
+          </div>
+          <div class="dial-box">
+            <button class="dial-btn" onclick="spinDial(1, 1)">▲</button>
+            <div class="dial-val" id="dial-1">A</div>
+            <button class="dial-btn" onclick="spinDial(1, -1)">▼</button>
+          </div>
+          <div class="dial-box">
+            <button class="dial-btn" onclick="spinDial(2, 1)">▲</button>
+            <div class="dial-val" id="dial-2">A</div>
+            <button class="dial-btn" onclick="spinDial(2, -1)">▼</button>
+          </div>
+        </div>
+        <button class="action-btn" onclick="checkDialStage()">다이얼 잠금 해제</button>
+        <details><summary>💡 힌트 보기</summary>알파벳을 H, A, P 순서대로 맞추세요.</details>
+      </div>
+    </div>
+
+    <!-- [STAGE 3] 10번: 진실/거짓 스와이프 (OX) -->
+    <div id="stage-3" class="interactive-box" style="display:none;">
+      <div class="quest-title-bar">🔔 미션 3: 갤러리 팩트체크 결계 해제</div>
+      <div class="quest-inner-content">
+        <div class="chat-wrapper">
+          <div class="chat-container">
+            <div class="chat-avatar"><img src="haechi.png" alt="해치"></div>
+            <div class="chat-body">
+              <span class="chat-sender">해치</span>
+              <div class="chat-bubble">제시되는 서울갤러리 상식이 <strong>참(O)</strong>인지 <strong>거짓(X)</strong>인지 판별해 줘!</div>
+            </div>
+          </div>
+        </div>
+        <div class="swipe-card" id="fact-card">제시문 로딩중...</div>
+        <div style="display: flex; gap: 10px; width: 100%;">
+          <button class="action-btn" style="background:var(--pine-green); border-color:var(--pine-dark);" onclick="answerFact(true)">⭕ 참 (O)</button>
+          <button class="action-btn" onclick="answerFact(false)">❌ 거짓 (X)</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- [STAGE 4] 12번: 연쇄 전등 스위치 -->
+    <div id="stage-4" class="interactive-box" style="display:none;">
+      <div class="quest-title-bar">🔔 미션 4: 메인 트리 전등 연쇄 켜기</div>
+      <div class="quest-inner-content">
+        <div class="chat-wrapper">
+          <div class="chat-container">
+            <div class="chat-avatar"><img src="haechi.png" alt="해치"></div>
+            <div class="chat-body">
+              <span class="chat-sender">해치</span>
+              <div class="chat-bubble">스위치를 누르면 주변 전등도 함께 켜지고 꺼져! 모든 전등(3x3)을 동시에 켜서 트리를 점등해 줘!</div>
+            </div>
+          </div>
+        </div>
+        <div class="quest-desc">스위치를 눌러 모든 전등을 노란색(ON)으로 만드세요!</div>
+        <div class="switch-grid" id="switch-board"></div>
+        <button class="action-btn" style="background:#9ca3af; padding:8px; font-size:14px;" onclick="resetSwitches()">스위치 초기화</button>
+      </div>
+    </div>
+
+    <!-- [STAGE 5] 18번: 아날로그 라디오 주파수 튜닝 (사운드 출력) -->
+    <div id="stage-5" class="interactive-box" style="display:none;">
+      <div class="quest-title-bar">🔔 미션 5: 라디오 주파수 튜닝 (소리 청취)</div>
+      <div class="quest-inner-content">
+        <div class="chat-wrapper">
+          <div class="chat-container">
+            <div class="chat-avatar"><img src="haechi.png" alt="해치"></div>
+            <div class="chat-body">
+              <span class="chat-sender">해치</span>
+              <div class="chat-bubble">라디오 다이얼을 밀어 잡음을 없애고 <strong>88.8 MHz</strong>의 맑은 캐럴 주파수를 맞추어 줘!</div>
+            </div>
+          </div>
+        </div>
+        <div class="radio-panel">
+          <div class="radio-screen" id="radio-screen-text">⚡ STATIC 70.0 MHz</div>
+          <input type="range" class="sound-slider" id="radioSlider" min="70.0" max="110.0" step="0.2" value="70.0" oninput="onRadioSliderMove(this.value)">
+        </div>
+        <button class="action-btn" onclick="checkRadioStageFinal()">최종 주파수 고정</button>
+      </div>
+    </div>
+
+    <!-- [STAGE 6] 6번: 오르골 멜로디 연주 및 청취 (사운드 출력) -->
+    <div id="stage-6" class="interactive-box" style="display:none;">
+      <div class="quest-title-bar">🔔 미션 6: 오르골 멜로디 연주</div>
+      <div class="quest-inner-content">
+        <div class="chat-wrapper">
+          <div class="chat-container">
+            <div class="chat-avatar"><img src="haechi.png" alt="해치"></div>
+            <div class="chat-body">
+              <span class="chat-sender">해치</span>
+              <div class="chat-bubble">마지막 자명종을 울리기 위해 오르골 캐럴 음계 순서 <strong>[도-미-솔-도]</strong>를 직접 연주해 줘!</div>
             </div>
           </div>
         </div>
@@ -286,78 +403,8 @@
           <button class="music-key" onclick="playMelodyKey(3, '미')">🎵 미 (3)</button>
           <button class="music-key" onclick="playMelodyKey(4, '파')">🎵 파 (4)</button>
           <button class="music-key" onclick="playMelodyKey(5, '솔')">🎵 솔 (5)</button>
-          <button class="music-key" onclick="resetMelody()">🔄 초기화</button>
+          <button class="music-key" onclick="resetMelody()" style="background:#f3f4f6; color:#6b7280;">🔄 초기화</button>
         </div>
-        <details><summary>💡 힌트 보기</summary>정답 순서: 도(1) -> 미(3) -> 솔(5) -> 도(1) 입니다.</details>
-      </div>
-    </div>
-
-    <!-- [STAGE 3] 최신 트렌드: 디지털 수사대 증거 보관함 (크리스마스 증거 3개 조합) -->
-    <div id="stage-3" class="interactive-box" style="display:none;">
-      <div class="quest-title-bar">🔔 미션 3: 디텍티브 보드 (결정적 증거 3개)</div>
-      <div class="quest-inner-content">
-        <div class="chat-wrapper">
-          <div class="chat-container">
-            <div class="chat-avatar">🎅</div>
-            <div class="chat-body">
-              <span class="chat-sender">아기 산타</span>
-              <div class="chat-bubble">사건 파일 증거들 중 **크리스마스 및 겨울 자명종 루프**와 직결된 결정적 증거 3개를 골라 줘!</div>
-            </div>
-          </div>
-        </div>
-        <div class="quest-desc" id="evidence-status">선택된 증거: 0 / 3 개</div>
-        <div class="evidence-board">
-          <div class="evidence-item" onclick="toggleEvidence(this, false)">📇 여름 휴가 영수증</div>
-          <div class="evidence-item" onclick="toggleEvidence(this, true)">⏰ 멈춰버린 자명종 시계</div> <!-- 정답1 -->
-          <div class="evidence-item" onclick="toggleEvidence(this, false)">📜 미술관 관람 가이드</div>
-          <div class="evidence-item" onclick="toggleEvidence(this, true)">❄️ 얼어붙은 눈꽃 결정체</div> <!-- 정답2 -->
-          <div class="evidence-item" onclick="toggleEvidence(this, false)">☕ 카페 아메리카노 컵</div>
-          <div class="evidence-item" onclick="toggleEvidence(this, true)">🎄 트리 전구 전력 차단기</div> <!-- 정답3 -->
-        </div>
-        <button class="action-btn" onclick="checkEvidenceStage()">수사 결과 제출</button>
-      </div>
-    </div>
-
-    <!-- [STAGE 4] 사운드 출력형: 모스 부호 리듬 터치 신호 입력 -->
-    <div id="stage-4" class="interactive-box" style="display:none;">
-      <div class="quest-title-bar">🔔 미션 4: 모스 부호 오디오 신호 송신</div>
-      <div class="quest-inner-content">
-        <div class="chat-wrapper">
-          <div class="chat-container">
-            <div class="chat-avatar">🎅</div>
-            <div class="chat-body">
-              <span class="chat-sender">아기 산타</span>
-              <div class="chat-bubble">스피커로 송출되는 삐- 삐- 웅 모스 부호 리듬 <strong>[짧게(ㆍ) - 길게(ㅡ) - 짧게(ㆍ)]</strong>을 터치로 전송해 줘!</div>
-            </div>
-          </div>
-        </div>
-        <div class="quest-desc" id="morse-status">입력된 신호: (비어있음)</div>
-        <div class="morse-pad">
-          <button class="morse-btn" onclick="inputMorseSound('ㆍ')">ㆍ (단음)</button>
-          <button class="morse-btn" onclick="inputMorseSound('ㅡ')">ㅡ (장음)</button>
-        </div>
-        <button class="action-btn" style="background:#9ca3af; padding:8px; font-size:13px;" onclick="resetMorseSound()">입력 초기화</button>
-      </div>
-    </div>
-
-    <!-- [STAGE 5] 사운드 출력형: 라디오 주파수 튜닝 노이즈 제거 -->
-    <div id="stage-5" class="interactive-box" style="display:none;">
-      <div class="quest-title-bar">🔔 미션 5: 라디오 주파수 튜닝 (소리 청취)</div>
-      <div class="quest-inner-content">
-        <div class="chat-wrapper">
-          <div class="chat-container">
-            <div class="chat-avatar">🎅</div>
-            <div class="chat-body">
-              <span class="chat-sender">아기 산타</span>
-              <div class="chat-bubble">마지막 송신기 다이얼을 돌려 잡음(노이즈)을 없애고 <strong>88.8 MHz</strong>의 맑은 캐럴 주파수를 맞추어 줘!</div>
-            </div>
-          </div>
-        </div>
-        <div class="radio-panel">
-          <div class="radio-screen" id="radio-screen-text">⚡ STATIC 70.0 MHz</div>
-          <input type="range" class="sound-slider" id="radioSlider" min="70.0" max="110.0" step="0.2" value="70.0" oninput="onRadioSliderMove(this.value)">
-        </div>
-        <button class="action-btn" onclick="checkRadioStageFinal()">최종 주파수 고정</button>
       </div>
     </div>
   </div>
@@ -377,14 +424,9 @@
   let currentStage = 1;
   let audioCtx = null;
 
-  // Web Audio API 초기화 및 사운드 재생 헬퍼
   function initAudio() {
-    if (!audioCtx) {
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    }
-    if (audioCtx.state === 'suspended') {
-      audioCtx.resume();
-    }
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
   }
 
   function playTone(freq, duration, type = 'sine') {
@@ -406,161 +448,139 @@
 
   window.addEventListener("DOMContentLoaded", () => {
     updateStageStars(1);
-    drawWave(10);
+    initFactGame();
+    initSwitchGame();
     updateRadioScreen(70.0);
   });
 
   function updateStageStars(stage) {
     let stars = "";
-    for (let i = 1; i <= 5; i++) { stars += (i <= stage) ? "★" : "☆"; }
+    for (let i = 1; i <= 6; i++) { stars += (i <= stage) ? "★" : "☆"; }
     document.getElementById("stage-badge").innerText = stars;
   }
 
-  // [미션 1] 사운드 웨이브 주파수 일치 로직
-  function drawWave(val) {
-    const canvas = document.getElementById("waveCanvas");
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.strokeStyle = (Math.abs(val - 50) < 3) ? "#4ade80" : "#38bdf8";
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    
-    let frequency = val * 0.05;
-    let amplitude = 15;
-    for (let x = 0; x < canvas.width; x++) {
-      let y = canvas.height / 2 + Math.sin(x * frequency * 0.1) * amplitude;
-      if (x === 0) ctx.moveTo(x, y);
-      else ctx.lineTo(x, y);
-    }
-    ctx.stroke();
+  // [미션 1 - 7번] 와이어 전선 연결 로직
+  let selectedLeft = null;
+  let wireCount = 0;
+  function selectLeftWire(id, el) {
+    document.querySelectorAll('.wire-col .wire-node').forEach(n => n.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedLeft = id;
   }
-
-  function updateWave(val) {
-    let numVal = parseInt(val);
-    drawWave(numVal);
-    if (Math.abs(numVal - 50) < 3) {
-      playTone(440, 0.05);
-    }
-  }
-
-  function checkWaveStage() {
-    let currentVal = parseInt(document.getElementById("waveSlider").value);
-    if (Math.abs(currentVal - 50) < 3) {
-      playTone(523.25, 0.3);
-      showModal("🔔 미션 1 클리어!", "오디오 음파 주파수가 목표 진폭과 완벽히 동기화되었습니다!");
+  function selectRightWire(id, el) {
+    if (!selectedLeft) { alert("먼저 왼쪽 색상 단자를 선택하세요!"); return; }
+    if (selectedLeft === id) {
+      el.style.background = "#bbf7d0";
+      el.style.pointerEvents = "none";
+      document.querySelectorAll('.wire-col .wire-node').forEach(n => {
+        if(n.classList.contains('selected')) {
+          n.style.background = "#f1f5f9";
+          n.style.color = "#94a3b8";
+          n.style.pointerEvents = "none";
+          n.classList.remove('selected');
+        }
+      });
+      wireCount++;
+      document.getElementById("wire-status").innerText = `연결 완료: ${wireCount}/5 완료`;
+      selectedLeft = null;
+      if (wireCount === 5) {
+        showModal("🔔 미션 1 클리어!", "모든 수호대의 상징이 조화롭게 연결되었습니다!");
+      }
     } else {
-      alert("음파의 진폭과 주파수가 어긋나 있습니다! 파형을 중앙에 맞추세요.");
+      alert("전선 스파크가 튀었습니다! 올바른 수호대 이름을 찾아주세요.");
+      selectedLeft = null;
+      document.querySelectorAll('.wire-col .wire-node').forEach(n => n.classList.remove('selected'));
     }
   }
 
-  // [미션 2] 오르골 멜로디 연주 로직 (도-미-솔-도 -> 1, 3, 5, 1)
-  let melodyInput = [];
-  const targetMelody = [1, 3, 5, 1];
-  const scaleFreqs = { 1: 261.63, 2: 293.66, 3: 329.63, 4: 349.23, 5: 384.00 };
-
-  function playMelodyKey(noteNum, noteName) {
-    playTone(scaleFreqs[noteNum], 0.25, 'triangle');
-    melodyInput.push(noteNum);
-    document.getElementById("music-status").innerText = "입력된 음계: " + melodyInput.join(" - ");
-
-    if (melodyInput.length === 4) {
-      if (melodyInput.toString() === targetMelody.toString()) {
-        playTone(523.25, 0.4);
-        setTimeout(() => playTone(659.25, 0.4), 200);
-        showModal("🔔 미션 2 클리어!", "오르골 캐럴 멜로디가 아름답게 연주되었습니다!");
-      } else {
-        alert("음계 연주가 틀렸습니다! 다시 시도하세요.");
-        resetMelody();
-      }
-    }
+  // [미션 2 - 2번] 3단 휠 다이얼 자물쇠 로직 (H-A-P)
+  const letters = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+  let dialIndices = [0, 0, 0];
+  function spinDial(dialIdx, direction) {
+    dialIndices[dialIdx] = (dialIndices[dialIdx] + direction + letters.length) % letters.length;
+    document.getElementById(`dial-${dialIdx}`).innerText = letters[dialIndices[dialIdx]];
   }
-
-  function resetMelody() {
-    melodyInput = [];
-    document.getElementById("music-status").innerText = "입력된 음계: -";
-  }
-
-  // [미션 3] 디지털 수사대 증거 보관함 로직
-  let selectedEvidences = [];
-  function toggleEvidence(el, isCorrect) {
-    if (el.classList.contains('selected')) {
-      el.classList.remove('selected');
-      selectedEvidences = selectedEvidences.filter(item => item !== el);
+  function checkDialStage() {
+    let word = letters[dialIndices[0]] + letters[dialIndices[1]] + letters[dialIndices[2]];
+    if (word === "HAP") {
+      showModal("🔔 미션 2 클리어!", "다이얼이 정확히 일치하며 문이 열렸습니다!");
     } else {
-      if (selectedEvidences.length < 3) {
-        el.classList.add('selected');
-        selectedEvidences.push(el);
-      } else {
-        alert("결정적 증거는 정확히 3개만 선택할 수 있습니다!");
-        return;
-      }
+      alert(`자물쇠가 열리지 않습니다! (현재 입력: ${word}, 힌트: HAP)`);
     }
-    document.getElementById("evidence-status").innerText = `선택된 증거: ${selectedEvidences.length} / 3 개`;
   }
 
-  function checkEvidenceStage() {
-    let correctCount = 0;
-    let hasWrong = false;
-    selectedEvidences.forEach(el => {
-      // 텍스트로 정답 판별
-      let txt = el.innerText;
-      if (txt.includes('자명종') || txt.includes('눈꽃') || txt.includes('차단기')) {
-        correctCount++;
+  // [미션 3 - 10번] 진실/거짓 스와이프 OX 로직
+  const factList = [
+    { text: "서울갤러리의 개관일은 2월 5일이다.", answer: true },
+    { text: "크리스마스는 한겨울이 아니라 한여름의 명절이다.", answer: false },
+    { text: "해치는 서울을 지키는 전통 상징 수호 동물이다.", answer: true }
+  ];
+  let factIdx = 0;
+  function initFactGame() {
+    factIdx = 0;
+    const card = document.getElementById("fact-card");
+    if(card && factList.length > 0) card.innerText = factList[0].text;
+  }
+  function answerFact(userChoice) {
+    if (userChoice === factList[factIdx].answer) {
+      factIdx++;
+      if (factIdx < factList.length) {
+        document.getElementById("fact-card").innerText = factList[factIdx].text;
       } else {
-        hasWrong = true;
+        showModal("🔔 미션 3 클리어!", "모든 팩트체크 결계가 해제되었습니다!");
       }
+    } else {
+      alert("틀렸습니다! 다시 생각해보세요.");
+      factIdx = 0;
+      document.getElementById("fact-card").innerText = factList[factIdx].text;
+    }
+  }
+
+  // [미션 4 - 12번] 연쇄 전등 스위치 로직
+  let switchState = Array(9).fill(false);
+  function initSwitchGame() {
+    switchState = [true, false, true, false, true, false, true, false, true];
+    renderSwitches();
+  }
+  function renderSwitches() {
+    const board = document.getElementById("switch-board");
+    if (!board) return;
+    board.innerHTML = "";
+    switchState.forEach((isOn, idx) => {
+      const sw = document.createElement("div");
+      sw.className = "light-switch" + (isOn ? " on" : "");
+      sw.innerText = isOn ? "💡" : "🔌";
+      sw.onclick = () => toggleSwitch(idx);
+      board.appendChild(sw);
     });
-
-    if (selectedEvidences.length === 3 && correctCount === 3 && !hasWrong) {
-      playTone(587.33, 0.3);
-      showModal("🔔 미션 3 클리어!", "사건의 실마리를 풀어낼 결정적 증거 3개가 모두 채택되었습니다!");
-    } else {
-      alert("선택한 증거 중에 사건과 무관한 가짜 증거가 섞여 있습니다!");
+  }
+  function toggleSwitch(idx) {
+    const row = Math.floor(idx / 3);
+    const col = idx % 3;
+    const targets = [idx];
+    if (row > 0) targets.push(idx - 3);
+    if (row < 2) targets.push(idx + 3);
+    if (col > 0) targets.push(idx - 1);
+    if (col < 2) targets.push(idx + 1);
+    targets.forEach(t => { switchState[t] = !switchState[t]; });
+    renderSwitches();
+    if (switchState.every(val => val === true)) {
+      showModal("🔔 미션 4 클리어!", "모든 전등이 연쇄적으로 점등되었습니다!");
     }
   }
-
-  // [미션 4] 모스 부호 리듬 터치 로직 (ㆍ - ㆍ)
-  let morseSoundInput = [];
-  const targetMorseSound = ['ㆍ', 'ㅡ', 'ㆍ'];
-
-  function inputMorseSound(symbol) {
-    if (symbol === 'ㆍ') playTone(700, 0.1);
-    else playTone(700, 0.3);
-
-    morseSoundInput.push(symbol);
-    document.getElementById("morse-status").innerText = "입력된 신호: " + morseSoundInput.join(" ");
-
-    if (morseSoundInput.length === 3) {
-      if (morseSoundInput.every((val, idx) => val === targetMorseSound[idx])) {
-        playTone(880, 0.4);
-        showModal("🔔 미션 4 클리어!", "모스 부호 오디오 신호가 정확하게 송신되었습니다!");
-      } else {
-        alert("리듬 신호가 일치하지 않습니다!");
-        resetMorseSound();
-      }
-    }
+  function resetSwitches() {
+    switchState = [false, true, false, true, false, true, false, true, false];
+    renderSwitches();
   }
 
-  function resetMorseSound() {
-    morseSoundInput = [];
-    document.getElementById("morse-status").innerText = "입력된 신호: (비어있음)";
-  }
-
-  // [미션 5] 라디오 주파수 노이즈 제거 로직 (88.8 MHz)
+  // [미션 5 - 18번] 아날로그 라디오 주파수 튜닝 로직
   let radioFreqVal = 70.0;
-
   function onRadioSliderMove(val) {
     radioFreqVal = Math.round(parseFloat(val) * 10) / 10;
     updateRadioScreen(radioFreqVal);
-    // 주파수에 따라 잡음 소리 피드백
-    if (Math.abs(radioFreqVal - 88.8) < 0.05) {
-      playTone(659.25, 0.05, 'sine');
-    } else {
-      playTone(150, 0.03, 'sawtooth');
-    }
+    if (Math.abs(radioFreqVal - 88.8) < 0.05) playTone(659.25, 0.05, 'sine');
+    else playTone(150, 0.03, 'sawtooth');
   }
-
   function updateRadioScreen(freq) {
     const screen = document.getElementById("radio-screen-text");
     if (Math.abs(freq - 88.8) < 0.05) {
@@ -571,14 +591,37 @@
       screen.style.color = "#ef4444";
     }
   }
-
   function checkRadioStageFinal() {
     if (Math.abs(radioFreqVal - 88.8) < 0.05) {
       playTone(880, 0.5);
-      showModal("🔔 미션 5 클리어!", "라디오 노이즈가 완전히 사라지고 맑은 캐럴이 울려 퍼집니다!");
+      showModal("🔔 미션 5 클리어!", "라디오 노이즈가 사라지고 맑은 캐럴이 울려 퍼집니다!");
     } else {
       alert(`아직 잡음이 들립니다! 정확히 88.8 MHz를 맞추세요. (현재: ${radioFreqVal.toFixed(1)} MHz)`);
     }
+  }
+
+  // [미션 6 - 6번] 오르골 멜로디 연주 로직
+  let melodyInput = [];
+  const targetMelody = [1, 3, 5, 1];
+  const scaleFreqs = { 1: 261.63, 2: 293.66, 3: 329.63, 4: 349.23, 5: 384.00 };
+  function playMelodyKey(noteNum, noteName) {
+    playTone(scaleFreqs[noteNum], 0.25, 'triangle');
+    melodyInput.push(noteNum);
+    document.getElementById("music-status").innerText = "입력된 음계: " + melodyInput.join(" - ");
+    if (melodyInput.length === 4) {
+      if (melodyInput.toString() === targetMelody.toString()) {
+        playTone(523.25, 0.4);
+        setTimeout(() => playTone(659.25, 0.4), 200);
+        showModal("🔔 미션 6 클리어!", "오르골 자명종의 멜로디가 완성되었습니다!");
+      } else {
+        alert("음계 연주가 틀렸습니다! 다시 시도하세요.");
+        resetMelody();
+      }
+    }
+  }
+  function resetMelody() {
+    melodyInput = [];
+    document.getElementById("music-status").innerText = "입력된 음계: -";
   }
 
   function showModal(title, desc) {
@@ -589,8 +632,8 @@
 
   function nextStage() {
     document.getElementById("modal").style.display = "none";
-    if (currentStage === 5) {
-      document.getElementById("stage-5").style.display = "none";
+    if (currentStage === 6) {
+      document.getElementById("stage-6").style.display = "none";
       document.getElementById("ending-screen").style.display = "flex";
       return;
     }
@@ -603,18 +646,26 @@
 
   function resetGame() {
     currentStage = 1;
-    resetMelody();
-    selectedEvidences.forEach(el => el.classList.remove('selected'));
-    selectedEvidences = [];
-    document.getElementById("evidence-status").innerText = "선택된 증거: 0 / 3 개";
-    resetMorseSound();
+    wireCount = 0;
+    document.getElementById("wire-status").innerText = "연결 완료: 0/5 완료";
+    document.querySelectorAll('.wire-col .wire-node').forEach(n => {
+      n.style.background = "#fff";
+      n.style.color = "";
+      n.style.pointerEvents = "auto";
+      n.classList.remove('selected');
+    });
+    dialIndices = [0, 0, 0];
+    document.getElementById("dial-0").innerText = "A";
+    document.getElementById("dial-1").innerText = "A";
+    document.getElementById("dial-2").innerText = "A";
+    initFactGame();
+    resetSwitches();
     radioFreqVal = 70.0;
     document.getElementById("radioSlider").value = 70.0;
     updateRadioScreen(70.0);
-    document.getElementById("waveSlider").value = 10;
-    drawWave(10);
+    resetMelody();
 
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= 6; i++) {
       document.getElementById(`stage-${i}`).style.display = (i === 1) ? "flex" : "none";
     }
     updateStageStars(1);
