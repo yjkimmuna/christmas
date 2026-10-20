@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>해치 크리스마스: 5대 비밀의 숲 (Optimized Edition)</title>
+  <title>해치 크리스마스: 사운드 & 트렌드 에디션</title>
   <link href="https://fonts.googleapis.com/css2?family=DungGeunMo&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -25,32 +25,35 @@
       padding: 0;
       user-select: none;
       -webkit-user-select: none;
-      touch-action: manipulation; /* 모바일 더블탭 줌 방지 */
+      touch-action: manipulation;
       font-family: 'DungGeunMo', monospace, sans-serif !important;
       letter-spacing: 0.5px;
     }
 
+    /* 모바일 스크롤 잘림 현상 해결을 위한 유연한 컨테이너 구조 */
     body {
       background-color: #fce7f3;
       color: var(--text-dark);
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start;
       min-height: 100vh;
-      overflow: hidden;
+      overflow-y: auto;
+      padding: 20px 0;
     }
 
     #app {
       position: relative;
       width: 100vw;
-      height: 100vh;
       max-width: 440px;
       background: var(--pink-bg);
       display: flex;
       flex-direction: column;
-      overflow: hidden;
       border: 4px solid var(--pink-deep);
       box-shadow: 4px 4px 0px #831843, 8px 8px 0px rgba(219, 39, 119, 0.3);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 20px;
     }
 
     header {
@@ -61,7 +64,6 @@
       justify-content: space-between;
       align-items: center;
       flex-shrink: 0;
-      z-index: 10;
     }
     .badge {
       background: var(--pine-green);
@@ -91,10 +93,7 @@
     }
 
     .content {
-      flex: 1;
       padding: 16px 18px 24px;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
       display: flex;
       flex-direction: column;
       gap: 16px;
@@ -104,14 +103,12 @@
       background: #ffffff;
       border: 3px solid var(--pink-deep);
       border-radius: 8px;
-      padding: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
       box-shadow: 5px 5px 0px rgba(219, 39, 119, 0.2);
       overflow: hidden;
-      flex-shrink: 0;
     }
 
     .quest-title-bar {
@@ -178,46 +175,28 @@
     }
     summary { cursor: pointer; font-weight: bold; color: var(--pine-green); }
 
-    /* [미션 1] 개선된 라디오 슬라이더 스타일 */
-    .radio-panel { width: 100%; background: #0f172a; border-radius: 8px; padding: 16px; display: flex; flex-direction: column; gap: 14px; position: relative; overflow: hidden; }
-    .radio-screen { height: 50px; background: #1e293b; border: 2px solid #334155; border-radius: 4px; display: flex; justify-content: center; align-items: center; color: #38bdf8; font-family: monospace; font-size: 18px; font-weight: bold; position: relative; }
-    .radio-screen.static { animation: noiseAnim 0.2s infinite; color: #ef4444; }
-    @keyframes noiseAnim { 0% { transform: translate(1px, 1px); } 50% { transform: translate(-1px, -1px); } 100% { transform: translate(0, 0); } }
-    
-    .slider-group { display: flex; flex-direction: column; gap: 6px; width: 100%; }
-    .custom-slider { width: 100%; height: 8px; background: #334155; border-radius: 4px; outline: none; -webkit-appearance: none; }
-    .custom-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 24px; height: 24px; border-radius: 50%; background: #38bdf8; cursor: pointer; border: 2px solid #fff; }
-    .slider-btns-row { display: flex; justify-content: space-between; gap: 10px; }
-    .step-btn { flex: 1; padding: 8px; background: #334155; color: #fff; border: 1px solid #64748b; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 14px; }
+    /* [미션 1] 사운드 웨이브 주파수 일치 퍼즐 스타일 */
+    .wave-panel { width: 100%; background: #0f172a; border-radius: 8px; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+    .wave-canvas-box { width: 100%; height: 70px; background: #1e293b; border: 2px solid #334155; border-radius: 4px; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; }
+    .sound-slider { width: 100%; accent-color: #38bdf8; cursor: pointer; }
 
-    /* [미션 2] CCTV 감시 카메라 화면 스타일 */
-    .cctv-frame { width: 100%; height: 180px; background: #0f172a; border: 4px solid #334155; border-radius: 6px; position: relative; overflow: hidden; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(2, 1fr); padding: 8px; }
-    .cctv-grid-item { border: 1px dashed rgba(255,255,255,0.1); display: flex; justify-content: center; align-items: center; font-size: 30px; cursor: pointer; position: relative; }
-    .cctv-grid-item.targeted::after { content: ''; position: absolute; inset: 4px; border: 3px solid #ef4444; border-radius: 4px; animation: pulseTarget 1s infinite; }
-    @keyframes pulseTarget { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+    /* [미션 2] 오르골 멜로디 청취 연주 퍼즐 스타일 */
+    .music-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 100%; }
+    .music-key { background: #fff; border: 2px solid var(--pink-deep); border-radius: 6px; padding: 14px 0; font-size: 15px; font-weight: bold; color: var(--pink-deep); cursor: pointer; box-shadow: 0 3px 0px var(--pink-primary); }
+    .music-key:active { transform: translateY(3px); box-shadow: none; background: var(--soft-pink); }
 
-    /* [미션 3] 진짜 크기별 톱니바퀴 스타일 */
-    .gear-assembly { display: flex; gap: 12px; justify-content: center; align-items: center; width: 100%; height: 90px; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 8px; }
-    .gear-slot-box { border: 2px dashed var(--pink-deep); border-radius: 8px; display: flex; justify-content: center; align-items: center; background: #fff; font-size: 12px; color: var(--text-muted); }
-    .gear-pool { display: flex; gap: 12px; justify-content: center; }
-    .gear-visual { border-radius: 50%; background: #eab308; border: 3px dashed #ca8a04; display: flex; justify-content: center; align-items: center; font-weight: bold; color: #713f12; cursor: pointer; box-shadow: 0 3px 0px rgba(0,0,0,0.15); }
-    .gear-visual.large { width: 70px; height: 70px; font-size: 14px; }
-    .gear-visual.medium { width: 55px; height: 55px; font-size: 13px; }
-    .gear-visual.small { width: 40px; height: 40px; font-size: 12px; }
-    .gear-visual.spinning { animation: spinGear 1.5s linear infinite; }
-    @keyframes spinGear { 100% { transform: rotate(360deg); } }
+    /* [미션 3] 디지털 수사대 증거 보관함 스타일 */
+    .evidence-board { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; width: 100%; }
+    .evidence-item { background: #f8fafc; border: 2px solid #cbd5e1; border-radius: 6px; padding: 12px 8px; font-size: 13px; font-weight: bold; cursor: pointer; text-align: center; }
+    .evidence-item.selected { background: var(--soft-pink); border-color: var(--crimson-red); color: var(--crimson-red); }
 
-    /* [미션 4] 레이저 광학 경로 스타일 */
-    .laser-box { width: 100%; height: 160px; background: #0f172a; border-radius: 6px; position: relative; overflow: hidden; display: flex; justify-content: space-around; align-items: center; padding: 10px; }
-    .mirror-node { width: 55px; height: 55px; background: #334155; border: 2px solid #94a3b8; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-size: 20px; color: #fff; cursor: pointer; z-index: 2; }
-    .mirror-node.active-mirror { background: #16a34a; border-color: #86efac; box-shadow: 0 0 12px #4ade80; }
-    svg.laser-svg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+    /* [미션 4] 모스 부호 리듬 터치 스타일 */
+    .morse-pad { display: flex; gap: 10px; width: 100%; }
+    .morse-btn { flex: 1; padding: 14px; background: #fff; border: 2px solid var(--pink-deep); border-radius: 6px; font-weight: bold; font-size: 15px; cursor: pointer; color: var(--pink-deep); }
 
-    /* [미션 5] 마법의 연금술 가마솥 */
-    .alchemy-pot { width: 130px; height: 90px; background: #334155; border: 4px solid #1e293b; border-radius: 0 0 60px 60px; margin: 0 auto; display: flex; justify-content: center; align-items: center; font-size: 36px; position: relative; box-shadow: inset 0 -10px 15px rgba(0,0,0,0.4); }
-    .ingredients-pool { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-    .ingredient-chip { padding: 10px 16px; background: #fff; border: 2px solid var(--pink-deep); border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 14px; }
-    .ingredient-chip.in-pot { background: var(--soft-pink); opacity: 0.6; }
+    /* [미션 5] 주파수 라디오 노이즈 튜닝 스타일 */
+    .radio-panel { width: 100%; background: #0f172a; border-radius: 8px; padding: 14px; display: flex; flex-direction: column; gap: 12px; }
+    .radio-screen { height: 45px; background: #1e293b; border: 2px solid #334155; border-radius: 4px; display: flex; justify-content: center; align-items: center; color: #38bdf8; font-family: monospace; font-size: 16px; font-weight: bold; }
 
     .modal { display: none; position: absolute; inset: 0; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(4px); z-index: 150; justify-content: center; align-items: center; padding: 22px; }
     .modal-card { background: #ffffff; border: 3px solid var(--pink-deep); border-radius: 12px; padding: 22px 18px; text-align: center; width: 100%; box-shadow: 6px 6px 0px rgba(219, 39, 119, 0.4); }
@@ -228,13 +207,13 @@
 
 <div id="app">
   <!-- 엔딩 화면 -->
-  <div id="ending-screen">
-    <div class="intro-header-box" style="margin-top: 20px;">
+  <div id="ending-screen" style="position:absolute; inset:0; display:none; background:var(--pink-bg); z-index:110; flex-direction:column; justify-content:space-between; align-items:center; padding:24px 20px; text-align:center;">
+    <div style="margin-top: 20px;">
       <span class="badge" style="background:var(--crimson-red); border-color:#7f1d1d;">MISSION COMPLETE</span>
-      <h1 style="font-size: 20px; color: var(--pink-deep); margin-top: 5px;">5대 미스터리 완전 해제 성공!</h1>
+      <h1 style="font-size: 20px; color: var(--pink-deep); margin-top: 5px;">오디오 방탈출 완전 탈출 성공!</h1>
     </div>
-    <div style="width: 100%; height: 160px; background: rgba(255,255,255,0.6); border: 3px solid var(--pink-deep); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--pink-deep); font-size: 14px;">
-      [ 🎉 크리스마스 대점등 축하 엔딩 ]
+    <div style="width: 100%; height: 150px; background: rgba(255,255,255,0.6); border: 3px solid var(--pink-deep); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--pink-deep); font-size: 14px;">
+      [ 🎉 크리스마스 오디오 연출 엔딩 ]
     </div>
     <div class="interactive-box" style="width: 100%;">
       <div class="quest-title-bar">🎁 축하합니다!</div>
@@ -244,7 +223,7 @@
             <div class="chat-avatar">🎅</div>
             <div class="chat-body">
               <span class="chat-sender">아기 산타</span>
-              <div class="chat-bubble">모든 시각 장치와 퍼즐의 결계를 풀고 숲에 온전한 불을 밝혔어! 안내 데스크에서 선물을 받아주세요 🎁</div>
+              <div class="chat-bubble">모든 사운드 주파수와 추리 증거를 맞춰 숲에 평화를 되찾았어! 안내 데스크에서 선물을 받아주세요 🎁</div>
             </div>
           </div>
         </div>
@@ -257,143 +236,128 @@
   <header>
     <div style="display:flex; align-items:center; gap:8px;">
       <span class="badge" id="stage-badge">★★★★★</span>
-      <span class="pink-tag">HAECHI ADVANCED</span>
+      <span class="pink-tag">SOUND & TREND</span>
     </div>
     <button class="reset-btn" onclick="resetGame()">처음으로</button>
   </header>
 
   <div class="content">
-    <!-- [STAGE 1] 최적화된 아날로그 라디오 주파수 슬라이더 (0.2 단위) -->
+    <!-- [STAGE 1] 최신 트렌드: 사운드 웨이브(음파) 주파수 일치 퍼즐 -->
     <div id="stage-1" class="interactive-box">
-      <div class="quest-title-bar">🔔 미션 1: 아날로그 주파수 튜닝</div>
+      <div class="quest-title-bar">🔔 미션 1: 사운드 웨이브 주파수 동기화</div>
       <div class="quest-inner-content">
         <div class="chat-wrapper">
           <div class="chat-container">
             <div class="chat-avatar">🎅</div>
             <div class="chat-body">
               <span class="chat-sender">아기 산타</span>
-              <div class="chat-bubble">안내데스크 라디오 주파수를 슬라이드로 밀거나 [-] [+] 버튼으로 조정해 <strong>88.8 MHz</strong>를 맞춰 줘!</div>
+              <div class="chat-bubble">수신된 무전 오디오의 음파 진폭을 슬라이더로 조절해 목표 파형과 정확히 일치(50Hz)시켜 줘!</div>
+            </div>
+          </div>
+        </div>
+        <div class="wave-panel">
+          <div class="wave-canvas-box">
+            <canvas id="waveCanvas" width="300" height="60"></canvas>
+          </div>
+          <input type="range" class="sound-slider" id="waveSlider" min="10" max="90" value="10" oninput="updateWave(this.value)">
+        </div>
+        <button class="action-btn" onclick="checkWaveStage()">음파 동기화 완료</button>
+        <details><summary>💡 힌트 보기</summary>슬라이더를 정확히 중간 부근(50)으로 맞추면 음파가 일치합니다.</details>
+      </div>
+    </div>
+
+    <!-- [STAGE 2] 사운드 출력형: 오르골 멜로디 청취 연주 퍼즐 -->
+    <div id="stage-2" class="interactive-box" style="display:none;">
+      <div class="quest-title-bar">🔔 미션 2: 오르골 멜로디 청취 및 연주</div>
+      <div class="quest-inner-content">
+        <div class="chat-wrapper">
+          <div class="chat-container">
+            <div class="chat-avatar">🎅</div>
+            <div class="chat-body">
+              <span class="chat-sender">아기 산타</span>
+              <div class="chat-bubble">오르골이 연주하는 캐럴 음계 순서 <strong>[도-미-솔-도]</strong>를 듣고 직접 버튼을 눌러 연주해 줘!</div>
+            </div>
+          </div>
+        </div>
+        <div class="quest-desc" id="music-status">입력된 음계: -</div>
+        <div class="music-grid">
+          <button class="music-key" onclick="playMelodyKey(1, '도')">🎵 도 (1)</button>
+          <button class="music-key" onclick="playMelodyKey(2, '레')">🎵 레 (2)</button>
+          <button class="music-key" onclick="playMelodyKey(3, '미')">🎵 미 (3)</button>
+          <button class="music-key" onclick="playMelodyKey(4, '파')">🎵 파 (4)</button>
+          <button class="music-key" onclick="playMelodyKey(5, '솔')">🎵 솔 (5)</button>
+          <button class="music-key" onclick="resetMelody()">🔄 초기화</button>
+        </div>
+        <details><summary>💡 힌트 보기</summary>정답 순서: 도(1) -> 미(3) -> 솔(5) -> 도(1) 입니다.</details>
+      </div>
+    </div>
+
+    <!-- [STAGE 3] 최신 트렌드: 디지털 수사대 증거 보관함 (크리스마스 증거 3개 조합) -->
+    <div id="stage-3" class="interactive-box" style="display:none;">
+      <div class="quest-title-bar">🔔 미션 3: 디텍티브 보드 (결정적 증거 3개)</div>
+      <div class="quest-inner-content">
+        <div class="chat-wrapper">
+          <div class="chat-container">
+            <div class="chat-avatar">🎅</div>
+            <div class="chat-body">
+              <span class="chat-sender">아기 산타</span>
+              <div class="chat-bubble">사건 파일 증거들 중 **크리스마스 및 겨울 자명종 루프**와 직결된 결정적 증거 3개를 골라 줘!</div>
+            </div>
+          </div>
+        </div>
+        <div class="quest-desc" id="evidence-status">선택된 증거: 0 / 3 개</div>
+        <div class="evidence-board">
+          <div class="evidence-item" onclick="toggleEvidence(this, false)">📇 여름 휴가 영수증</div>
+          <div class="evidence-item" onclick="toggleEvidence(this, true)">⏰ 멈춰버린 자명종 시계</div> <!-- 정답1 -->
+          <div class="evidence-item" onclick="toggleEvidence(this, false)">📜 미술관 관람 가이드</div>
+          <div class="evidence-item" onclick="toggleEvidence(this, true)">❄️ 얼어붙은 눈꽃 결정체</div> <!-- 정답2 -->
+          <div class="evidence-item" onclick="toggleEvidence(this, false)">☕ 카페 아메리카노 컵</div>
+          <div class="evidence-item" onclick="toggleEvidence(this, true)">🎄 트리 전구 전력 차단기</div> <!-- 정답3 -->
+        </div>
+        <button class="action-btn" onclick="checkEvidenceStage()">수사 결과 제출</button>
+      </div>
+    </div>
+
+    <!-- [STAGE 4] 사운드 출력형: 모스 부호 리듬 터치 신호 입력 -->
+    <div id="stage-4" class="interactive-box" style="display:none;">
+      <div class="quest-title-bar">🔔 미션 4: 모스 부호 오디오 신호 송신</div>
+      <div class="quest-inner-content">
+        <div class="chat-wrapper">
+          <div class="chat-container">
+            <div class="chat-avatar">🎅</div>
+            <div class="chat-body">
+              <span class="chat-sender">아기 산타</span>
+              <div class="chat-bubble">스피커로 송출되는 삐- 삐- 웅 모스 부호 리듬 <strong>[짧게(ㆍ) - 길게(ㅡ) - 짧게(ㆍ)]</strong>을 터치로 전송해 줘!</div>
+            </div>
+          </div>
+        </div>
+        <div class="quest-desc" id="morse-status">입력된 신호: (비어있음)</div>
+        <div class="morse-pad">
+          <button class="morse-btn" onclick="inputMorseSound('ㆍ')">ㆍ (단음)</button>
+          <button class="morse-btn" onclick="inputMorseSound('ㅡ')">ㅡ (장음)</button>
+        </div>
+        <button class="action-btn" style="background:#9ca3af; padding:8px; font-size:13px;" onclick="resetMorseSound()">입력 초기화</button>
+      </div>
+    </div>
+
+    <!-- [STAGE 5] 사운드 출력형: 라디오 주파수 튜닝 노이즈 제거 -->
+    <div id="stage-5" class="interactive-box" style="display:none;">
+      <div class="quest-title-bar">🔔 미션 5: 라디오 주파수 튜닝 (소리 청취)</div>
+      <div class="quest-inner-content">
+        <div class="chat-wrapper">
+          <div class="chat-container">
+            <div class="chat-avatar">🎅</div>
+            <div class="chat-body">
+              <span class="chat-sender">아기 산타</span>
+              <div class="chat-bubble">마지막 송신기 다이얼을 돌려 잡음(노이즈)을 없애고 <strong>88.8 MHz</strong>의 맑은 캐럴 주파수를 맞추어 줘!</div>
             </div>
           </div>
         </div>
         <div class="radio-panel">
-          <div class="radio-screen" id="radio-screen">⚡ NOISE 70.0 MHz</div>
-          <div class="slider-group">
-            <input type="range" id="radio-slider" class="custom-slider" min="70.0" max="110.0" step="0.2" value="70.0" oninput="onSliderMove(this.value)">
-            <div class="slider-btns-row">
-              <button class="step-btn" onclick="stepRadio(-1)">◀ -1.0 MHz</button>
-              <button class="step-btn" onclick="stepRadio(-0.2)">-0.2</button>
-              <button class="step-btn" onclick="stepRadio(0.2)">+0.2</button>
-              <button class="step-btn" onclick="stepRadio(1)">+1.0 MHz ▶</button>
-            </div>
-          </div>
+          <div class="radio-screen" id="radio-screen-text">⚡ STATIC 70.0 MHz</div>
+          <input type="range" class="sound-slider" id="radioSlider" min="70.0" max="110.0" step="0.2" value="70.0" oninput="onRadioSliderMove(this.value)">
         </div>
-        <button class="action-btn" onclick="checkRadioStage()">주파수 잠금 고정</button>
-        <details><summary>💡 힌트 보기</summary>슬라이더를 드래그하거나 미세 조정 버튼을 눌러 88.8에 맞추세요.</details>
-      </div>
-    </div>
-
-    <!-- [STAGE 2] CCTV 감시 카메라 위장 물체 타겟팅 -->
-    <div id="stage-2" class="interactive-box" style="display:none;">
-      <div class="quest-title-bar">🔔 미션 2: CCTV 위장 물체 실시간 타겟팅</div>
-      <div class="quest-inner-content">
-        <div class="chat-wrapper">
-          <div class="chat-container">
-            <div class="chat-avatar">🎅</div>
-            <div class="chat-body">
-              <span class="chat-sender">아기 산타</span>
-              <div class="chat-bubble">CCTV 보안 화면 속에서 평소와 다른 <strong>위장 물체 3개</strong>를 정확히 찾아 타겟팅해 줘!</div>
-            </div>
-          </div>
-        </div>
-        <div class="quest-desc" id="cctv-counter">타겟팅 완료: 0 / 3 개</div>
-        <div class="cctv-frame">
-          <div class="cctv-grid-item" onclick="targetCCTV(0)">🏛️</div>
-          <div class="cctv-grid-item" onclick="targetCCTV(1)">🕶️</div> <!-- 정답1 -->
-          <div class="cctv-grid-item" onclick="storeCabinet()">🪴</div>
-          <div class="cctv-grid-item" onclick="targetCCTV(3)">🐥</div> <!-- 정답2 -->
-          <div class="cctv-grid-item" onclick="targetCCTV(4)">🖼️</div>
-          <div class="cctv-grid-item" onclick="targetCCTV(5)">🎩</div> <!-- 정답3 -->
-        </div>
-      </div>
-    </div>
-
-    <!-- [STAGE 3] 진짜 크기별 원형 톱니바퀴 조립 & 회전 구동 -->
-    <div id="stage-3" class="interactive-box" style="display:none;">
-      <div class="quest-title-bar">🔔 미션 3: 톱니바퀴 맞물림 및 구동</div>
-      <div class="quest-inner-content">
-        <div class="chat-wrapper">
-          <div class="chat-container">
-            <div class="chat-avatar">🎅</div>
-            <div class="chat-body">
-              <span class="chat-sender">아기 산타</span>
-              <div class="chat-bubble">시계 내부 홈에 <strong>[대 - 중 - 소]</strong> 크기별 톱니바퀴를 올바르게 배치하고 구동시켜 줘!</div>
-            </div>
-          </div>
-        </div>
-        <div class="gear-assembly" id="gear-assembly-box">
-          <div class="gear-slot-box" id="slot-0" style="width:75px; height:75px;" onclick="removeGear(0)">홈 1(대)</div>
-          <div class="gear-slot-box" id="slot-1" style="width:60px; height:60px;" onclick="removeGear(1)">홈 2(중)</div>
-          <div class="gear-slot-box" id="slot-2" style="width:45px; height:45px;" onclick="removeGear(2)">홈 3(소)</div>
-        </div>
-        <div class="gear-pool">
-          <div class="gear-visual small" onclick="placeGear('소')">소(⚙️)</div>
-          <div class="gear-visual large" onclick="placeGear('대')">대(⚙️)</div>
-          <div class="gear-visual medium" onclick="placeGear('중')">중(⚙️)</div>
-        </div>
-        <details><summary>💡 힌트 보기</summary>왼쪽부터 [대 ➔ 중 ➔ 소] 크기 순서대로 홈에 끼우세요.</details>
-      </div>
-    </div>
-
-    <!-- [STAGE 4] 실시간 레이저 광학 경로 패스 -->
-    <div id="stage-4" class="interactive-box" style="display:none;">
-      <div class="quest-title-bar">🔔 미션 4: 레이저 광학 반사 경로 연결</div>
-      <div class="quest-inner-content">
-        <div class="chat-wrapper">
-          <div class="chat-container">
-            <div class="chat-avatar">🎅</div>
-            <div class="chat-body">
-              <span class="chat-sender">아기 산타</span>
-              <div class="chat-bubble">레이저 송신기에서 발사된 빛이 거울들을 거쳐 최종 센서에 도달하도록 거울을 활성화해 줘!</div>
-            </div>
-          </div>
-        </div>
-        <div class="laser-box">
-          <svg class="laser-svg" id="laser-svg-canvas">
-            <line x1="10" y1="80" x2="120" y2="80" stroke="#ef4444" stroke-width="4" id="beam-1" opacity="0.2"/>
-            <line x1="120" y1="80" x2="230" y2="80" stroke="#ef4444" stroke-width="4" id="beam-2" opacity="0.2"/>
-            <line x1="230" y1="80" x2="340" y2="80" stroke="#ef4444" stroke-width="4" id="beam-3" opacity="0.2"/>
-          </svg>
-          <div style="color:#ef4444; font-weight:bold; z-index:2;">🔴 레이저</div>
-          <div class="mirror-node" onclick="activateMirror(0)" id="mirror-0">🪞A</div>
-          <div class="mirror-node" onclick="activateMirror(1)" id="mirror-1">🪞B</div>
-          <div class="mirror-node" onclick="activateMirror(2)" id="mirror-2">🪞C</div>
-          <div style="color:#4ade80; font-weight:bold; z-index:2;" id="laser-sensor">🎯센서(OFF)</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- [STAGE 5] 연금술 가마솥 변신 연출 -->
-    <div id="stage-5" class="interactive-box" style="display:none;">
-      <div class="quest-title-bar">🔔 미션 5: 마법의 연금술 가마솥 조합</div>
-      <div class="quest-inner-content">
-        <div class="chat-wrapper">
-          <div class="chat-container">
-            <div class="chat-avatar">🎅</div>
-            <div class="chat-body">
-              <span class="chat-sender">아기 산타</span>
-              <div class="chat-bubble">가마솥에 올바른 두 재료를 투입해 마법의 <strong>[눈사람]</strong> 아이템을 연성해 줘!</div>
-            </div>
-          </div>
-        </div>
-        <div class="alchemy-pot" id="alchemy-pot-slot">✨</div>
-        <div class="ingredients-pool">
-          <div class="ingredient-chip" onclick="throwIngredient('눈', this)">❄️ 눈</div>
-          <div class="ingredient-chip" onclick="throwIngredient('불꽃', this)">🔥 불꽃</div>
-          <div class="ingredient-chip" onclick="throwIngredient('사람', this)">⛄ 사람</div>
-          <div class="ingredient-chip" onclick="throwIngredient('별', this)">⭐ 별</div>
-        </div>
-        <button class="action-btn" onclick="brewPotion()">마법 연성 실행하기</button>
+        <button class="action-btn" onclick="checkRadioStageFinal()">최종 주파수 고정</button>
       </div>
     </div>
   </div>
@@ -411,9 +375,38 @@
 
 <script>
   let currentStage = 1;
+  let audioCtx = null;
+
+  // Web Audio API 초기화 및 사운드 재생 헬퍼
+  function initAudio() {
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+  }
+
+  function playTone(freq, duration, type = 'sine') {
+    try {
+      initAudio();
+      if (!audioCtx) return;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+      gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+      gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + duration);
+    } catch(e) { console.log(e); }
+  }
 
   window.addEventListener("DOMContentLoaded", () => {
     updateStageStars(1);
+    drawWave(10);
     updateRadioScreen(70.0);
   });
 
@@ -423,155 +416,168 @@
     document.getElementById("stage-badge").innerText = stars;
   }
 
-  // [미션 1] 슬라이더 및 0.2 단위 세밀 조정 로직
-  let radioFreq = 70.0;
-
-  function onSliderMove(val) {
-    radioFreq = Math.round(parseFloat(val) * 10) / 10;
-    updateRadioScreen(radioFreq);
+  // [미션 1] 사운드 웨이브 주파수 일치 로직
+  function drawWave(val) {
+    const canvas = document.getElementById("waveCanvas");
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.strokeStyle = (Math.abs(val - 50) < 3) ? "#4ade80" : "#38bdf8";
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    
+    let frequency = val * 0.05;
+    let amplitude = 15;
+    for (let x = 0; x < canvas.width; x++) {
+      let y = canvas.height / 2 + Math.sin(x * frequency * 0.1) * amplitude;
+      if (x === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
   }
 
-  function stepRadio(amount) {
-    radioFreq = Math.round((radioFreq + amount) * 10) / 10;
-    if (radioFreq < 70.0) radioFreq = 70.0;
-    if (radioFreq > 110.0) radioFreq = 110.0;
-    
-    const slider = document.getElementById("radio-slider");
-    slider.value = radioFreq;
-    updateRadioScreen(radioFreq);
+  function updateWave(val) {
+    let numVal = parseInt(val);
+    drawWave(numVal);
+    if (Math.abs(numVal - 50) < 3) {
+      playTone(440, 0.05);
+    }
+  }
+
+  function checkWaveStage() {
+    let currentVal = parseInt(document.getElementById("waveSlider").value);
+    if (Math.abs(currentVal - 50) < 3) {
+      playTone(523.25, 0.3);
+      showModal("🔔 미션 1 클리어!", "오디오 음파 주파수가 목표 진폭과 완벽히 동기화되었습니다!");
+    } else {
+      alert("음파의 진폭과 주파수가 어긋나 있습니다! 파형을 중앙에 맞추세요.");
+    }
+  }
+
+  // [미션 2] 오르골 멜로디 연주 로직 (도-미-솔-도 -> 1, 3, 5, 1)
+  let melodyInput = [];
+  const targetMelody = [1, 3, 5, 1];
+  const scaleFreqs = { 1: 261.63, 2: 293.66, 3: 329.63, 4: 349.23, 5: 384.00 };
+
+  function playMelodyKey(noteNum, noteName) {
+    playTone(scaleFreqs[noteNum], 0.25, 'triangle');
+    melodyInput.push(noteNum);
+    document.getElementById("music-status").innerText = "입력된 음계: " + melodyInput.join(" - ");
+
+    if (melodyInput.length === 4) {
+      if (melodyInput.toString() === targetMelody.toString()) {
+        playTone(523.25, 0.4);
+        setTimeout(() => playTone(659.25, 0.4), 200);
+        showModal("🔔 미션 2 클리어!", "오르골 캐럴 멜로디가 아름답게 연주되었습니다!");
+      } else {
+        alert("음계 연주가 틀렸습니다! 다시 시도하세요.");
+        resetMelody();
+      }
+    }
+  }
+
+  function resetMelody() {
+    melodyInput = [];
+    document.getElementById("music-status").innerText = "입력된 음계: -";
+  }
+
+  // [미션 3] 디지털 수사대 증거 보관함 로직
+  let selectedEvidences = [];
+  function toggleEvidence(el, isCorrect) {
+    if (el.classList.contains('selected')) {
+      el.classList.remove('selected');
+      selectedEvidences = selectedEvidences.filter(item => item !== el);
+    } else {
+      if (selectedEvidences.length < 3) {
+        el.classList.add('selected');
+        selectedEvidences.push(el);
+      } else {
+        alert("결정적 증거는 정확히 3개만 선택할 수 있습니다!");
+        return;
+      }
+    }
+    document.getElementById("evidence-status").innerText = `선택된 증거: ${selectedEvidences.length} / 3 개`;
+  }
+
+  function checkEvidenceStage() {
+    let correctCount = 0;
+    let hasWrong = false;
+    selectedEvidences.forEach(el => {
+      // 텍스트로 정답 판별
+      let txt = el.innerText;
+      if (txt.includes('자명종') || txt.includes('눈꽃') || txt.includes('차단기')) {
+        correctCount++;
+      } else {
+        hasWrong = true;
+      }
+    });
+
+    if (selectedEvidences.length === 3 && correctCount === 3 && !hasWrong) {
+      playTone(587.33, 0.3);
+      showModal("🔔 미션 3 클리어!", "사건의 실마리를 풀어낼 결정적 증거 3개가 모두 채택되었습니다!");
+    } else {
+      alert("선택한 증거 중에 사건과 무관한 가짜 증거가 섞여 있습니다!");
+    }
+  }
+
+  // [미션 4] 모스 부호 리듬 터치 로직 (ㆍ - ㆍ)
+  let morseSoundInput = [];
+  const targetMorseSound = ['ㆍ', 'ㅡ', 'ㆍ'];
+
+  function inputMorseSound(symbol) {
+    if (symbol === 'ㆍ') playTone(700, 0.1);
+    else playTone(700, 0.3);
+
+    morseSoundInput.push(symbol);
+    document.getElementById("morse-status").innerText = "입력된 신호: " + morseSoundInput.join(" ");
+
+    if (morseSoundInput.length === 3) {
+      if (morseSoundInput.every((val, idx) => val === targetMorseSound[idx])) {
+        playTone(880, 0.4);
+        showModal("🔔 미션 4 클리어!", "모스 부호 오디오 신호가 정확하게 송신되었습니다!");
+      } else {
+        alert("리듬 신호가 일치하지 않습니다!");
+        resetMorseSound();
+      }
+    }
+  }
+
+  function resetMorseSound() {
+    morseSoundInput = [];
+    document.getElementById("morse-status").innerText = "입력된 신호: (비어있음)";
+  }
+
+  // [미션 5] 라디오 주파수 노이즈 제거 로직 (88.8 MHz)
+  let radioFreqVal = 70.0;
+
+  function onRadioSliderMove(val) {
+    radioFreqVal = Math.round(parseFloat(val) * 10) / 10;
+    updateRadioScreen(radioFreqVal);
+    // 주파수에 따라 잡음 소리 피드백
+    if (Math.abs(radioFreqVal - 88.8) < 0.05) {
+      playTone(659.25, 0.05, 'sine');
+    } else {
+      playTone(150, 0.03, 'sawtooth');
+    }
   }
 
   function updateRadioScreen(freq) {
-    const screen = document.getElementById("radio-screen");
-    // 부동소수점 오차 방지를 위해 0.05 이내 범위 판정
+    const screen = document.getElementById("radio-screen-text");
     if (Math.abs(freq - 88.8) < 0.05) {
-      screen.className = "radio-screen";
-      screen.innerText = "🎵 CONNECTED 88.8 MHz (CAROL CLEAR)";
+      screen.innerText = "🎵 CAROL CLEAR 88.8 MHz";
       screen.style.color = "#4ade80";
     } else {
-      screen.className = "radio-screen static";
       screen.innerText = `⚡ STATIC NOISE ${freq.toFixed(1)} MHz`;
       screen.style.color = "#ef4444";
     }
   }
 
-  function checkRadioStage() {
-    if (Math.abs(radioFreq - 88.8) < 0.05) {
-      showModal("🔔 미션 1 클리어!", "라디오 잡음이 깨끗하게 걷히며 아날로그 자명종의 잠금이 해제되었습니다!");
+  function checkRadioStageFinal() {
+    if (Math.abs(radioFreqVal - 88.8) < 0.05) {
+      playTone(880, 0.5);
+      showModal("🔔 미션 5 클리어!", "라디오 노이즈가 완전히 사라지고 맑은 캐럴이 울려 퍼집니다!");
     } else {
-      alert(`아직 잡음이 심합니다! 정확히 88.8 MHz를 맞추세요. (현재: ${radioFreq.toFixed(1)} MHz)`);
-    }
-  }
-
-  // [미션 2] CCTV 타겟팅 로직 (인덱스 1, 3, 5)
-  let targetedCount = 0;
-  const correctCCTVIndices = [1, 3, 5];
-  let cctvTargetedState = [false, false, false, false, false, false];
-
-  function targetCCTV(idx) {
-    if (cctvTargetedState[idx]) return;
-    if (correctCCTVIndices.includes(idx)) {
-      cctvTargetedState[idx] = true;
-      document.querySelectorAll('.cctv-grid-item')[idx].classList.add('targeted');
-      targetedCount++;
-      document.getElementById("cctv-counter").innerText = `타겟팅 완료: ${targetedCount} / 3 개`;
-      if (targetedCount === 3) {
-        showModal("🔔 미션 2 클리어!", "CCTV 속 수상한 위장 물체 3개가 모두 보안 타겟팅되었습니다!");
-      }
-    } else {
-      alert("정상적인 보안 구역입니다. 위장 물체를 찾으세요!");
-    }
-  }
-  function storeCabinet() { alert("평범한 식물 인테리어입니다."); }
-
-  // [미션 3] 톱니바퀴 조립 및 회전 구동 로직
-  let placedGears = [null, null, null];
-  const targetGears = ['대', '중', '소'];
-
-  function placeGear(sizeName) {
-    const emptyIdx = placedGears.indexOf(null);
-    if (emptyIdx !== -1) {
-      placedGears[emptyIdx] = sizeName;
-      const slot = document.getElementById(`slot-${emptyIdx}`);
-      slot.innerHTML = `<div class="gear-visual spinning ${sizeName==='대'?'large':sizeName==='중'?'medium':'small'}">${sizeName}(⚙️)</div>`;
-      slot.style.border = "2px solid #ca8a04";
-
-      if (!placedGears.includes(null)) {
-        if (placedGears.toString() === targetGears.toString()) {
-          showModal("🔔 미션 3 클리어!", "톱니바퀴들이 크기별로 맞물려 시계 태엽이 강력하게 구동됩니다!");
-        } else {
-          alert("톱니 크기 순서가 잘못되어 헛돌고 있습니다! 다시 조립하세요.");
-          resetGears();
-        }
-      }
-    }
-  }
-  function removeGear(idx) {
-    placedGears[idx] = null;
-    const slot = document.getElementById(`slot-${idx}`);
-    slot.innerHTML = `홈 ${idx+1}(${idx===0?'대':idx===1?'중':'소'})`;
-    slot.style.border = "2px dashed var(--pink-deep)";
-  }
-  function resetGears() {
-    placedGears = [null, null, null];
-    for(let i=0; i<3; i++) {
-      const slot = document.getElementById(`slot-${i}`);
-      slot.innerHTML = `홈 ${i+1}(${i===0?'대':i===1?'중':'소'})`;
-      slot.style.border = "2px dashed var(--pink-deep)";
-    }
-  }
-
-  // [미션 4] 레이저 광학 경로 패스 로직
-  let mirrorStates = [false, false, false];
-  function activateMirror(idx) {
-    mirrorStates[idx] = !mirrorStates[idx];
-    const mirrorEl = document.getElementById(`mirror-${idx}`);
-    if (mirrorStates[idx]) {
-      mirrorEl.classList.add('active-mirror');
-      mirrorEl.innerText = `✨A`;
-    } else {
-      mirrorEl.classList.remove('active-mirror');
-      mirrorEl.innerText = `🪞${String.fromCharCode(65+idx)}`;
-    }
-
-    if (mirrorStates[0]) document.getElementById("beam-1").style.opacity = "1";
-    else document.getElementById("beam-1").style.opacity = "0.2";
-
-    if (mirrorStates[0] && mirrorStates[1]) document.getElementById("beam-2").style.opacity = "1";
-    else document.getElementById("beam-2").style.opacity = "0.2";
-
-    if (mirrorStates[0] && mirrorStates[1] && mirrorStates[2]) {
-      document.getElementById("beam-3").style.opacity = "1";
-      const sensor = document.getElementById("laser-sensor");
-      sensor.innerText = "🎯센서(ACTIVE!)";
-      sensor.style.color = "#86efac";
-      
-      showModal("🔔 미션 4 클리어!", "마법 레이저 빛이 모든 거울을 반사하여 최종 센서를 활성화했습니다!");
-    } else {
-      const sensor = document.getElementById("laser-sensor");
-      sensor.innerText = "🎯센서(OFF)";
-      sensor.style.color = "#4ade80";
-    }
-  }
-
-  // [미션 5] 연금술 가마솥 조합 로직
-  let potIngredients = [];
-  function throwIngredient(name, el) {
-    if (potIngredients.length < 2 && !el.classList.contains('in-pot')) {
-      el.classList.add('in-pot');
-      potIngredients.push(name);
-      document.getElementById("alchemy-pot-slot").innerText = potIngredients.join(" + ");
-    }
-  }
-  function brewPotion() {
-    if (potIngredients.length === 2 && potIngredients.includes("눈") && potIngredients.includes("사람")) {
-      document.getElementById("alchemy-pot-slot").innerText = "⛄";
-      showModal("🔔 미션 5 클리어!", "가마솥에서 화려한 마법 가루와 함께 [눈사람]이 완벽하게 연성되었습니다!");
-    } else {
-      alert("가마솥이 연기를 뿜으며 펑 소리와 함께 비어버렸습니다! 올바른 조합(눈 + 사람)을 선택하세요.");
-      potIngredients = [];
-      document.getElementById("alchemy-pot-slot").innerText = "✨";
-      document.querySelectorAll('.ingredient-chip').forEach(c => c.classList.remove('in-pot'));
+      alert(`아직 잡음이 들립니다! 정확히 88.8 MHz를 맞추세요. (현재: ${radioFreqVal.toFixed(1)} MHz)`);
     }
   }
 
@@ -592,41 +598,28 @@
     currentStage++;
     document.getElementById(`stage-${currentStage}`).style.display = "flex";
     updateStageStars(currentStage);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   function resetGame() {
     currentStage = 1;
-    radioFreq = 70.0;
-    document.getElementById("radio-slider").value = 70.0;
+    resetMelody();
+    selectedEvidences.forEach(el => el.classList.remove('selected'));
+    selectedEvidences = [];
+    document.getElementById("evidence-status").innerText = "선택된 증거: 0 / 3 개";
+    resetMorseSound();
+    radioFreqVal = 70.0;
+    document.getElementById("radioSlider").value = 70.0;
     updateRadioScreen(70.0);
-
-    targetedCount = 0;
-    cctvTargetedState = [false, false, false, false, false, false];
-    document.getElementById("cctv-counter").innerText = "타겟팅 완료: 0 / 3 개";
-    document.querySelectorAll('.cctv-grid-item').forEach(i => i.classList.remove('targeted'));
-
-    resetGears();
-
-    mirrorStates = [false, false, false];
-    for(let i=0; i<3; i++) {
-      const m = document.getElementById(`mirror-${i}`);
-      m.classList.remove('active-mirror');
-      m.innerText = `🪞${String.fromCharCode(65+i)}`;
-    }
-    document.getElementById("beam-1").style.opacity = "0.2";
-    document.getElementById("beam-2").style.opacity = "0.2";
-    document.getElementById("beam-3").style.opacity = "0.2";
-    document.getElementById("laser-sensor").innerText = "🎯센서(OFF)";
-
-    potIngredients = [];
-    document.getElementById("alchemy-pot-slot").innerText = "✨";
-    document.querySelectorAll('.ingredient-chip').forEach(c => c.classList.remove('in-pot'));
+    document.getElementById("waveSlider").value = 10;
+    drawWave(10);
 
     for (let i = 1; i <= 5; i++) {
       document.getElementById(`stage-${i}`).style.display = (i === 1) ? "flex" : "none";
     }
     updateStageStars(1);
     document.getElementById("ending-screen").style.display = "none";
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 </script>
 </body>
