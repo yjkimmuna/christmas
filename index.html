@@ -148,11 +148,7 @@
       align-items: flex-start;
       width: 100%;
       text-align: left;
-      opacity: 0;
-      transform: translateY(6px);
-      transition: opacity 0.3s ease, transform 0.3s ease;
     }
-    .chat-container.show { opacity: 1; transform: translateY(0); }
 
     .chat-avatar {
       width: 38px; height: 38px; border-radius: 4px; background: #fdf2f8;
@@ -193,8 +189,8 @@
     .wire-node.selected { background: var(--soft-pink); border-color: var(--crimson-red); }
 
     .scratch-box { position: relative; width: 100%; height: 120px; background: #cbd5e1; border-radius: 6px; overflow: hidden; display: flex; justify-content: center; align-items: center; }
-    #scratch-canvas { position: absolute; inset: 0; cursor: pointer; }
-    .hidden-message { font-size: 18px; font-weight: bold; color: var(--crimson-red); z-index: 1; }
+    #scratch-canvas { position: absolute; inset: 0; cursor: pointer; z-index: 2; }
+    .hidden-message { font-size: 18px; font-weight: bold; color: var(--crimson-red); position: absolute; z-index: 1; }
 
     .text-input-field {
       width: 100%; padding: 14px; border: 2px solid var(--pink-deep); border-radius: 6px;
@@ -223,7 +219,15 @@
     <div class="interactive-box" style="width: 100%;">
       <div class="quest-title-bar">🎁 축하합니다!</div>
       <div class="quest-inner-content" style="padding: 12px;">
-        <div class="chat-wrapper" id="ending-chat-wrapper"></div>
+        <div class="chat-wrapper">
+          <div class="chat-container">
+            <div class="chat-avatar">🎅</div>
+            <div class="chat-body">
+              <span class="chat-sender">아기 산타</span>
+              <div class="chat-bubble">모든 시공간의 수수께끼를 풀고 숲에 빛이 돌아왔어! 안내 데스크에 가서 선물을 받아주세요 🎁</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <button class="action-btn" onclick="resetGame()">처음으로 돌아가기</button>
@@ -232,8 +236,8 @@
   <!-- 헤더 -->
   <header>
     <div style="display:flex; align-items:center; gap:8px;">
-      <span class="badge" id="stage-badge">★★☆☆☆</span>
-      <span class="pink-tag" id="header-tag">HAECHI CHRISTMAS</span>
+      <span class="badge" id="stage-badge">★☆☆☆☆</span>
+      <span class="pink-tag">HAECHI CHRISTMAS</span>
     </div>
     <button class="reset-btn" onclick="resetGame()">처음으로</button>
   </header>
@@ -243,7 +247,15 @@
     <div id="stage-1" class="interactive-box">
       <div class="quest-title-bar">🔔 미션 1: 대형 트리 - 메인 전선 복구</div>
       <div class="quest-inner-content">
-        <div class="chat-wrapper" id="chat-wrapper-1"></div>
+        <div class="chat-wrapper">
+          <div class="chat-container">
+            <div class="chat-avatar">🎅</div>
+            <div class="chat-body">
+              <span class="chat-sender">아기 산타</span>
+              <div class="chat-bubble">대형 트리의 전기가 차단되었어. 양쪽의 올바른 전선 단자들을 연결해 전력을 복구해 줘!</div>
+            </div>
+          </div>
+        </div>
         <div class="quest-desc">엉킨 전선의 짝을 찾아 올바르게 연결하세요! (왼쪽 단자 선택 후 오른쪽 단자 선택)</div>
         <div class="wire-container">
           <div class="wire-col">
@@ -266,7 +278,15 @@
     <div id="stage-2" class="interactive-box" style="display:none;">
       <div class="quest-title-bar">🔔 미션 2: 내친구서울관 1관 - 눈보라 지우기</div>
       <div class="quest-inner-content">
-        <div class="chat-wrapper" id="chat-wrapper-2"></div>
+        <div class="chat-wrapper">
+          <div class="chat-container">
+            <div class="chat-avatar">🎅</div>
+            <div class="chat-body">
+              <span class="chat-sender">아기 산타</span>
+              <div class="chat-bubble">내친구서울관 1관의 유리창이 얼어붙었어. 화면을 문질러 숨겨진 단어를 찾고 입력해 줘!</div>
+            </div>
+          </div>
+        </div>
         <div class="quest-desc">화면을 마우스나 터치로 문질러(스크래치) 얼어붙은 유리창 너머의 글자를 확인하세요!</div>
         <div class="scratch-box">
           <div class="hidden-message">정답: SNOW</div>
@@ -282,7 +302,15 @@
     <div id="stage-3" class="interactive-box" style="display:none;">
       <div class="quest-title-bar">🔔 미션 3: 숲 통로 - 팩트체크 결계 해제</div>
       <div class="quest-inner-content">
-        <div class="chat-wrapper" id="chat-wrapper-3"></div>
+        <div class="chat-wrapper">
+          <div class="chat-container">
+            <div class="chat-avatar">🎅</div>
+            <div class="chat-body">
+              <span class="chat-sender">아기 산타</span>
+              <div class="chat-bubble">마지막 숲 통로야! 팩트체크 문제를 풀고 결계를 완전히 해제해 줘!</div>
+            </div>
+          </div>
+        </div>
         <div class="quest-desc">제시되는 서울갤러리/크리스마스 상식이 <strong>참(O)</strong>인지 <strong>거짓(X)</strong>인지 판별하세요!</div>
         <div class="swipe-card" id="fact-card">제시문 로딩중...</div>
         <div style="display: flex; gap: 10px; width: 100%;">
@@ -307,15 +335,6 @@
 <script>
   let currentStage = 1;
   let audioCtx = null;
-  let playerCharacter = { name: "아기 산타", avatar: "🎅" };
-
-  const storyScripts = {
-    1: ["대형 트리의 전기가 차단되었어.", "양쪽의 올바른 전선 단자들을 연결해 전력을 복구해 줘!"],
-    2: ["내친구서울관 1관의 유리창이 얼어붙었어.", "화면을 문질러 숨겨진 단어를 찾고 입력해 줘!"],
-    3: ["마지막 숲 통로야!", "팩트체크 문제를 풀고 결계를 완전히 해제해 줘!"]
-  };
-
-  const endingText = ["모든 시공간의 수수께끼를 풀고 숲에 빛이 돌아왔어!", "안내 데스크에 가서 선물을 받아주세요 🎁"];
 
   const factList = [
     { text: "서울갤러리의 개관일은 2월 5일이다.", answer: true },
@@ -325,7 +344,6 @@
   let factIdx = 0;
 
   window.addEventListener("DOMContentLoaded", () => {
-    playStageChat(1);
     updateStageStars(1);
     initScratchCanvas();
     initFactGame();
@@ -335,3 +353,135 @@
     let stars = "";
     for (let i = 1; i <= 3; i++) { stars += (i <= stage) ? "★" : "☆"; }
     document.getElementById("stage-badge").innerText = stars;
+  }
+
+  // [미션 1] 전선 연결 로직
+  let selectedLeft = null;
+  let wireCount = 0;
+  function selectLeftWire(id, el) {
+    document.querySelectorAll('.wire-col .wire-node').forEach(n => n.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedLeft = id;
+  }
+  function selectRightWire(id, el) {
+    if (!selectedLeft) { alert("먼저 왼쪽 단자를 선택하세요!"); return; }
+    if (selectedLeft === id) {
+      el.style.background = "#bbf7d0";
+      el.style.pointerEvents = "none";
+      wireCount++;
+      document.getElementById("wire-status").innerText = `연결된 전선: ${wireCount}/3 완료`;
+      selectedLeft = null;
+      document.querySelectorAll('.wire-col .wire-node').forEach(n => n.classList.remove('selected'));
+      if (wireCount === 3) {
+        showModal("🔔 미션 1 클리어!", "대형 트리에 화려한 불이 들어왔습니다!");
+      }
+    } else {
+      alert("전선 스파크가 튀었습니다! 올바른 짝을 찾아주세요.");
+      selectedLeft = null;
+      document.querySelectorAll('.wire-col .wire-node').forEach(n => n.classList.remove('selected'));
+    }
+  }
+
+  // [미션 2] 스크래치 캔버스 로직
+  function initScratchCanvas() {
+    const canvas = document.getElementById("scratch-canvas");
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    ctx.fillStyle = "#cbd5e1";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    let isDrawing = false;
+    
+    // 마우스 및 터치 이벤트 모두 지원
+    function scratch(e) {
+      if (!isDrawing) return;
+      const rect = canvas.getBoundingClientRect();
+      const x = (e.clientX || e.touches[0].clientX) - rect.left;
+      const y = (e.clientY || e.touches[0].clientY) - rect.top;
+      ctx.globalCompositeOperation = "destination-out";
+      ctx.beginPath();
+      ctx.arc(x, y, 18, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    canvas.addEventListener("pointerdown", () => isDrawing = true);
+    canvas.addEventListener("pointerup", () => isDrawing = false);
+    canvas.addEventListener("pointermove", scratch);
+  }
+
+  function checkStage2() {
+    const val = document.getElementById("scratch-input").value.trim().toUpperCase();
+    if (val === "SNOW") {
+      showModal("🔔 미션 2 클리어!", "얼어붙은 유리창이 녹아내렸습니다!");
+    } else {
+      alert("단어가 일치하지 않습니다. 힌트(SNOW)를 확인하세요.");
+    }
+  }
+
+  // [미션 3] 진실/거짓 스와이프 로직
+  function initFactGame() {
+    factIdx = 0;
+    const card = document.getElementById("fact-card");
+    if(card && factList.length > 0) {
+      card.innerText = factList[0].text;
+    }
+  }
+
+  function answerFact(userChoice) {
+    if (userChoice === factList[factIdx].answer) {
+      factIdx++;
+      if (factIdx < factList.length) {
+        document.getElementById("fact-card").innerText = factList[factIdx].text;
+      } else {
+        showModal("🔔 미션 3 클리어!", "모든 팩트체크 결계가 해제되었습니다!");
+      }
+    } else {
+      alert("틀렸습니다! 다시 생각해보세요.");
+      factIdx = 0;
+      document.getElementById("fact-card").innerText = factList[factIdx].text;
+    }
+  }
+
+  function showModal(title, desc) {
+    document.getElementById("modal-title").innerText = title;
+    document.getElementById("modal-desc").innerHTML = desc;
+    document.getElementById("modal").style.display = "flex";
+  }
+
+  function nextStage() {
+    document.getElementById("modal").style.display = "none";
+    if (currentStage === 3) {
+      document.getElementById("stage-3").style.display = "none";
+      document.getElementById("ending-screen").style.display = "flex";
+      return;
+    }
+    document.getElementById(`stage-${currentStage}`).style.display = "none";
+    currentStage++;
+    document.getElementById(`stage-${currentStage}`).style.display = "flex";
+    updateStageStars(currentStage);
+  }
+
+  function resetGame() {
+    currentStage = 1;
+    wireCount = 0;
+    document.getElementById("wire-status").innerText = "연결된 전선: 0/3 완료";
+    document.getElementById("scratch-input").value = "";
+    
+    // 전선 초기화
+    document.querySelectorAll('.wire-col .wire-node').forEach(n => {
+      n.style.background = "#fff";
+      n.style.pointerEvents = "auto";
+      n.classList.remove('selected');
+    });
+
+    initScratchCanvas();
+    initFactGame();
+    
+    for (let i = 1; i <= 3; i++) {
+      document.getElementById(`stage-${i}`).style.display = (i === 1) ? "flex" : "none";
+    }
+    updateStageStars(1);
+    document.getElementById("ending-screen").style.display = "none";
+  }
+</script>
+</body>
+</html>
