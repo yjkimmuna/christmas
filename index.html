@@ -178,9 +178,10 @@
     }
     summary { cursor: pointer; font-weight: bold; color: var(--pine-green); }
 
-    /* 스타일: 1. 라디오 주파수 슬라이더 */
-    .slider-container { width: 100%; display: flex; flex-direction: column; gap: 8px; }
-    .freq-display { font-size: 20px; font-weight: bold; color: var(--pink-deep); }
+    /* 스타일: 1. 주파수 다이얼 버튼 조절형 */
+    .freq-box { display: flex; align-items: center; justify-content: center; gap: 14px; width: 100%; }
+    .freq-btn { width: 50px; height: 50px; background: #fff; border: 2px solid var(--pink-deep); border-radius: 8px; font-size: 22px; font-weight: bold; cursor: pointer; box-shadow: 0 3px 0px var(--pink-primary); }
+    .freq-display { font-size: 24px; font-weight: bold; color: var(--pink-deep); min-width: 130px; text-align: center; }
 
     /* 스타일: 2. CCTV 틀린 물건 찾기 */
     .cctv-screen { width: 100%; height: 160px; background: #1e293b; border-radius: 6px; position: relative; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(2, 1fr); padding: 10px; }
@@ -247,7 +248,7 @@
   </header>
 
   <div class="content">
-    <!-- [STAGE 1] 라디오 주파수 맞추기 -->
+    <!-- [STAGE 1] 주파수 다이얼 맞추기 (정밀 버튼형) -->
     <div id="stage-1" class="interactive-box">
       <div class="quest-title-bar">🔔 미션 1: 비밀 라디오 주파수 맞추기</div>
       <div class="quest-inner-content">
@@ -256,16 +257,17 @@
             <div class="chat-avatar">🎅</div>
             <div class="chat-body">
               <span class="chat-sender">아기 산타</span>
-              <div class="chat-bubble">안내데스크 라디오에서 구조 신호가 나와! 슬라이더를 움직여 정확한 주파수 <strong>88.8MHz</strong>를 맞춰 줘!</div>
+              <div class="chat-bubble">안내데스크 라디오에서 구조 신호가 나와! [-] [+] 버튼을 눌러 정확한 주파수 <strong>88.8 MHz</strong>를 맞춰 줘!</div>
             </div>
           </div>
         </div>
-        <div class="slider-container">
-          <div class="freq-display" id="freq-text">75.0 MHz</div>
-          <input type="range" id="freq-slider" min="70" max="100" step="0.5" value="70" oninput="updateFreq(this.value)">
+        <div class="freq-box">
+          <button class="freq-btn" onclick="adjustFreq(-0.1)">-</button>
+          <div class="freq-display" id="freq-text">80.0 MHz</div>
+          <button class="freq-btn" onclick="adjustFreq(0.1)">+</button>
         </div>
         <button class="action-btn" onclick="checkStage1()">주파수 고정하기</button>
-        <details><summary>💡 힌트 보기</summary>슬라이더를 우측으로 옮겨 88.8에 정확히 맞추고 버튼을 누르세요.</details>
+        <details><summary>💡 힌트 보기</summary>버튼을 탭하여 정확히 88.8 MHz를 맞춘 뒤 고정 버튼을 누르세요.</details>
       </div>
     </div>
 
@@ -284,7 +286,6 @@
         </div>
         <div class="quest-desc" id="cctv-status">찾은 물건: 0 / 3 개</div>
         <div class="cctv-screen" id="cctv-board">
-          <!-- 6개 칸 중 3개가 정답 -->
           <div class="cctv-item" onclick="clickCCTV(0)">🖼️</div>
           <div class="cctv-item" onclick="clickCCTV(1)">🕶️</div> <!-- 정답1 -->
           <div class="cctv-item" onclick="clickCCTV(2)">🪴</div>
@@ -386,6 +387,7 @@
 
   window.addEventListener("DOMContentLoaded", () => {
     updateStageStars(1);
+    updateFreqDisplay();
   });
 
   function updateStageStars(stage) {
@@ -394,16 +396,22 @@
     document.getElementById("stage-badge").innerText = stars;
   }
 
-  // [미션 1] 라디오 주파수 로직 (정확히 88.8)
-  function updateFreq(val) {
-    document.getElementById("freq-text").innerText = parseFloat(val).toFixed(1) + " MHz";
+  // [미션 1] 주파수 정밀 다이얼 버튼 조절 로직 (오차 방지)
+  let currentFreq = 80.0;
+  function adjustFreq(amount) {
+    currentFreq = Math.round((currentFreq + amount) * 10) / 10;
+    if (currentFreq < 70.0) currentFreq = 70.0;
+    if (currentFreq > 100.0) currentFreq = 100.0;
+    updateFreqDisplay();
+  }
+  function updateFreqDisplay() {
+    document.getElementById("freq-text").innerText = currentFreq.toFixed(1) + " MHz";
   }
   function checkStage1() {
-    const currentVal = parseFloat(document.getElementById("freq-slider").value);
-    if (Math.abs(currentVal - 88.8) < 0.2) {
+    if (Math.abs(currentFreq - 88.8) < 0.01) {
       showModal("🔔 미션 1 클리어!", "주파수가 정확히 일치하여 구조 신호가 연결되었습니다!");
     } else {
-      alert("잡음만 들립니다! 주파수 88.8 MHz를 정확히 맞춰주세요.");
+      alert("잡음만 들립니다! 정확히 88.8 MHz를 맞춰주세요. (현재: " + currentFreq.toFixed(1) + " MHz)");
     }
   }
 
@@ -413,7 +421,7 @@
   let clickedCCTVStatus = [false, false, false, false, false, false];
 
   function clickCCTV(idx) {
-    if (clickedCCTVStatus[idx]) return; // 이미 누름
+    if (clickedCCTVStatus[idx]) return;
     
     if (correctCCTV.includes(idx)) {
       clickedCCTVStatus[idx] = true;
@@ -429,7 +437,7 @@
     }
   }
 
-  // [미션 3] 톱니바퀴 맞물리기 로직 (정답: 톱니(대) -> 톱니(중) -> 톱니(소))
+  // [미션 3] 톱니바퀴 맞물리기 로직
   let currentGears = [null, null, null];
   const correctGears = ['톱니(대)', '톱니(중)', '톱니(소)'];
 
@@ -458,11 +466,10 @@
     for(let i=0; i<3; i++) document.getElementById(`gear-slot-${i}`).innerText = `홈 ${i+1}`;
   }
 
-  // [미션 4] 레이저 빛 반사 패스 로직 (3개 모두 활성화 필요)
+  // [미션 4] 레이저 빛 반사 패스 로직
   let laserStates = [false, false, false];
   function toggleLaser(idx) {
     laserStates[idx] = !laserStates[idx];
-    const cell = document.getElementById(`laser-0` + (idx===0?'':idx===1?':not()':`-${idx}` ) ); // 안전한 DOM 선택
     const targetCell = document.getElementById(`laser-${idx}`);
     
     if (laserStates[idx]) {
@@ -478,7 +485,7 @@
     }
   }
 
-  // [미션 5] 단어 조합 연금술 로직 (눈 + 사람 = 눈사람)
+  // [미션 5] 단어 조합 연금술 로직
   let selectedWords = [];
   function selectWord(word, el) {
     if (el.classList.contains('selected')) {
@@ -501,7 +508,6 @@
       showModal("🔔 미션 5 클리어!", "마법의 [눈사람]이 완성되어 최종 문이 열렸습니다!");
     } else {
       alert("조합이 올바르지 않습니다! 크리스마스에 필요한 조합을 생각해보세요.");
-      // 리셋
       selectedWords = [];
       document.querySelectorAll('.word-chip').forEach(c => c.classList.remove('selected'));
       document.getElementById("alchemy-status").innerText = "선택된 단어: (없음)";
@@ -529,9 +535,8 @@
 
   function resetGame() {
     currentStage = 1;
-    // 상태 초기화
-    document.getElementById("freq-slider").value = 70;
-    updateFreq(70);
+    currentFreq = 80.0;
+    updateFreqDisplay();
     
     foundCCTVCount = 0;
     clickedCCTVStatus = [false, false, false, false, false, false];
