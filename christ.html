@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>해치 크리스마스: 멈춰버린 겨울 자명종</title>
+  <link href="https://fonts.googleapis.com/css2?family=DungGeunMo&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pink-bg: #fff1f5;
+      --card-white: #ffffff;
+      --soft-pink: #fce7f3;
+      --pink-primary: #f472b6;
+      --pink-deep: #db2777;
+      --crimson-red: #dc2626;
+      --pine-green: #15803d;
+      --pine-dark: #14532d;
+      --text-dark: #1f2937;
+      --text-muted: #6b7280;
+      --border-pink: #fbcfe8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+      font-family: 'DungGeunMo', monospace, sans-serif !important;
+      letter-spacing: 0.5px;
+    }
+
+    body {
+      background-color: #fce7f3;
+      color: var(--text-dark);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    #app {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      max-width: 440px;
+      background: var(--pink-bg);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border: 4px solid var(--pink-deep);
+      box-shadow: 4px 4px 0px #831843, 8px 8px 0px rgba(219, 39, 119, 0.3);
+    }
+
+    /* --- 인트로 화면 --- */
+    #intro-screen {
+      position: absolute;
+      inset: 0;
+      background-image: url('여기에_인코딩한_Base64_또는_이미지경로_입력');
+      background-size: cover;
+      background-position: center;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 50px 20px 40px;
+      text-align: center;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      overflow: hidden;
+    }
+
+    #intro-screen.hidden {
+      opacity: 0;
+      transform: scale(1.05);
+      pointer-events: none;
+    }
+
+    .intro-header-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .intro-badge {
+      background: var(--pine-green);
+      color: #fff;
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 4px;
+      border: 1.5px solid var(--pine-dark);
+    }
+
+    .intro-title {
+      font-size: 26px;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1.3;
+      text-shadow: 3px 3px 0px var(--pink-deep), 6px 6px 0px #831843;
+    }
+
+    .intro-start-btn {
+      width: 75%;
+      max-width: 260px;
+      padding: 16px;
+      background: var(--crimson-red);
+      color: #ffffff;
+      border: 3px solid #7f1d1d;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 5px 0px #7f1d1d;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      animation: floatBtn 1.5s ease-in-out infinite;
+    }
+
+    @keyframes floatBtn {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    /* --- 난이도 및 캐릭터 선택 화면 --- */
+    #difficulty-screen {
+      position: absolute;
+      inset: 0;
+      background: var(--pink-bg);
+      z-index: 90;
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 20px;
+      text-align: center;
+      overflow-y: auto;
+    }
+
+    .diff-card {
+      width: 100%;
+      background: #ffffff;
+      border: 3px solid var(--pink-deep);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: 5px 5px 0px rgba(219, 39, 119, 0.2);
+    }
+
+    .diff-btn {
+      width: 100%;
+      padding: 12px;
+      background: #fff5f8;
+      border: 2px solid var(--pink-primary);
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: bold;
+      color: var(--text-dark);
+      cursor: pointer;
+      text-align: left;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 2px 2px 0px var(--border-pink);
+    }
+
+    /* --- 헤더 및 본문 --- */
+    header {
+      padding: 12px 18px;
+      background: #ffffff;
+      border-bottom: 3px solid var(--pink-deep);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+      z-index: 10;
+    }
+    .badge {
+      background: var(--pine-green);
+      color: #fff;
+      font-size: 14px;
+      padding: 4px 10px;
+      border-radius: 4px;
+      border: 2px solid var(--pine-dark);
+      letter-spacing: 2px;
+    }
+    .pink-tag {
+      background: var(--soft-pink);
+      color: var(--pink-deep);
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      border: 2px solid var(--pink-primary);
+    }
+    .reset-btn {
+      background: #f3f4f6;
+      border: 2px solid #9ca3af;
+      color: var(--text-muted);
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .content {
+      flex: 1;
+      padding: 16px 18px 24px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .interactive-box {
+      background: #ffffff;
+      border: 3px solid var(--pink-deep);
+      border-radius: 8px;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-shadow: 5px 5px 0px rgba(219, 39, 119, 0.2);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .quest-title-bar {
+      width: 100%;
+      background: var(--pine-green);
+      color: #ffffff;
+      padding: 12px 16px;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+      border-bottom: 3px dashed #86efac;
+    }
+
+    .quest-inner-content {
+      width: 100%;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .chat-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .chat-container {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      width: 100%;
+      text-align: left;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .chat-container.show { opacity: 1; transform: translateY(0); }
+
+    .chat-avatar {
+      width: 38px; height: 38px; border-radius: 4px; background: #fdf2f8;
+      border: 2px solid var(--pink-deep); display: flex; justify-content: center;
+      align-items: center; font-size: 20px; flex-shrink: 0;
+    }
+    .chat-avatar-placeholder { width: 38px; flex-shrink: 0; }
+    .chat-body { display: flex; flex-direction: column; gap: 3px; flex: 1; }
+    .chat-sender { font-size: 12px; font-weight: bold; color: var(--pink-deep); }
+    .chat-bubble {
+      background: #fdf2f8; border: 2px solid var(--pink-primary); border-radius: 6px;
+      padding: 10px 12px; font-size: 14px; line-height: 1.5; color: #374151; word-break: break-all;
+    }
+
+    .quest-desc {
+      font-size: 14px; color: var(--text-dark); line-height: 1.5; width: 100%;
+      background: #fff1f5; padding: 10px 12px; border-radius: 6px; border: 1.5px dashed var(--pink-primary);
+    }
+
+    .action-btn {
+      width: 100%; padding: 14px; background: var(--crimson-red); color: #ffffff;
+      border: 3px solid #7f1d1d; border-radius: 6px; font-size: 17px; font-weight: bold; cursor: pointer;
+      box-shadow: 0 4px 0px #7f1d1d;
+    }
+
+    details {
+      width: 100%; background: #f0fdf4; border: 2px solid var(--pine-green);
+      padding: 10px 12px; border-radius: 6px; font-size: 13px; color: var(--pine-dark); text-align: left;
+    }
+    summary { cursor: pointer; font-weight: bold; color: var(--pine-green); }
+
+    /* --- [형식 A] 오르골 건반 스타일 --- */
+    .music-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; width: 100%; }
+    .music-key {
+      background: #fff; border: 2px solid var(--pink-deep); border-radius: 6px;
+      padding: 18px 0; font-size: 16px; font-weight: bold; cursor: pointer; color: var(--pink-deep);
+      box-shadow: 0 3px 0px var(--pink-primary);
+    }
+    .music-key:active { transform: translateY(3px); box-shadow: none; background: var(--soft-pink); }
+
+    /* --- [형식 B] 전선 연결 노드 스타일 --- */
+    .wire-container { display: flex; justify-content: space-between; width: 100%; gap: 10px; }
+    .wire-col { display: flex; flex-direction: column; gap: 8px; flex: 1; }
+    .wire-node {
+      background: #fff; border: 2px solid var(--pine-dark); border-radius: 6px;
+      padding: 12px 6px; font-size: 13px; font-weight: bold; cursor: pointer; text-align: center;
+    }
+    .wire-node.selected { background: var(--soft-pink); border-color: var(--crimson-red); }
+
+    /* --- [형식 C] 스크래치 캔버스 --- */
+    .scratch-box { position: relative; width: 100%; height: 120px; background: #cbd5e1; border-radius: 6px; overflow: hidden; display: flex; justify-content: center; align-items: center; }
+    #scratch-canvas { position: absolute; inset: 0; cursor: pointer; }
+    .hidden-message { font-size: 18px; font-weight: bold; color: var(--crimson-red); z-index: 1; }
+
+    /* --- [형식 D] 슬라이딩 퍼즐 --- */
+    .slide-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; width: 200px; height: 200px; background: var(--pine-dark); padding: 6px; border-radius: 8px; margin: 0 auto; }
+    .slide-tile { background: #fff; border-radius: 4px; display: flex; justify-content: center; align-items: center; font-size: 22px; font-weight: bold; color: var(--text-dark); cursor: pointer; }
+    .slide-tile.empty { background: transparent; cursor: default; }
+
+    /* --- [형식 E] 진실/거짓 스와이프 카드 --- */
+    .swipe-card { width: 100%; background: #fff5f8; border: 2px solid var(--pink-primary); border-radius: 8px; padding: 20px; font-size: 15px; font-weight: bold; min-height: 90px; display: flex; align-items: center; justify-content: center; text-align: center; }
+
+    /* 모달 및 엔딩 */
+    .modal { display: none; position: absolute; inset: 0; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(4px); z-index: 150; justify-content: center; align-items: center; padding: 22px; }
+    .modal-card { background: #ffffff; border: 3px solid var(--pink-deep); border-radius: 12px; padding: 22px 18px; text-align: center; width: 100%; box-shadow: 6px 6px 0px rgba(219, 39, 119, 0.4); }
+    #ending-screen { position: absolute; inset: 0; background: var(--pink-bg); z-index: 110; display: none; flex-direction: column; justify-content: space-between; align-items: center; padding: 24px 20px; text-align: center; }
+  </style>
+</head>
+<body>
+
+<div id="app">
+  <!-- 1. 인트로 화면 -->
+  <div id="intro-screen">
+    <div class="intro-header-box">
+      <span class="intro-badge">SEOUL GALLERY WINTER EVENT</span>
+      <h1 class="intro-title">해치 크리스마스:<br>멈춰버린 겨울 자명종</h1>
+    </div>
+    <button class="intro-start-btn" onclick="goToDifficulty()">
+      <span>모험 시작하기 ✨</span>
+    </button>
+  </div>
+
+  <!-- 2. 난이도 및 캐릭터 선택 화면 -->
+  <div id="difficulty-screen">
+    <div class="intro-header-box">
+      <span class="intro-badge">LEVEL & CHARACTER SELECT</span>
+      <h1 style="font-size: 18px; color: var(--pink-deep);">함께할 수호대를 골라주세요!</h1>
+    </div>
+    <div class="chat-wrapper" id="diff-chat-wrapper" style="margin: 10px 0;"></div>
+    <div class="diff-card">
+      <div style="font-size: 15px; font-weight: bold; color: var(--pink-deep);">🎯 캐릭터 선택</div>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <button class="diff-btn" onclick="selectDifficulty('해치', '🦁', 1)"><span>해치 (쉬움)</span><span style="color:var(--pine-green);">★</span></button>
+        <button class="diff-btn" onclick="selectDifficulty('주작, 백호', '🔥', 2)"><span>주작, 백호 (보통)</span><span style="color:#d97706;">★★</span></button>
+        <button class="diff-btn" onclick="selectDifficulty('청룡, 현무', '🐉', 3)"><span>청룡, 현무 (어려움)</span><span style="color:var(--crimson-red);">★★★</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. 엔딩 화면 -->
+  <div id="ending-screen">
+    <div class="intro-header-box">
+      <span class="intro-badge">MISSION COMPLETE</span>
+      <h1 style="font-size: 20px; color: var(--pink-deep);">시간 루프 탈출 성공!</h1>
+    </div>
+    <div style="width: 100%; height: 160px; background: rgba(255,255,255,0.6); border: 3px solid var(--pink-deep); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--pink-deep); font-size: 14px;">
+      [ 🎉 축하 엔딩 이미지 공간 ]
+    </div>
+    <div class="interactive-box" style="width: 100%;">
+      <div class="quest-title-bar">🎁 축하합니다!</div>
+      <div class="quest-inner-content" style="padding: 12px;">
+        <div class="chat-wrapper" id="ending-chat-wrapper"></div>
+      </div>
+    </div>
+    <button class="action-btn" onclick="resetGame()">처음으로 돌아가기</button>
+  </div>
+
+  <!-- 헤더 -->
+  <header>
+    <div style="display:flex; align-items:center; gap:8px;">
+      <span class="badge" id="stage-badge">★☆☆☆☆</span>
+      <span class="pink-tag" id="header-tag">HAECHI CHRISTMAS</span>
+    </div>
+    <button class="reset-btn" onclick="resetGame()">처음으로</button>
+  </header>
+
+  <div class="content">
+    <!-- [STAGE 1] 안내데스크 - 형식 A: 오르골 멜로디 연주 -->
+    <div id="stage-1" class="interactive-box">
+      <div class="quest-title-bar">🔔 미션 1: 안내데스크 - 오르골 멜로디</div>
+      <div class="quest-inner-content">
+        <div class="chat-wrapper" id="chat-wrapper-1"></div>
+        <div class="quest-desc">안내데스크 자명종을 울리려면 겨울 숲의 음계 번호 <strong>[2-4-1-3]</strong> 순서대로 건반을 누르세요!</div>
+        <div class="music-grid">
+          <button class="music-key" onclick="pressMusicKey(1)">도(1)</button>
+          <button class="music-key" onclick="pressMusicKey(2)">레(2)</button>
+          <button class="music-key" onclick="pressMusicKey(3)">미(3)</button>
+          <button class="music-key" onclick="pressMusicKey(4)">파(4)</button>
+        </div>
+        <div id="music-status" style="font-weight: bold; color: var(--pink-deep);">입력된 순서: -</div>
+        <details><summary>💡 힌트 보기</summary>레 -> 파 -> 도 -> 미 순서입니다.</details>
+      </div>
+    </div>
+
+    <!-- [STAGE 2] 대형 트리 - 형식 B: 전선 와이어 연결 퍼즐 -->
+    <div id="stage-2" class="interactive-box" style="display:none;">
+      <div class="quest-title-bar">🔔 미션 2: 대형 트리 - 메인 전선 복구</div>
+      <div class="quest-inner-content">
+        <div class="chat-wrapper" id="chat-wrapper-2"></div>
+        <div class="quest-desc">엉킨 전선의 짝을 찾아 올바르게 연결하세요! (왼쪽 단자 선택 후 오른쪽 단자 선택)</div>
+        <div class="wire-container">
+          <div class="wire-col">
+            <div class="wire-node" onclick="selectLeftWire(1, this)">🔴 적색 단자</div>
+            <div class="wire-node" onclick="selectLeftWire(2, this)">🟢 녹색 단자</div>
+            <div class="wire-node" onclick="selectLeftWire(3, this)">🔵 청색 단자</div>
+          </div>
+          <div class="wire-col">
+            <div class="wire-node" onclick="selectRightWire(3, this)">블루 포트</div>
+            <div class="wire-node" onclick="selectRightWire(1, this)">레드 포트</div>
+            <div class="wire-node" onclick="selectRightWire(2, this)">그린 포트</div>
+          </div>
+        </div>
+        <div id="wire-status" style="font-weight: bold; color: var(--pine-green);">연결된 전선: 0/3 완료</div>
+        <details><summary>💡 힌트 보기</summary>같은 색상끼리 연결하면 불이 들어옵니다.</details>
+      </div>
+    </div>
+
+    <!-- [STAGE 3] 내친구서울관 1관 - 형식 C: 스크래치 캔버스 (문지르기) -->
+    <div id="stage-3" class="interactive-box" style="display:none;">
+      <div class="quest-title-bar">(`🔔 미션 3: 내친구서울관 1관 - 눈보라 지우기)</div>
+      <div class="quest-inner-content">
+        <div class="chat-wrapper" id="chat-wrapper-3"></div>
+        <div class="quest-desc">화면을 손가락이나 마우스로 문질러(스크래치) 얼어붙은 유리창 너머의 글자를 확인하세요!</div>
+        <div class="scratch-box">
+          <div class="hidden-message">정답: SNOW</div>
+          <canvas id="scratch-canvas" width="300" height="120"></canvas>
+        </div>
+        <input type="text" id="scratch-input" class="text-input-field" placeholder="나타난 비밀 단어 입력">
+        <button class="action-btn" onclick="checkStage3()">확인</button>
+        <details><summary>💡 힌트 보기</summary>눈을 뜻하는 영어 단어 4글자입니다. (SNOW)</details>
+      </div>
+    </div>
+
+    <!-- [STAGE 4] 내친구서울관 2관 - 형식 D: 슬라이딩 퍼즐 -->
+    <div id="stage-4" class="interactive-box" style="display:none;">
+      <div class="quest-title-bar">🔔 미션 4: 내친구서울관 2관 - 시간 복원 퍼즐</div>
+      <div class="quest-inner-content">
+        <div class="chat-wrapper" id="chat-wrapper-4"></div>
+        <div class="quest-desc">조각을 눌러 이동시키며 숫자를 <strong>[1, 2, 3, 4, 5, 6, 7, 8]</strong> 순서대로 맞추세요!</div>
+        <div class="slide-grid" id="slide-board"></div>
+        <button class="action-btn" style="background:#9ca3af;" onclick="resetSlidePuzzle()">퍼즐 섞기</button>
+        <details><summary>💡 힌트 보기</summary>빈칸을 활용해 순차적으로 숫자를 정렬하세요.</details>
+      </div>
+    </div>
+
+    <!-- [STAGE 5] 크리스마스 숲 통로 - 형식 E: 진실/거짓 스와이프 -->
+    <div id="stage-5" class="interactive-box" style="display:none;">
+      <div class="quest-title-bar">🔔 미션 5: 숲 통로 - 팩트체크 결계 해제</div>
+      <div class="quest-inner-content">
+        <div class="chat-wrapper" id="chat-wrapper-5"></div>
+        <div class="quest-desc">제시되는 서울갤러리/크리스마스 상식이 <strong>참(O)</strong>인지 <strong>거짓(X)</strong>인지 판별하세요!</div>
+        <div class="swipe-card" id="fact-card">제시문 로딩중...</div>
+        <div style="display: flex; gap: 10px; width: 100%;">
+          <button class="action-btn" style="background:var(--pine-green); border-color:var(--pine-dark);" onclick="answerFact(true)">⭕ 참 (O)</button>
+          <button class="action-btn" onclick="answerFact(false)">❌ 거짓 (X)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 결과 알림 모달 -->
+  <div id="modal" class="modal">
+    <div class="modal-card">
+      <div style="font-size: 42px; margin-bottom: 6px;">✨</div>
+      <h3 id="modal-title" style="color:var(--pink-deep); margin-bottom: 6px;">미션 클리어!</h3>
+      <p id="modal-desc" style="font-size:13.5px; color:#4b5563; line-height: 1.5; margin-bottom: 16px;">설명</p>
+      <button class="action-btn" id="modal-btn" onclick="nextStage()">다음 단계로</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let currentStage = 1;
+  let audioCtx = null;
+  let playerCharacter = { name: "아기 산타", avatar: "🎅" };
+
+  const diffIntroText = [
+    "멈춰버린 크리스마스 자명종 루프에 오신 것을 환영합니다!",
+    "갤러리의 시간이 12시에 갇혔어요. 새로운 5가지 퍼즐을 풀고 시간을 되돌려주세요!"
+  ];
+
+  const storyScripts = {
+    1: ["안내데스크의 자명종이 멈췄어.", "오르골 건반을 [2-4-1-3] 순서대로 눌러 첫 번째 시계를 깨워줘!"],
+    2: ["대형 트리의 전기가 차단되었어.", "양쪽의 올바른 전선 단자들을 연결해 전력을 복구해 줘!"],
+    3: ["내친구서울관 1관의 유리창이 얼어붙었어.", "화면을 문질러 숨겨진 단어를 찾고 입력해 줘!"],
+    4: ["2관의 미디어 기판이 엉켰어.", "슬라이딩 퍼즐을 순서대로 맞춰 시스템을 정상화해 줘!"],
+    5: ["마지막 숲 통로야!", "마지막 팩트체크 문제를 풀고 결계를 완전히 해제해 줘!"]
+  };
+
+  const endingText = ["모든 시공간의 수수께끼를 풀고 숲에 빛이 돌아왔어!", "안내 데스크에 가서 선물을 받아주세요 🎁"];
+
+  window.addEventListener("DOMContentLoaded", () => {
+    initSlidePuzzle();
+    initScratchCanvas();
+    initFactGame();
+  });
+
+  function goToDifficulty() {
+    initAudio();
+    playTone(523, 0.2);
+    document.getElementById("intro-screen").classList.add("hidden");
+    document.getElementById("difficulty-screen").style.display = "flex";
+    playDiffChat();
+  }
+
+  function playDiffChat() {
+    const wrapper = document.getElementById("diff-chat-wrapper");
+    if (!wrapper) return;
+    wrapper.innerHTML = "";
+    let idx = 0;
+    function showNext() {
+      if (idx >= diffIntroText.length) return;
+      const text = diffIntroText[idx];
+      const isFirst = (idx === 0);
+      idx++;
+      const container = document.createElement("div");
+      container.className = "chat-container";
+      container.innerHTML = `<div class="chat-avatar">🎅</div><div class="chat-body"><span class="chat-sender">안내자</span><div class="chat-bubble"><span></span><span class="cursor"></span></div></div>`;
+      wrapper.appendChild(container);
+      setTimeout(() => container.classList.add("show"), 50);
+      let textSpan = container.querySelector(".chat-bubble span");
+      let charIdx = 0;
+      let interval = setInterval(() => {
+        if (charIdx < text.length) { textSpan.innerText += text.charAt(charIdx); charIdx++; }
+        else { clearInterval(interval); setTimeout(showNext, 350); }
+      }, 30);
+    }
+    showNext();
+  }
+
+  function selectDifficulty(charName, avatarIcon) {
+    playerCharacter = { name: charName, avatar: avatarIcon };
+    document.getElementById("difficulty-screen").style.display = "none";
+    playStageChat(1);
+    updateStageStars(1);
+  }
+
+  function updateStageStars(stage) {
+    let stars = "";
+    for (let i = 1; i <= 5; i++) { stars += (i <= stage) ? "★" : "☆"; }
+    document.getElementById("stage-badge").innerText = stars;
+  }
+
+  function playStageChat(stageNum) {
+    const wrapper = document.getElementById(`chat-wrapper-${stageNum}`);
+    if (!wrapper) return;
+    wrapper.innerHTML = "";
+    const sentences = storyScripts[stageNum];
+    let sentenceIdx = 0;
+    function showNext() {
+      if (sentenceIdx >= sentences.length) return;
+      const sentence = sentences[sentenceIdx++];
+      const container = document.createElement("div");
+      container.className = "chat-container";
+      container.innerHTML = `<div class="chat-avatar">${playerCharacter.avatar}</div><div class="chat-body"><span class="chat-sender">${playerCharacter.name}</span><div class="chat-bubble"><span>${sentence}</span></div></div>`;
+      wrapper.appendChild(container);
+      setTimeout(() => container.classList.add("show"), 50);
+      setTimeout(showNext, 400);
+    }
+    showNext();
+  }
+
+  // [형식 A] 오르골 로직
+  let musicInput = [];
+  function pressMusicKey(num) {
+    musicInput.push(num);
+    document.getElementById("music-status").innerText = "입력된 순서: " + musicInput.join("-");
+    playTone(300 + num * 100, 0.1);
+    if (musicInput.length === 4) {
+      if (musicInput.join("") === "2413") {
+        showModal("🔔 미션 1 클리어!", "오르골 자명종의 첫 번째 바늘이 움직이기 시작합니다!");
+      } else {
+        alert("멜로디가 틀렸습니다. 다시 시도하세요!");
+        musicInput = [];
+        document.getElementById("music-status").innerText = "입력된 순서: -";
+      }
+    }
+  }
+
+  // [형식 B] 전선 연결 로직
+  let selectedLeft = null;
+  let wireCount = 0;
+  function selectLeftWire(id, el) {
+    document.querySelectorAll('.wire-col .wire-node').forEach(n => n.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedLeft = id;
+  }
+  function selectRightWire(id, el) {
+    if (!selectedLeft) { alert("먼저 왼쪽 단자를 선택하세요!"); return; }
+    if (selectedLeft === id) {
+      el.style.background = "#bbf7d0";
+      el.style.pointerEvents = "none";
+      wireCount++;
+      document.getElementById("wire-status").innerText = `연결된 전선: ${wireCount}/3 완료`;
+      selectedLeft = null;
+      document.querySelectorAll('.wire-col .wire-node').forEach(n => n.classList.remove('selected'));
+      if (wireCount === 3) {
+        showModal("🔔 미션 2 클리어!", "대형 트리에 화려한 불이 들어왔습니다!");
+      }
+    } else {
+      alert("전선 스파크가 튀었습니다! 올바른 짝을 찾아주세요.");
+      selectedLeft = null;
+      document.querySelectorAll('.wire-col .wire-node').forEach(n => n.classList.remove('selected'));
+    }
+  }
+
+  // [형식 C] 스크래치 캔버스 로직
+  function initScratchCanvas() {
+    const canvas = document.getElementById("scratch-canvas");
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    ctx.fillStyle = "#cbd5e1";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    let isDrawing = false;
+    canvas.addEventListener("pointerdown", () => isDrawing = true);
+    canvas.addEventListener("pointerup", () => isDrawing = false);
+    canvas.addEventListener("pointermove", (e) => {
+      if (!isDrawing) return;
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      ctx.globalCompositeOperation = "destination-out";
+      ctx.beginPath();
+      ctx.arc(x, y, 16, 0, Math.PI * 2);
+      ctx.fill();
+    });
+  }
+  function checkStage3() {
+    const val = document.getElementById("scratch-input").value.trim().toUpperCase();
+    if (val === "SNOW") {
+      showModal("🔔 미션 3 클리어!", "얼어붙은 유리창이 녹아내렸습니다!");
+    } else {
+      alert("단어가 일치하지 않습니다. 힌트(SNOW)를 확인하세요.");
+    }
+  }
+
+  // [형식 D] 슬라이딩 퍼즐 로직
+  let slideState = [1, 2, 3, 4, 5, 6, 8, 7, ""]; // 8,7이 섞인 상태 (초기화)
+  function initSlidePuzzle() {
+    renderSlide();
+  }
+  function renderSlide() {
+    const board = document.getElementById("slide-board");
+    if (!board) return;
+    board.innerHTML = "";
+    slideState.forEach((val, idx) => {
+      const tile = document.createElement("div");
+      tile.className = "slide-tile" + (val === "" ? " empty" : "");
+      tile.innerText = val;
+      tile.onclick = () => moveSlide(idx);
+      board.appendChild(tile);
+    });
+  }
+  function moveSlide(idx) {
+    const emptyIdx = slideState.indexOf("");
+    const validMoves = [emptyIdx - 1, emptyIdx + 1, emptyIdx - 3, emptyIdx + 3];
+    if (validMoves.includes(idx)) {
+      if (Math.floor(emptyIdx/3) === Math.floor(idx/3) || emptyIdx%3 === idx%3) {
+        slideState[emptyIdx] = slideState[idx];
+        slideState[idx] = "";
+        renderSlide();
+        if (slideState.toString() === [1,2,3,4,5,6,7,8,""].toString()) {
+          showModal("🔔 미션 4 클리어!", "미디어 기판의 시간이 제자리를 찾았습니다!");
+        }
+      }
+    }
+  }
+  function resetSlidePuzzle() {
+    slideState = [1, 2, 3, 4, 5, 6, 8, 7, ""];
+    renderSlide();
+  }
+
+  // [형식 E] 진실/거짓 스와이프 로직
+  const factList = [
+    { text: "서울갤러리의 개관일은 2월 5일이다.", answer: true },
+    { text: "크리스마스는 한겨울이 아니라 한여름의 명절이다.", answer: false },
+    { text: "해치는 서울을 지키는 전통 상징 수호 동물이다.", answer: true }
+  ];
+  let factIdx = 0;
+  function initFactGame() {
+    const card = document.getElementById("fact-card");
+    if(card) card.innerText = factList[factIdx].text;
+  }
+  function answerFact(userChoice) {
+    if (userChoice === factList[factIdx].answer) {
+      factIdx++;
+      if (factIdx < factList.length) {
+        document.getElementById("fact-card").innerText = factList[factIdx].text;
+      } else {
+        showModal("🔔 미션 5 클리어!", "모든 팩트체크 결계가 해제되었습니다!");
+      }
+    } else {
+      alert("틀렸습니다! 다시 생각해보세요.");
+      factIdx = 0;
+      document.getElementById("fact-card").innerText = factList[factIdx].text;
+    }
+  }
+
+  function initAudio() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+  }
+  function playTone(freq, duration) {
+    initAudio();
+    if (!audioCtx) return;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+    gain.gain.setValueAtTime(0.18, audioCtx.currentTime);
+    gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + duration);
+  }
+
+  function showModal(title, desc) {
+    document.getElementById("modal-title").innerText = title;
+    document.getElementById("modal-desc").innerHTML = desc;
+    document.getElementById("modal").style.display = "flex";
+  }
+
+  function nextStage() {
+    document.getElementById("modal").style.display = "none";
+    if (currentStage === 5) {
+      document.getElementById("stage-5").style.display = "none";
+      document.getElementById("ending-screen").style.display = "flex";
+      playEndingChat();
+      return;
+    }
+    document.getElementById(`stage-${currentStage}`).style.display = "none";
+    currentStage++;
+    document.getElementById(`stage-${currentStage}`).style.display = "flex";
+    updateStageStars(currentStage);
+    playStageChat(currentStage);
+  }
+
+  function playEndingChat() {
+    const wrapper = document.getElementById("ending-chat-wrapper");
+    if (!wrapper) return;
+    wrapper.innerHTML = "";
+    let idx = 0;
+    function showNext() {
+      if (idx >= endingText.length) return;
+      const sentence = endingText[idx++];
+      const container = document.createElement("div");
+      container.className = "chat-container";
+      container.innerHTML = `<div class="chat-avatar">${playerCharacter.avatar}</div><div class="chat-body"><span class="chat-sender">${playerCharacter.name}</span><div class="chat-bubble"><span>${sentence}</span></div></div>`;
+      wrapper.appendChild(container);
+      setTimeout(() => container.classList.add("show"), 50);
+      setTimeout(showNext, 400);
+    }
+    showNext();
+  }
+
+  function resetGame() {
+    currentStage = 1;
+    musicInput = [];
+    wireCount = 0;
+    factIdx = 0;
+    document.getElementById("music-status").innerText = "입력된 순서: -";
+    document.getElementById("wire-status").innerText = "연결된 전선: 0/3 완료";
+    resetSlidePuzzle();
+    initFactGame();
+    for (let i = 1; i <= 5; i++) {
+      document.getElementById(`stage-${i}`).style.display = (i === 1) ? "flex" : "none";
+    }
+    updateStageStars(1);
+    document.getElementById("ending-screen").style.display = "none";
+    document.getElementById("difficulty-screen").style.display = "none";
+    document.getElementById("intro-screen").classList.remove("hidden");
+  }
+</script>
+</body>
+</html>
