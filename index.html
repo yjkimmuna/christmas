@@ -535,7 +535,7 @@
         <span class="badge">★</span>
         <span class="pink-tag">해치 크리스마스</span>
       </div>
-      <button class="reset-btn" onclick="goToPrevStep()">◀ 앞으로</button>
+      <button class="reset-btn" onclick="resetGameCompletely()">처음으로</button>
     </header>
 
     <div class="content">
@@ -571,7 +571,7 @@
         <span class="badge">★</span>
         <span class="pink-tag">해치 크리스마스</span>
       </div>
-      <button class="reset-btn" onclick="goToPrevStep()">◀ 앞으로</button>
+      <button class="reset-btn" onclick="resetGameCompletely()">처음으로</button>
     </header>
 
     <div class="content">
@@ -783,34 +783,6 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // 상단 '◀ 앞으로' 버튼 동작
-  function goToPrevStep() {
-    const activeScreen = document.querySelector('.screen.active');
-    if (!activeScreen) return;
-
-    if (activeScreen.id === 'screen-game') {
-      goToScreen('screen-story');
-      startStoryChatSequence(currentStage);
-    } else if (activeScreen.id === 'screen-story') {
-      if (currentStage > 1) {
-        currentStage--;
-        goToScreen('screen-story');
-        startStoryChatSequence(currentStage);
-      } else {
-        goToScreen('screen-setup');
-        startSetupChatSequence();
-      }
-    } else if (activeScreen.id === 'screen-setup') {
-      goToScreen('screen-intro', false);
-    } else if (activeScreen.id === 'screen-branch') {
-      currentStage = 6;
-      goToScreen('screen-story');
-      startStoryChatSequence(6);
-    } else {
-      goToScreen('screen-intro', false);
-    }
-  }
-
   function goToDifficulty() {
     initAudio();
     playTone(523, 0.2);
@@ -973,7 +945,6 @@
     document.getElementById("story-next-indicator").style.display = "block";
     document.getElementById("go-problem-btn").style.display = "none";
 
-    // 약간의 딜레이를 주어 DOM 렌더링 완료 후 타이핑 시작 (세이프티 가드)
     setTimeout(() => {
       typeNextStoryLine();
     }, 50);
