@@ -973,7 +973,10 @@
     document.getElementById("story-next-indicator").style.display = "block";
     document.getElementById("go-problem-btn").style.display = "none";
 
-    typeNextStoryLine();
+    // 약간의 딜레이를 주어 DOM 렌더링 완료 후 타이핑 시작 (세이프티 가드)
+    setTimeout(() => {
+      typeNextStoryLine();
+    }, 50);
   }
 
   function typeNextStoryLine() {
