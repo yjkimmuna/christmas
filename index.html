@@ -131,7 +131,7 @@
       z-index: 20;
     }
 
-    /* 2. 난이도 및 캐릭터 선택 화면 (간격 축소) */
+    /* 2. 난이도 및 캐릭터 선택 화면 */
     #screen-setup {
       justify-content: flex-start;
       align-items: center;
@@ -294,7 +294,6 @@
       flex-shrink: 0;
     }
 
-    /* 프로필 빨간 테두리 제거 완료 */
     .chat-avatar {
       width: 40px; height: 40px; border-radius: 4px; background: #fdf2f8;
       display: flex; justify-content: center;
@@ -386,7 +385,7 @@
 <body>
 
 <div id="app">
-  <!-- 1. 인트로 화면 -->
+  <!-- 1. 인트로 화면 (최초 기본 진입 화면) -->
   <div id="screen-intro" class="screen active">
     <img src="intro.gif" alt="인트로 배경" class="intro-bg-img" onerror="this.style.display='none';">
     <div class="intro-header-box">
@@ -400,10 +399,9 @@
   <div id="screen-setup" class="screen">
     <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; margin-top: 10px; width: 100%;">
       <span class="badge" style="background:var(--pine-green);">LEVEL & CHARACTER SELECT</span>
-      <h1 style="font-size: 17px; color: var(--pink-deep);">수호대와 함께 떠나는 크리스마스 모험</h1>
+      <h1 style="font-size: 18px; color: var(--pink-deep);">수호대와 함께 떠나는 크리스마스 모험</h1>
     </div>
 
-    <!-- 타자기 타이핑으로 채워질 도입 스토리 채팅창 -->
     <div class="chat-wrapper" id="diff-chat-wrapper" style="width: 100%; margin-top: 5px;"></div>
 
     <div class="diff-card" style="margin-top: auto;">
@@ -605,7 +603,8 @@
   function loadGameProgress() {
     const savedScreen = localStorage.getItem("haechi_screen");
     const savedStage = localStorage.getItem("haechi_stage");
-    if (savedScreen && savedStage) {
+    // 최초 실행 시에는 인트로 화면이 무조건 먼저 뜨도록 강제 제어
+    if (savedScreen && savedScreen !== 'screen-intro' && savedStage) {
       currentStage = parseInt(savedStage);
       goToScreen(savedScreen, false);
       showStage(currentStage);
@@ -991,7 +990,6 @@
 
     let placedCount = matrixState.filter(s => s !== "").length;
     if (placedCount === 3) {
-      // 정답 조건: 첫 번째 줄의 첫 세 칸(인덱스 0, 1, 2)에 성물이 채워져 있는지 검증
       if (matrixState[0] && matrixState[1] && matrixState[2]) {
         showModal("🔔 미션 5 클리어!", "4x4 마법진의 첫 번째 줄에 성물이 완벽하게 안착되었습니다!");
       } else {
