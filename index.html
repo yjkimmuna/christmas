@@ -279,7 +279,7 @@
       object-fit: cover;
     }
 
-    /* 채팅 박스 (클릭 영역 지정) */
+    /* 채팅 박스 개선: 프로필 이미지 가득 채우기 + 이름 상단 배치 */
     .layout-chat-box {
       display: flex;
       width: 100%;
@@ -287,7 +287,6 @@
       background: #ffffff;
       border-bottom: 3px dashed var(--pink-primary);
       flex-shrink: 0;
-      cursor: pointer;
     }
 
     .layout-profile-area {
@@ -313,7 +312,6 @@
       flex-direction: column;
       padding: 8px 12px;
       text-align: left;
-      position: relative;
     }
     .layout-sender {
       font-size: 12px;
@@ -333,15 +331,6 @@
       overflow-y: auto;
       word-break: break-all;
     }
-    .chat-next-indicator {
-      position: absolute;
-      bottom: 4px;
-      right: 8px;
-      font-size: 13px;
-      color: var(--pink-deep);
-      animation: blink 1s infinite;
-    }
-    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
 
     .sub-page-box {
       background: #ffffff;
@@ -393,6 +382,7 @@
     }
     .cheat-btn:hover { background: #fde047; }
 
+    /* 미션 1: 상단 가로폭 좁은 다이아 일렬 배치 + 아래 세로 꽉 찬 캐릭터 보기 */
     .wire-top-row { display: flex; justify-content: center; gap: 8px; width: 100%; margin-bottom: 6px; }
     .wire-top-node { background: #fff; border: 2px solid var(--pine-dark); border-radius: 6px; padding: 8px 12px; font-size: 18px; font-weight: bold; cursor: pointer; }
     .wire-top-node.selected { background: var(--soft-pink); border-color: var(--crimson-red); }
@@ -408,10 +398,12 @@
 
     .swipe-card { width: 100%; background: #fff5f8; border: 2px solid var(--pink-primary); border-radius: 8px; padding: 18px; font-size: 16px; font-weight: bold; min-height: 85px; display: flex; align-items: center; justify-content: center; text-align: center; }
 
+    /* 미션 4: 3x3 전등 가로폭 꽉 차게 확대 */
     .switch-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 100%; max-width: 280px; margin: 0 auto; }
     .light-switch { height: 75px; background: #e2e8f0; border: 3px solid #cbd5e1; border-radius: 8px; font-size: 28px; display: flex; justify-content: center; align-items: center; cursor: pointer; }
     .light-switch.on { background: #fef08a; border-color: #ca8a04; box-shadow: 0 0 10px #fde047; }
 
+    /* 미션 5: 4x4 마법진 가로폭 꽉 차게 확대 */
     .matrix-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; width: 100%; max-width: 280px; margin: 0 auto; }
     .matrix-cell { height: 60px; background: #f8fafc; border: 2px solid var(--pine-dark); border-radius: 6px; font-size: 24px; display: flex; justify-content: center; align-items: center; cursor: pointer; }
     .matrix-cell.placed { background: var(--soft-pink); border-color: var(--crimson-red); }
@@ -419,9 +411,11 @@
     .shape-btn { padding: 10px 18px; background: #fff; border: 2px solid var(--pink-deep); border-radius: 6px; font-size: 20px; font-weight: bold; cursor: pointer; }
     .shape-btn.selected { background: var(--soft-pink); border-color: var(--crimson-red); }
 
+    /* 미션 6: 피아노 건반 스타일 도레미파솔라시 한 줄 배치 */
     .music-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; width: 100%; }
     .music-key { background: #fff; border: 2px solid var(--pink-deep); border-radius: 4px; padding: 16px 0; font-size: 13px; font-weight: bold; color: var(--pink-deep); cursor: pointer; box-shadow: 0 3px 0px var(--pink-primary); text-align: center; }
 
+    /* 최종 분기점 버튼 가로폭 오버플로우 방지 및 정렬 */
     .branch-btn-wrapper {
       width: 100%;
       padding: 0 12px;
@@ -477,7 +471,6 @@
       flex-direction: column;
       justify-content: space-between;
       box-shadow: 0 -4px 10px rgba(0,0,0,0.2);
-      cursor: pointer;
     }
 
     .modal { display: none; position: absolute; inset: 0; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(4px); z-index: 150; justify-content: center; align-items: center; padding: 22px; }
@@ -508,15 +501,13 @@
       <img src="outro.gif" alt="공간 상황 이미지" onerror="this.style.display='none';">
     </div>
 
-    <!-- 터치 가능한 채팅 박스 (setup 화면) -->
-    <div class="layout-chat-box" onclick="onSetupChatClick()">
+    <div class="layout-chat-box">
       <div class="layout-profile-area">
         <div class="layout-avatar"><img id="setup-avatar-img" src="haechi.png" alt="프로필"></div>
       </div>
       <div class="layout-msg-content">
         <div class="layout-sender" id="setup-sender-name">해치</div>
         <div class="layout-msg-area"><span id="setup-msg-text">...</span></div>
-        <div class="chat-next-indicator">▶</div>
       </div>
     </div>
 
@@ -529,14 +520,14 @@
     </div>
   </div>
 
-  <!-- 3. 스토리 채팅 진행 화면 (클릭 시 다음 대화 전환) -->
+  <!-- 3. 스토리 채팅 진행 화면 (클릭/▶ 버튼 도입 & 버튼 지연 노출) -->
   <div id="screen-story" class="screen">
     <header>
       <div style="display:flex; align-items:center; gap:8px;">
         <span class="badge">★</span>
         <span class="pink-tag">해치 크리스마스</span>
       </div>
-      <button class="reset-btn" onclick="goToPrevStep()">◀ 앞으로</button>
+      <button class="reset-btn" onclick="resetGameCompletely()">처음으로</button>
     </header>
 
     <div class="content">
@@ -547,20 +538,20 @@
           <img src="outro.gif" alt="공간 이미지" onerror="this.style.display='none';">
         </div>
 
-        <!-- 터치 가능한 스토리 채팅 박스 -->
-        <div class="layout-chat-box" onclick="onStoryChatClick()">
+        <div class="layout-chat-box">
           <div class="layout-profile-area">
             <div class="layout-avatar"><img id="story-avatar" src="haechi.png" alt="프로필"></div>
           </div>
           <div class="layout-msg-content">
             <div class="layout-sender" id="story-sender">해치</div>
             <div class="layout-msg-area"><span id="story-msg">...</span></div>
-            <div class="chat-next-indicator" id="story-next-indicator">▶</div>
           </div>
         </div>
 
-        <div style="width: 100%; padding: 8px 12px; background: #fff; flex-shrink: 0;">
-          <button id="go-problem-btn" class="action-btn" style="display: none;" onclick="goToProblemScreen()">▶ 문제 풀기</button>
+        <!-- 하단 컨트롤 영역: ▶ 다음 대화 버튼 및 완료 후 나타나는 문제 풀기 버튼 -->
+        <div style="width: 100%; padding: 10px 14px; background: #fff; flex-shrink: 0; display: flex; flex-direction: column; gap: 8px;">
+          <button id="next-dialog-btn" class="action-btn" style="background: var(--pine-green); border-color: var(--pine-dark); font-size: 15px; padding: 10px;" onclick="onNextDialogClick()">▶ 다음 대화</button>
+          <button id="go-problem-btn" class="action-btn" style="display: none;" onclick="goToProblemScreen()">다음 (문제 풀기) ➔</button>
         </div>
       </div>
     </div>
@@ -573,7 +564,7 @@
         <span class="badge">★</span>
         <span class="pink-tag">해치 크리스마스</span>
       </div>
-      <button class="reset-btn" onclick="goToPrevStep()">◀ 앞으로</button>
+      <button class="reset-btn" onclick="resetGameCompletely()">처음으로</button>
     </header>
 
     <div class="content">
@@ -581,6 +572,7 @@
       <div id="stage-1" class="sub-page-box" style="display:none;">
         <div class="quest-title-bar">🔔 미션 1: 컬러 코드</div>
         <div class="quest-inner-content" style="padding: 16px;">
+          <!-- 상단 가로폭 좁은 다이아 일렬 배치 -->
           <div class="wire-top-row">
             <div class="wire-top-node" style="color:#0284c7;" onclick="selectLeftWire(1, this)">◆</div>
             <div class="wire-top-node" style="color:#16a34a;" onclick="selectLeftWire(2, this)">◆</div>
@@ -588,6 +580,7 @@
             <div class="wire-top-node" style="color:#db2777;" onclick="selectLeftWire(4, this)">◆</div>
             <div class="wire-top-node" style="color:#475569;" onclick="selectLeftWire(5, this)">◇</div>
           </div>
+          <!-- 아래 세로로 가로폭 꽉 찬 캐릭터 보기 -->
           <div class="wire-bottom-col">
             <div class="wire-bottom-node" onclick="selectRightWire(4, this)">해치</div>
             <div class="wire-bottom-node" onclick="selectRightWire(1, this)">청룡</div>
@@ -612,7 +605,7 @@
         </div>
       </div>
 
-      <!-- [STAGE 3] OX 퀴즈 -->
+      <!-- [STAGE 3] OX 퀴즈 (참/거짓 삭제, OX 버튼만 정렬) -->
       <div id="stage-3" class="sub-page-box" style="display:none;">
         <div class="quest-title-bar">🔔 미션 3: 팩트체크 OX</div>
         <div class="quest-inner-content" style="padding: 20px;">
@@ -626,7 +619,7 @@
         </div>
       </div>
 
-      <!-- [STAGE 4] 전등 스위치 -->
+      <!-- [STAGE 4] 전등 스위치 (3x3 크게 확대) -->
       <div id="stage-4" class="sub-page-box" style="display:none;">
         <div class="quest-title-bar">🔔 미션 4: 메인 트리 전등 켜기</div>
         <div class="quest-inner-content" style="padding: 20px;">
@@ -637,7 +630,7 @@
         </div>
       </div>
 
-      <!-- [STAGE 5] 성물 배치 -->
+      <!-- [STAGE 5] 성물 배치 (4x4 크게 확대) -->
       <div id="stage-5" class="sub-page-box" style="display:none;">
         <div class="quest-title-bar">🔔 미션 5: 성물 배치</div>
         <div class="quest-inner-content" style="padding: 20px;">
@@ -653,7 +646,7 @@
         </div>
       </div>
 
-      <!-- [STAGE 6] 캐럴 연주 -->
+      <!-- [STAGE 6] 캐럴 연주 (피아노 건반 스타일 한 줄 배치 및 독립 초기화) -->
       <div id="stage-6" class="sub-page-box" style="display:none;">
         <div class="quest-title-bar">🔔 미션 6: 캐럴 연주</div>
         <div class="quest-inner-content" style="padding: 16px;">
@@ -669,13 +662,13 @@
           </div>
           <button class="action-btn" style="background:#f3f4f6; color:#6b7280; border:2px solid #9ca3af; padding:10px; font-size:14px;" onclick="resetCarol()">🔄 초기화</button>
           <details><summary>💡 힌트 보기</summary>미-미-미 / 미-미-미 / 미-솔-도-레-미 순서입니다.</details>
-          <button class="cheat-btn" onclick="nextStage()">⚡ 테스트용: 다음 문제로 건너뛰기</button>
+          <button class="cheat-btn" onclick="nextStage()">⚡ 테스트용: 바로 다음 문제로 건너뛰기</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- 5. 최종 엔딩 분기 선택 화면 -->
+  <!-- 5. 최종 엔딩 분기 선택 화면 (오버플로우 방지 정렬) -->
   <div id="screen-branch" class="screen">
     <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%; margin-top: 20px;">
       <span class="badge" style="background:var(--crimson-red);">FINAL CHOICE</span>
@@ -694,22 +687,22 @@
     </div>
   </div>
 
-  <!-- 6. 엔딩 화면 -->
+  <!-- 6. 엔딩 화면 (아웃트로 영역 겹침 현상 해결) -->
   <div id="screen-ending" class="screen">
     <img src="outro.gif" alt="아웃트로 배경" class="outro-bg-img" onerror="this.style.display='none';">
-    <div class="outro-dialog-box" onclick="onOutroBoxClick()">
+    <div class="outro-dialog-box">
       <div style="display: flex; gap: 10px; align-items: flex-start; width: 100%;">
         <div style="width: 36px; height: 36px; border-radius: 4px; overflow: hidden; flex-shrink: 0; border: 2px solid var(--pink-primary);">
           <img id="outro-avatar" src="haechi.png" alt="프로필" style="width:100%; height:100%; object-fit:cover;">
         </div>
-        <div style="flex: 1; text-align: left; position: relative;">
+        <div style="flex: 1; text-align: left;">
           <div id="outro-sender" style="font-size: 11px; font-weight: bold; color: var(--pink-deep); margin-bottom: 2px;">해치</div>
           <div id="outro-msg" style="font-size: 12.5px; color: var(--text-dark); line-height: 1.4; word-break: break-all;">...</div>
-          <div class="chat-next-indicator" id="outro-next-indicator">▶</div>
         </div>
       </div>
-      <div style="display: flex; justify-content: flex-end; align-items: center;">
-        <button class="action-btn" onclick="resetGameCompletely(); event.stopPropagation();" style="padding: 4px 10px; font-size: 11px; width: auto;">처음으로</button>
+      <div style="display: flex; gap: 6px; justify-content: space-between; align-items: center;">
+        <button id="outro-next-btn" class="action-btn" style="padding: 6px; font-size: 12px; background: var(--pine-green); border-color: var(--pine-dark);" onclick="onOutroNextClick()">▶ 다음 대화</button>
+        <button class="action-btn" onclick="resetGameCompletely()" style="padding: 6px; font-size: 12px;">처음으로</button>
       </div>
     </div>
   </div>
@@ -731,10 +724,10 @@
   let selectedRoute = 'ju-jak';
   let selectedEnding = 'festival';
 
+  // 스토리 타이핑 및 다음 대화 제어 변수
   let currentLines = [];
   let currentLineIdx = 0;
   let isTyping = false;
-  let typingTimer = null;
 
   window.addEventListener("DOMContentLoaded", () => {
     loadGameProgress();
@@ -785,36 +778,6 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // 상단 '◀ 앞으로' 버튼 동작 (현재 화면에 따라 이전 단계로 분기)
-  function goToPrevStep() {
-    const activeScreen = document.querySelector('.screen.active');
-    if (!activeScreen) return;
-
-    if (activeScreen.id === 'screen-game') {
-      // 문제 풀이 화면이면 직전 스토리 브리핑 화면으로 이동
-      goToScreen('screen-story');
-      startStoryChatSequence(currentStage);
-    } else if (activeScreen.id === 'screen-story') {
-      if (currentStage > 1) {
-        currentStage--;
-        goToScreen('screen-story');
-        startStoryChatSequence(currentStage);
-      } else {
-        // 1스테이지 브리핑이면 난이도 선택 화면으로
-        goToScreen('screen-setup');
-        startSetupChatSequence();
-      }
-    } else if (activeScreen.id === 'screen-setup') {
-      goToScreen('screen-intro', false);
-    } else if (activeScreen.id === 'screen-branch') {
-      currentStage = 6;
-      goToScreen('screen-story');
-      startStoryChatSequence(6);
-    } else {
-      goToScreen('screen-intro', false);
-    }
-  }
-
   function goToDifficulty() {
     initAudio();
     playTone(523, 0.2);
@@ -850,24 +813,16 @@
 
     isTyping = true;
     let charIdx = 0;
-    if (typingTimer) clearInterval(typingTimer);
-    typingTimer = setInterval(() => {
+    const timer = setInterval(() => {
       if (charIdx < data.text.length) {
         textEl.innerText += data.text.charAt(charIdx);
         playKeyClickTone();
         charIdx++;
       } else {
-        clearInterval(typingTimer);
+        clearInterval(timer);
         isTyping = false;
       }
     }, 25);
-  }
-
-  function onSetupChatClick() {
-    if (isTyping) return;
-    if (currentLineIdx < currentLines.length) {
-      typeNextSetupLine();
-    }
   }
 
   function setRouteAndStart(route) {
@@ -882,6 +837,7 @@
     startStoryChatSequence(currentStage);
   }
 
+  // 각 미션별 상세 대화 데이터 (풍성한 스토리 보강)
   const stageChatData = {
     1: {
       'ju-jak': [
@@ -974,7 +930,7 @@
     currentLines = stageObj[selectedRoute] || stageObj['ju-jak'] || [];
     currentLineIdx = 0;
 
-    document.getElementById("story-next-indicator").style.display = "block";
+    document.getElementById("next-dialog-btn").style.display = "block";
     document.getElementById("go-problem-btn").style.display = "none";
 
     typeNextStoryLine();
@@ -982,7 +938,8 @@
 
   function typeNextStoryLine() {
     if (currentLineIdx >= currentLines.length) {
-      document.getElementById("story-next-indicator").style.display = "none";
+      // 대화가 모두 끝나면 ▶ 다음 대화 버튼을 숨기고 문제 풀기 버튼 노출
+      document.getElementById("next-dialog-btn").style.display = "none";
       document.getElementById("go-problem-btn").style.display = "block";
       return;
     }
@@ -1001,28 +958,21 @@
 
     isTyping = true;
     let charIdx = 0;
-    if (typingTimer) clearInterval(typingTimer);
-    typingTimer = setInterval(() => {
+    const timer = setInterval(() => {
       if (charIdx < data.text.length) {
         textEl.innerText += data.text.charAt(charIdx);
         playKeyClickTone();
         charIdx++;
       } else {
-        clearInterval(typingTimer);
+        clearInterval(timer);
         isTyping = false;
-        if (currentLineIdx >= currentLines.length) {
-          document.getElementById("story-next-indicator").style.display = "none";
-          document.getElementById("go-problem-btn").style.display = "block";
-        }
       }
     }, 25);
   }
 
-  function onStoryChatClick() {
-    if (isTyping) return;
-    if (currentLineIdx < currentLines.length) {
-      typeNextStoryLine();
-    }
+  function onNextDialogClick() {
+    if (isTyping) return; // 타이핑 중에는 패스 방지
+    typeNextStoryLine();
   }
 
   function goToProblemScreen() {
@@ -1346,7 +1296,7 @@
 
   function typeNextOutroLine() {
     if (outroIdx >= outroLines.length) {
-      document.getElementById("outro-next-indicator").style.display = "none";
+      document.getElementById("outro-next-btn").style.display = "none";
       return;
     }
     const data = outroLines[outroIdx];
@@ -1363,27 +1313,21 @@
 
     isTyping = true;
     let charIdx = 0;
-    if (typingTimer) clearInterval(typingTimer);
-    typingTimer = setInterval(() => {
+    const timer = setInterval(() => {
       if (charIdx < data.text.length) {
         textEl.innerText += data.text.charAt(charIdx);
         playKeyClickTone();
         charIdx++;
       } else {
-        clearInterval(typingTimer);
+        clearInterval(timer);
         isTyping = false;
-        if (outroIdx >= outroLines.length) {
-          document.getElementById("outro-next-indicator").style.display = "none";
-        }
       }
     }, 25);
   }
 
-  function onOutroBoxClick() {
+  function onOutroNextClick() {
     if (isTyping) return;
-    if (outroIdx < outroLines.length) {
-      typeNextOutroLine();
-    }
+    typeNextOutroLine();
   }
 
   function resetGameCompletely() {
