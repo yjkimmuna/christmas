@@ -133,7 +133,7 @@
       z-index: 20;
     }
 
-    /* 2. 난이도 및 캐릭터 선택 화면 */
+    /* 2. 난이도 및 성향 분기 선택 화면 */
     #screen-setup {
       justify-content: flex-start;
       align-items: center;
@@ -168,7 +168,7 @@
       background: #fff5f8;
       border: 2px solid var(--pink-primary);
       border-radius: 8px;
-      font-size: 14px;
+      font-size: 13.5px;
       font-weight: bold;
       color: var(--text-dark);
       cursor: pointer;
@@ -176,6 +176,7 @@
       justify-content: space-between;
       align-items: center;
       box-shadow: 2px 2px 0px var(--border-pink);
+      text-align: left;
     }
     .diff-btn:hover {
       background: var(--soft-pink);
@@ -367,7 +368,7 @@
     .music-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; width: 100%; }
     .music-key { background: #fff; border: 2px solid var(--pink-deep); border-radius: 6px; padding: 10px 0; font-size: 13px; font-weight: bold; color: var(--pink-deep); cursor: pointer; box-shadow: 0 3px 0px var(--pink-primary); }
 
-    /* 4. 엔딩 화면 (outro.gif 배경 및 하단 140px 대화 상자) */
+    /* 4. 엔딩 화면 */
     #screen-ending {
       background: #000;
       justify-content: flex-end;
@@ -390,7 +391,7 @@
       position: relative;
       z-index: 10;
       width: 100%;
-      height: 140px; /* 요청하신 하단 140px 고정 높이 */
+      height: 140px;
       background: rgba(255, 241, 245, 0.92);
       border-top: 3px solid var(--pink-deep);
       padding: 12px 16px;
@@ -417,25 +418,23 @@
     <button class="intro-transparent-btn" onclick="goToDifficulty()"></button>
   </div>
 
-  <!-- 2. 난이도 및 캐릭터 선택 화면 -->
+  <!-- 2. 난이도 및 첫 번째 성향 분기 선택 화면 -->
   <div id="screen-setup" class="screen">
     <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; margin-top: 6px; width: 100%;">
-      <span class="badge" style="background:var(--pine-green);">LEVEL & CHARACTER SELECT</span>
-      <h1 style="font-size: 18px; color: var(--pink-deep);">수호대와 함께 떠나는 크리스마스 모험</h1>
+      <span class="badge" style="background:var(--pine-green);">ROUTE & CHARACTER SELECT</span>
+      <h1 style="font-size: 17px; color: var(--pink-deep);">수호대와 함께 떠나는 크리스마스 모험</h1>
     </div>
 
     <div class="chat-wrapper" id="diff-chat-wrapper" style="width: 100%; margin-top: 4px;"></div>
 
     <div class="diff-card">
-      <div class="diff-title">🎯 난이도 선택</div>
+      <div class="diff-title">🔀 모험 성향 분기 선택</div>
       <div class="diff-options" style="display: flex; flex-direction: column; gap: 8px;">
-        <button class="diff-btn" onclick="startGamePlay()">
-          <span>해치 & 주작 (쉬움)</span>
-          <span style="color: var(--pine-green);">★</span>
+        <button class="diff-btn" onclick="startGamePlay('joo')">
+          <span>🔥 주작의 뜨거운 열정 루트 (스릴러/빠른 진행)</span>
         </button>
-        <button class="diff-btn" onclick="startGamePlay()">
-          <span>청룡 & 백호 & 현무 (어려움)</span>
-          <span style="color: var(--crimson-red);">★★★</span>
+        <button class="diff-btn" onclick="startGamePlay('haechi')">
+          <span>🐾 해치의 포근한 긍정 루트 (힐링/안정 진행)</span>
         </button>
       </div>
     </div>
@@ -491,7 +490,7 @@
         </div>
       </div>
 
-      <!-- [STAGE 3] 진실/거짓 스와이프 (OX) -->
+      <!-- [STAGE 3] 진실/거짓 스와이프 (OX) - 분기에 따라 문항 변경 -->
       <div id="stage-3" class="interactive-box" style="display:none;">
         <div class="quest-title-bar">🔔 미션 3: 갤러리 팩트체크 결계 해제</div>
         <div class="quest-inner-content">
@@ -501,7 +500,7 @@
             <button class="action-btn" style="background:var(--pine-green); border-color:var(--pine-dark);" onclick="answerFact(true)">⭕ 참 (O)</button>
             <button class="action-btn" onclick="answerFact(false)">❌ 거짓 (X)</button>
           </div>
-          <details><summary>💡 힌트 보기</summary>군기시의 역사적 의미를 생각해보세요.</details>
+          <details><summary>💡 힌트 보기</summary>선택한 루트에 따른 역사를 떠올려보세요.</details>
           <button class="cheat-btn" onclick="nextStage()">⚡ 테스트용: 바로 다음 문제로 건너뛰기</button>
         </div>
       </div>
@@ -518,7 +517,7 @@
         </div>
       </div>
 
-      <!-- [STAGE 5] 4x4 체스판/마법진 도형 배치형 (첫 줄 정답) -->
+      <!-- [STAGE 5] 4x4 마법진 성물 배치 -->
       <div id="stage-5" class="interactive-box" style="display:none;">
         <div class="quest-title-bar">🔔 미션 5: 4x4 마법진 성물 배치</div>
         <div class="quest-inner-content">
@@ -535,12 +534,22 @@
         </div>
       </div>
 
-      <!-- [STAGE 6] 오르골 멜로디 연주 (도-레-미-파-솔 모두 제공) -->
+      <!-- [STAGE 6] 오르골 멜로디 연주 & 두 번째 엔딩 분기 선택 -->
       <div id="stage-6" class="interactive-box" style="display:none;">
         <div class="quest-title-bar">🔔 미션 6: 캐럴 멜로디 연주</div>
         <div class="quest-inner-content">
           <div class="chat-wrapper" id="stage-6-chat"></div>
           <div class="quest-desc" id="music-status" style="padding:6px; background:#fff1f5; border-radius:6px; font-size:13px; font-weight:bold; color:var(--pink-deep); width:100%;">진행 상황: (0/11 음표 입력)</div>
+          
+          <!-- 엔딩 마법 에너지 분기 선택 (캐럴 연주 전 미니 선택지) -->
+          <div style="width:100%; background:#f0fdf4; border:2px solid var(--pine-green); border-radius:6px; padding:8px; display:flex; flex-direction:column; gap:6px;">
+            <div style="font-size:12px; font-weight:bold; color:var(--pine-dark);">✨ 자명종 마법 집중 방향 선택</div>
+            <div style="display:flex; gap:6px;">
+              <button class="action-btn" style="padding:8px; font-size:12px; background:var(--pine-green);" onclick="setEndingFlavor('light')">빛의 축제</button>
+              <button class="action-btn" style="padding:8px; font-size:12px; background:#2563eb;" onclick="setEndingFlavor('warmth')">따뜻한 온기</button>
+            </div>
+          </div>
+
           <div class="music-grid">
             <button class="music-key" onclick="playCarolNote('도', 261.63)">도</button>
             <button class="music-key" onclick="playCarolNote('레', 293.66)">레</button>
@@ -558,7 +567,7 @@
     </div>
   </div>
 
-  <!-- 4. 엔딩 화면 (outro.gif 배경 및 하단 140px 타자기 대화 박스) -->
+  <!-- 4. 엔딩 화면 (분기에 따른 맞춤 아웃트로) -->
   <div id="screen-ending" class="screen">
     <img src="outro.gif" alt="아웃트로 배경" class="outro-bg-img" onerror="this.style.display='none';">
     <div class="outro-dialog-box">
@@ -581,6 +590,8 @@
 <script>
   let currentStage = 1;
   let audioCtx = null;
+  let userRoute = 'joo'; // 'joo' (주작 루트) 또는 'haechi' (해치 루트)
+  let endingFlavor = 'light'; // 'light' (빛의 축제) 또는 'warmth' (온기)
 
   window.addEventListener("DOMContentLoaded", () => {
     loadGameProgress();
@@ -593,11 +604,16 @@
   function saveGameProgress(screenId, stageNum) {
     localStorage.setItem("haechi_screen", screenId);
     localStorage.setItem("haechi_stage", stageNum);
+    localStorage.setItem("haechi_route", userRoute);
+    localStorage.setItem("haechi_flavor", endingFlavor);
   }
 
   function loadGameProgress() {
     const savedScreen = localStorage.getItem("haechi_screen");
     const savedStage = localStorage.getItem("haechi_stage");
+    if(localStorage.getItem("haechi_route")) userRoute = localStorage.getItem("haechi_route");
+    if(localStorage.getItem("haechi_flavor")) endingFlavor = localStorage.getItem("haechi_flavor");
+
     if (savedScreen && savedScreen !== 'screen-intro' && savedStage) {
       currentStage = parseInt(savedStage);
       goToScreen(savedScreen, false);
@@ -625,10 +641,20 @@
     playDiffIntroChat();
   }
 
+  // 성향 분기 선택 후 게임 시작
+  function startGamePlay(route) {
+    userRoute = route;
+    playTone(650, 0.15);
+    document.getElementById("header-tag").innerText = route === 'joo' ? "JOO's FLAME ROUTE" : "HAECHI's HEAL ROUTE";
+    currentStage = 1;
+    goToScreen('screen-game');
+    showStage(1);
+  }
+
   // 난이도 화면 도입 스토리 타자기 연출
   const diffIntroLines = [
     { name: "해치", avatar: "haechi.png", text: "소망 숲에 어둠이 찾아와 크리스마스 빛이 모두 사라졌어..." },
-    { name: "주작", avatar: "ju.png", text: "우리의 수호 마법을 되찾으려면 6가지 시련을 통과해야 해!" }
+    { name: "주작", avatar: "ju.png", text: "어떤 성향으로 시련을 돌파할지 길을 선택해 줘!" }
   ];
 
   function playDiffIntroChat() {
@@ -670,16 +696,20 @@
     showNextLine();
   }
 
-  // 엔딩 아웃트로 타자기 대화 데이터
-  const outroChatLines = [
-    { name: "해치", avatar: "haechi.png", text: "모든 시련을 극복하고 숲에 따뜻한 크리스마스를 되찾았어!" },
-    { name: "주작", avatar: "ju.png", text: "안내 데스크에 가면 멋진 선물이 기다리고 있어! 축하해 🎁" }
-  ];
-
+  // 엔딩 아웃트로 타자기 대화 데이터 (분기에 따라 다르게 출력)
   function playOutroChat() {
     const wrapper = document.getElementById("outro-chat-wrapper");
     if (!wrapper) return;
     wrapper.innerHTML = "";
+
+    let flavorText = endingFlavor === 'light' 
+      ? "화려한 축제의 빛이 소망 숲 전체를 환하게 물들였어!" 
+      : "모두가 함께 모여 나누는 따뜻한 온기가 숲을 감싸 안았어!";
+
+    const outroChatLines = [
+      { name: "해치", avatar: "haechi.png", text: flavorText },
+      { name: "주작", avatar: "ju.png", text: "안내 데스크에 가면 멋진 선물이 기다리고 있어! 정말 수고했어 🎁" }
+    ];
 
     let lineIdx = 0;
     function showNextLine() {
@@ -715,7 +745,7 @@
     showNextLine();
   }
 
-  // 문제 페이지별 해치 & 주작 대화 데이터
+  // 문제 페이지별 해치 & 주작 대화 데이터 (백호, 현무 등 카메오 대화 포함)
   const stageChatData = {
     1: [
       { name: "해치", avatar: "haechi.png", text: "다섯 수호대의 상징 기호(◆) 색상과 이름을 올바르게 찾아야 해!" },
@@ -727,7 +757,7 @@
     ],
     3: [
       { name: "해치", avatar: "haechi.png", text: "서울갤러리 역사와 관련된 팩트체크 결계를 해제해야 해!" },
-      { name: "주작", avatar: "ju.png", text: "제시되는 문장을 꼼꼼히 읽고 참(O)인지 거짓(X)인지 판별해 줘!" }
+      { name: "주작", avatar: "ju.png", text: userRoute === 'joo' ? "주작 루트 특유의 날카로운 역사 추리 감각으로 참/거짓을 판별해!" : "해치와 함께 꼼꼼하게 읽어보고 참/거짓을 판별해 줘!" }
     ],
     4: [
       { name: "해치", avatar: "haechi.png", text: "메인 트리의 불이 꺼졌어. 모든 전등을 동시에 켜야 해!" },
@@ -784,14 +814,6 @@
     showNext();
   }
 
-  function startGamePlay() {
-    playTone(650, 0.15);
-    document.getElementById("header-tag").innerText = "HAECHI CHRISTMAS";
-    currentStage = 1;
-    goToScreen('screen-game');
-    showStage(1);
-  }
-
   function showStage(stageNum) {
     for (let i = 1; i <= 6; i++) {
       const box = document.getElementById(`stage-${i}`);
@@ -845,7 +867,7 @@
     } catch(e) {}
   }
 
-  // [미션 1] ◆ 기호 전선 연결 로직
+  // [미션 1] 전선 연결
   let selectedLeft = null;
   let wireCount = 0;
   function selectLeftWire(id, el) {
@@ -879,7 +901,7 @@
     }
   }
 
-  // [미션 2] 다이얼 자물쇠 로직
+  // [미션 2] 다이얼 자물쇠
   const dialChars = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','♥'];
   let currentDialIndices = [7, 0, 4, 2, 7, 8];
 
@@ -932,33 +954,41 @@
     }
   }
 
-  // [미션 3] 진실/거짓 스와이프 OX 로직
-  const factList = [
-    { text: "서울갤러리의 개관일은 2월 5일이다.", answer: true },
-    { text: "군기시는 조선시대 학문을 공부하던 곳이다.", answer: false }
-  ];
+  // [미션 3] 팩트체크 OX (성향 분기에 따라 다른 문항 제시)
+  const factLists = {
+    joo: [
+      { text: "서울갤러리의 개관일은 2월 5일이다.", answer: true },
+      { text: "군기시는 조선시대 군기(무기)를 만들던 곳이다.", answer: true }
+    ],
+    haechi: [
+      { text: "서울갤러리의 개관일은 2월 5일이다.", answer: true },
+      { text: "군기시는 조선시대 학문을 공부하던 곳이다.", answer: false }
+    ]
+  };
   let factIdx = 0;
   function initFactGame() {
     factIdx = 0;
     const card = document.getElementById("fact-card");
-    if(card && factList.length > 0) card.innerText = factList[0].text;
+    const list = factLists[userRoute] || factLists['haechi'];
+    if(card && list.length > 0) card.innerText = list[0].text;
   }
   function answerFact(userChoice) {
-    if (userChoice === factList[factIdx].answer) {
+    const list = factLists[userRoute] || factLists['haechi'];
+    if (userChoice === list[factIdx].answer) {
       factIdx++;
-      if (factIdx < factList.length) {
-        document.getElementById("fact-card").innerText = factList[factIdx].text;
+      if (factIdx < list.length) {
+        document.getElementById("fact-card").innerText = list[factIdx].text;
       } else {
         showModal("🔔 미션 3 클리어!", "모든 팩트체크 결계가 해제되었습니다!");
       }
     } else {
-      alert("틀렸습니다! 군기시는 조선시대 군기(무기)를 만들던 곳입니다.");
+      alert("틀렸습니다! 다시 생각해보세요.");
       factIdx = 0;
-      document.getElementById("fact-card").innerText = factList[factIdx].text;
+      document.getElementById("fact-card").innerText = list[factIdx].text;
     }
   }
 
-  // [미션 4] 연쇄 전등 스위치 로직
+  // [미션 4] 전등 스위치
   let switchState = Array(9).fill(false);
   function initSwitchGame() {
     switchState = [true, false, true, false, true, false, true, false, true];
@@ -995,7 +1025,7 @@
     renderSwitches();
   }
 
-  // [미션 5] 4x4 마법진 성물 배치 로직
+  // [미션 5] 마법진 성물 배치
   let selectedShape = null;
   let matrixState = Array(16).fill("");
 
@@ -1044,9 +1074,15 @@
     renderMatrix();
   }
 
-  // [미션 6] 캐럴 멜로디 연주 로직
+  // [미션 6] 캐럴 연주 및 엔딩 분기 지정
   const carolMelodyTarget = ['미', '미', '미', '미', '미', '미', '미', '솔', '도', '레', '미'];
   let carolInput = [];
+
+  function setEndingFlavor(flavor) {
+    endingFlavor = flavor;
+    playTone(587.33, 0.15);
+    alert(flavor === 'light' ? "✨ [빛의 축제] 방향으로 마법이 설정되었습니다!" : "💖 [따뜻한 온기] 방향으로 마법이 설정되었습니다!");
+  }
 
   function playCarolNote(noteName, freq) {
     playTone(freq, 0.25, 'triangle');
