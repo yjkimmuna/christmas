@@ -58,17 +58,17 @@
     .screen { display: none; width: 100%; height: 100%; flex-direction: column; }
     .screen.active { display: flex; }
 
-    /* --- 인트로 화면 (intro.gif 배경, 창 크기 관계없이 좌표 고정) --- */
+    /* --- 인트로 화면 (img 태그 기반 안정적인 렌더링 및 확실한 클릭 버튼) --- */
     #screen-intro {
       position: absolute;
       inset: 0;
-      background-image: url('intro.gif');
-      background-size: cover;
-      background-position: center;
+      background: #000;
       z-index: 100;
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: space-between;
+      padding: 30px 20px;
       text-align: center;
       overflow: hidden;
     }
@@ -80,18 +80,25 @@
       transition: opacity 0.4s ease, transform 0.4s ease;
     }
 
-    /* 상단 타이틀 고정 좌표 (창 크기 변동 무관) */
-    .intro-header-box {
+    /* 배경 gif를 채우는 <img> 태그 */
+    .intro-bg-img {
       position: absolute;
-      top: 8%;
-      left: 5%;
-      right: 5%;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+    }
+
+    /* 상단 타이틀 고정 (창 크기 무관) */
+    .intro-header-box {
+      position: relative;
+      z-index: 10;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 10px;
-      z-index: 10;
-      pointer-events: none; /* 터치가 버튼으로 바로 가도록 통과시킴 */
+      width: 100%;
     }
 
     .intro-badge {
@@ -113,18 +120,27 @@
       font-family: 'DungGeunMo', monospace, sans-serif !important;
     }
 
-    /* 하단 시작 버튼 고정 좌표 (창 크기 변동 무관, 최상단 z-index 부여) */
-    .intro-transparent-btn {
-      position: absolute;
-      bottom: 10%;
-      left: 15%;
-      right: 15%;
-      width: 70%;
-      height: 75px;
-      background: transparent;
-      border: none;
+    /* 하단 시작 버튼 (확실히 클릭 가능한 시각적 버튼 레이어) */
+    .intro-start-btn {
+      position: relative;
+      z-index: 10;
+      width: 80%;
+      max-width: 280px;
+      padding: 16px;
+      background: var(--crimson-red);
+      color: #ffffff;
+      border: 3px solid #7f1d1d;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: bold;
       cursor: pointer;
-      z-index: 20;
+      box-shadow: 0 5px 0px #7f1d1d;
+      margin-bottom: 20px;
+      transition: transform 0.05s, box-shadow 0.05s;
+    }
+    .intro-start-btn:active {
+      transform: translateY(4px);
+      box-shadow: 0 1px 0px #7f1d1d;
     }
 
     /* --- 난이도 및 캐릭터 선택 화면 --- */
@@ -392,13 +408,18 @@
 <body>
 
 <div id="app">
-  <!-- 1. 인트로 커버 화면 (intro.gif 배경, 타이틀 복구, 하단 투명 버튼 고정 좌표 및 최상위 z-index 적용) -->
+  <!-- 1. 인트로 커버 화면 (img 태그 기반 확실한 인터랙션 구조) -->
   <div id="screen-intro" class="screen active">
+    <img src="intro.gif" alt="인트로 배경" class="intro-bg-img" onerror="this.style.display='none';">
+    
     <div class="intro-header-box">
       <span class="intro-badge">SEOUL GALLERY WINTER EVENT</span>
       <h1 class="intro-title">해치 크리스마스:<br>소망 숲 모험</h1>
     </div>
-    <button class="intro-transparent-btn" onclick="goToDifficulty()"></button>
+
+    <button class="intro-start-btn" onclick="goToDifficulty()">
+      <span>모험 시작하기 ✨</span>
+    </button>
   </div>
 
   <!-- 2. 난이도 및 캐릭터 선택 화면 -->
