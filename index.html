@@ -69,12 +69,11 @@
       display: flex;
     }
 
-    /* 1. 인트로 화면 */
+    /* 1. 인트로 화면 (비율 유지 GIF 배경 및 지정 좌표 타이틀/투명 버튼) */
     #screen-intro {
       background: #000;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
-      padding: 30px 20px;
       text-align: center;
       z-index: 10;
     }
@@ -84,18 +83,22 @@
       inset: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain; /* 비율 유지하며 작아지도록 수정 */
+      background: #000;
       z-index: 1;
     }
 
+    /* 상단 타이틀 좌표 (220, 255) ~ (720, 395) 반영 */
     .intro-header-box {
-      position: relative;
+      position: absolute;
+      top: 15%;
+      left: 10%;
+      right: 10%;
       z-index: 10;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
-      width: 100%;
+      gap: 8px;
     }
 
     .intro-badge {
@@ -108,41 +111,34 @@
     }
 
     .intro-title {
-      font-size: 26px;
+      font-size: 24px;
       font-weight: 900;
       color: #ffffff;
       line-height: 1.3;
       text-shadow: 3px 3px 0px var(--pink-deep), 6px 6px 0px #831843;
     }
 
-    .intro-start-btn {
-      position: relative;
-      z-index: 10;
-      width: 80%;
-      max-width: 280px;
-      padding: 16px;
-      background: var(--crimson-red);
-      color: #ffffff;
-      border: 3px solid #7f1d1d;
-      border-radius: 8px;
-      font-size: 18px;
-      font-weight: bold;
+    /* 모험 시작하기 투명 버튼 좌표 (280, 1390) ~ (650, 1500) 매칭 */
+    .intro-transparent-btn {
+      position: absolute;
+      bottom: 12%;
+      left: 18%;
+      right: 18%;
+      height: 65px;
+      background: transparent;
+      border: none;
       cursor: pointer;
-      box-shadow: 0 5px 0px #7f1d1d;
-      margin-bottom: 20px;
-    }
-    .intro-start-btn:active {
-      transform: translateY(4px);
-      box-shadow: 0 1px 0px #7f1d1d;
+      z-index: 20;
     }
 
-    /* 2. 난이도 및 캐릭터 선택 화면 */
+    /* 2. 난이도 및 캐릭터 선택 화면 (도입 텍스트 및 타자기 효과 복구) */
     #screen-setup {
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
       padding: 24px 20px;
       text-align: center;
-      gap: 16px;
+      gap: 14px;
+      overflow-y: auto;
     }
 
     .diff-card {
@@ -281,6 +277,13 @@
       align-items: flex-start;
       width: 100%;
       text-align: left;
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+    .chat-container.show {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .chat-profile-col {
@@ -322,6 +325,20 @@
       padding: 10px 12px; border-radius: 6px; font-size: 13px; color: var(--pine-dark); text-align: left;
     }
     summary { cursor: pointer; font-weight: bold; color: var(--pine-green); }
+
+    /* 테스트용 치트 버튼 스타일 */
+    .cheat-btn {
+      width: 100%;
+      padding: 8px;
+      background: #fef08a;
+      color: #854d0e;
+      border: 2px dashed #ca8a04;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .cheat-btn:hover { background: #fde047; }
 
     /* 미션 스타일들 */
     .wire-container { display: flex; justify-content: space-between; width: 100%; gap: 10px; }
@@ -373,22 +390,24 @@
       <span class="intro-badge">SEOUL GALLERY WINTER EVENT</span>
       <h1 class="intro-title">해치 크리스마스:<br>소망 숲 모험</h1>
     </div>
-    <button class="intro-start-btn" onclick="goToDifficulty()">
-      <span>모험 시작하기 ✨</span>
-    </button>
+    <button class="intro-transparent-btn" onclick="goToDifficulty()"></button>
   </div>
 
-  <!-- 2. 난이도 및 캐릭터 선택 화면 -->
+  <!-- 2. 난이도 및 캐릭터 선택 화면 (도입 텍스트 및 타자기 연출 복구) -->
   <div id="screen-setup" class="screen">
-    <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom: 10px;">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; margin-top: 10px; width: 100%;">
       <span class="badge" style="background:var(--pine-green);">LEVEL & CHARACTER SELECT</span>
-      <h1 style="font-size: 18px; color: var(--pink-deep);">함께할 수호대를 골라주세요!</h1>
+      <h1 style="font-size: 18px; color: var(--pink-deep);">수호대와 함께 떠나는 크리스마스 모험</h1>
     </div>
-    <div class="diff-card">
+
+    <!-- 타자기 타이핑으로 채워질 도입 스토리 채팅창 -->
+    <div class="chat-wrapper" id="diff-chat-wrapper" style="width: 100%;"></div>
+
+    <div class="diff-card" style="margin-top: auto;">
       <div class="diff-title">🎯 난이도 선택</div>
       <div class="diff-options">
         <button class="diff-btn" onclick="startGamePlay()">
-          <span>해치 & 주작</span>
+          <span>해치 & 주작 (스탠다드)</span>
           <span style="color: var(--pine-green);">★</span>
         </button>
       </div>
@@ -411,14 +430,14 @@
         <div class="quest-title-bar">🔔 미션 1: 수호대별 상징 기호 연결</div>
         <div class="quest-inner-content">
           <div class="chat-wrapper">
-            <div class="chat-container">
+            <div class="chat-container show">
               <div class="chat-profile-col">
                 <div class="chat-avatar"><img src="haechi.png" alt="해치"></div>
                 <span class="chat-sender">해치</span>
               </div>
               <div class="chat-bubble">다섯 수호대의 상징 기호(◆) 색상과 이름을 올바르게 연결해 줘!</div>
             </div>
-            <div class="chat-container">
+            <div class="chat-container show">
               <div class="chat-profile-col">
                 <div class="chat-avatar"><img src="ju.png" alt="주작"></div>
                 <span class="chat-sender">주작</span>
@@ -444,7 +463,11 @@
             </div>
           </div>
           <div id="wire-status" style="font-weight: bold; color: var(--pine-green);">연결 완료: 0/5 완료</div>
-          <details><summary>💡 힌트 보기</summary>하늘색-청룡, 연녹색-현무, 주황색-주작, 분홍색-해치, 흰색-백호 입니다.</details>
+          <details>
+            <summary>💡 힌트 보기</summary>
+            하늘색-청룡, 연녹색-현무, 주황색-주작, 분홍색-해치, 흰색-백호 입니다.
+          </details>
+          <button class="cheat-btn" onclick="nextStage()">⚡ 테스트용: 바로 다음 문제로 건너뛰기</button>
         </div>
       </div>
 
@@ -453,14 +476,14 @@
         <div class="quest-title-bar">🔔 미션 2: 행복의 단어♥ 다이얼 자물쇠</div>
         <div class="quest-inner-content">
           <div class="chat-wrapper">
-            <div class="chat-container">
+            <div class="chat-container show">
               <div class="chat-profile-col">
                 <div class="chat-avatar"><img src="haechi.png" alt="해치"></div>
                 <span class="chat-sender">해치</span>
               </div>
               <div class="chat-bubble">다이얼을 돌려 행복의 단어♥ <strong>[H-A-P-P-Y-♥]</strong>를 완성해 줘!</div>
             </div>
-            <div class="chat-container">
+            <div class="chat-container show">
               <div class="chat-profile-col">
                 <div class="chat-avatar"><img src="ju.png" alt="주작"></div>
                 <span class="chat-sender">주작</span>
@@ -477,7 +500,11 @@
             <div class="dial-box"><button class="dial-btn" onclick="spinDial(5, 1)">▲</button><div class="dial-val" id="dial-5">A</div><button class="dial-btn" onclick="spinDial(5, -1)">▼</button></div>
           </div>
           <button class="action-btn" onclick="checkDialStage()">다이얼 잠금 해제</button>
-          <details><summary>💡 힌트 보기</summary>글자를 차례대로 H, A, P, P, Y, ♥ 로 맞추세요.</details>
+          <details>
+            <summary>💡 힌트 보기</summary>
+            글자를 차례대로 H, A, P, P, Y, ♥ 로 맞추세요.
+          </details>
+          <button class="cheat-btn" onclick="nextStage()">⚡ 테스트용: 바로 다음 문제로 건너뛰기</button>
         </div>
       </div>
 
@@ -486,14 +513,14 @@
         <div class="quest-title-bar">🔔 미션 3: 갤러리 팩트체크 결계 해제</div>
         <div class="quest-inner-content">
           <div class="chat-wrapper">
-            <div class="chat-container">
+            <div class="chat-container show">
               <div class="chat-profile-col">
                 <div class="chat-avatar"><img src="haechi.png" alt="해치"></div>
                 <span class="chat-sender">해치</span>
               </div>
               <div class="chat-bubble">제시되는 서울갤러리 상식이 <strong>참(O)</strong>인지 <strong>거짓(X)</strong>인지 판별해 줘!</div>
             </div>
-            <div class="chat-container">
+            <div class="chat-container show">
               <div class="chat-profile-col">
                 <div class="chat-avatar"><img src="ju.png" alt="주작"></div>
                 <span class="chat-sender">주작</span>
@@ -506,6 +533,11 @@
             <button class="action-btn" style="background:var(--pine-green); border-color:var(--pine-dark);" onclick="answerFact(true)">⭕ 참 (O)</button>
             <button class="action-btn" onclick="answerFact(false)">❌ 거짓 (X)</button>
           </div>
+          <details>
+            <summary>💡 힌트 보기</summary>
+            서울갤러리 개관일과 상식을 생각해보세요.
+          </details>
+          <button class="cheat-btn" onclick="nextStage()">⚡ 테스트용: 바로 다음 문제로 건너뛰기</button>
         </div>
       </div>
 
@@ -514,14 +546,14 @@
         <div class="quest-title-bar">🔔 미션 4: 메인 트리 전등 연쇄 켜기</div>
         <div class="quest-inner-content">
           <div class="chat-wrapper">
-            <div class="chat-container">
+            <div class="chat-container show">
               <div class="chat-profile-col">
                 <div class="chat-avatar"><img src="haechi.png" alt="해치"></div>
                 <span class="chat-sender">해치</span>
               </div>
               <div class="chat-bubble">스위치를 누르면 주변 전등도 함께 켜지고 꺼져! 모든 전등(3x3)을 동시에 켜서 트리를 점등해 줘!</div>
             </div>
-            <div class="chat-container">
+            <div class="chat-container show">
               <div class="chat-profile-col">
                 <div class="chat-avatar"><img src="ju.png" alt="주작"></div>
                 <span class="chat-sender">주작</span>
@@ -532,6 +564,11 @@
           <div class="quest-desc">스위치를 눌러 모든 전등을 노란색(ON)으로 만드세요!</div>
           <div class="switch-grid" id="switch-board"></div>
           <button class="action-btn" style="background:#9ca3af; padding:8px; font-size:14px;" onclick="resetSwitches()">스위치 초기화</button>
+          <details>
+            <summary>💡 힌트 보기</summary>
+            스위치를 연쇄적으로 눌러보세요.
+          </details>
+          <button class="cheat-btn" onclick="nextStage()">⚡ 테스트용: 바로 다음 문제로 건너뛰기</button>
         </div>
       </div>
 
@@ -540,14 +577,14 @@
         <div class="quest-title-bar">🔔 미션 5: 4x4 마법진 성물 배치</div>
         <div class="quest-inner-content">
           <div class="chat-wrapper">
-            <div class="chat-container">
+            <div class="chat-container show">
               <div class="chat-profile-col">
                 <div class="chat-avatar"><img src="haechi.png" alt="해치"></div>
                 <span class="chat-sender">해치</span>
               </div>
               <div class="chat-bubble">4x4 마법진 격자 위에 올바른 크리스마스 성물 <strong>3개 (⭐, 🎄, 🎁)</strong>를 정확히 배치해 줘!</div>
             </div>
-            <div class="chat-container">
+            <div class="chat-container show">
               <div class="chat-profile-col">
                 <div class="chat-avatar"><img src="ju.png" alt="주작"></div>
                 <span class="chat-sender">주작</span>
@@ -563,6 +600,11 @@
           </div>
           <div class="matrix-grid" id="matrix-board"></div>
           <button class="action-btn" style="background:#9ca3af; padding:8px; font-size:13px;" onclick="resetMatrix()">배치 초기화</button>
+          <details>
+            <summary>💡 힌트 보기</summary>
+            지정된 자리에 성물을 배치하세요.
+          </details>
+          <button class="cheat-btn" onclick="nextStage()">⚡ 테스트용: 바로 다음 문제로 건너뛰기</button>
         </div>
       </div>
 
@@ -571,14 +613,14 @@
         <div class="quest-title-bar">🔔 미션 6: 캐럴 멜로디 연주</div>
         <div class="quest-inner-content">
           <div class="chat-wrapper">
-            <div class="chat-container">
+            <div class="chat-container show">
               <div class="chat-profile-col">
                 <div class="chat-avatar"><img src="haechi.png" alt="해치"></div>
                 <span class="chat-sender">해치</span>
               </div>
               <div class="chat-bubble">징글벨 도입부 멜로디 <strong>[미-미-미 / 미-미-미 / 미-솔-도-레-미]</strong>를 연주해 줘!</div>
             </div>
-            <div class="chat-container">
+            <div class="chat-container show">
               <div class="chat-profile-col">
                 <div class="chat-avatar"><img src="ju.png" alt="주작"></div>
                 <span class="chat-sender">주작</span>
@@ -595,32 +637,37 @@
             <button class="music-key" onclick="playCarolNote('도', 523.25)">도</button>
             <button class="music-key" onclick="resetCarol()" style="background:#f3f4f6; color:#6b7280;">🔄 초기화</button>
           </div>
+          <details>
+            <summary>💡 힌트 보기</summary>
+            미-미-미 / 미-미-미 / 미-솔-도-레-미 순서입니다.
+          </details>
+          <button class="cheat-btn" onclick="nextStage()">⚡ 테스트용: 바로 다음 문제로 건너뛰기</button>
         </div>
       </div>
     </div>
   </div>
 
   <!-- 4. 엔딩 화면 -->
-  <div id="screen-ending" class="screen" style="padding: 24px; text-align: center; justify-content: space-between;">
+  <div id="screen-ending" class="screen" style="padding: 24px; text-align: center;">
     <div style="margin-top: 20px;">
       <span class="badge" style="background:var(--crimson-red); border-color:#7f1d1d;">MISSION COMPLETE</span>
       <h1 style="font-size: 20px; color: var(--pink-deep); margin-top: 5px;">6단계 방탈출 완전 정복 성공!</h1>
     </div>
-    <div style="width: 100%; height: 150px; background: rgba(255,255,255,0.6); border: 3px solid var(--pink-deep); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--pink-deep); font-size: 14px;">
+    <div style="width: 100%; height: 150px; background: rgba(255,255,255,0.6); border: 3px solid var(--pink-deep); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--pink-deep); font-size: 14px; margin: 15px 0;">
       [ 🎉 크리스마스 축하 엔딩 ]
     </div>
     <div class="interactive-box" style="width: 100%;">
       <div class="quest-title-bar">🎁 축하합니다!</div>
       <div class="quest-inner-content" style="padding: 12px;">
         <div class="chat-wrapper">
-          <div class="chat-container">
+          <div class="chat-container show">
             <div class="chat-profile-col">
               <div class="chat-avatar"><img src="haechi.png" alt="해치"></div>
               <span class="chat-sender">해치</span>
             </div>
             <div class="chat-bubble">모든 미션을 완벽하게 풀고 숲에 따뜻한 크리스마스를 되찾았어!</div>
           </div>
-          <div class="chat-container">
+          <div class="chat-container show">
             <div class="chat-profile-col">
               <div class="chat-avatar"><img src="ju.png" alt="주작"></div>
               <span class="chat-sender">주작</span>
@@ -630,7 +677,7 @@
         </div>
       </div>
     </div>
-    <button class="action-btn" onclick="resetGameCompletely()">처음으로 돌아가기</button>
+    <button class="action-btn" onclick="resetGameCompletely()" style="margin-top: 15px;">처음으로 돌아가기</button>
   </div>
 
   <!-- 결과 알림 모달 -->
@@ -672,7 +719,6 @@
     }
   }
 
-  // 화면 전환을 처리하는 안전하고 명확한 함수
   function goToScreen(screenId, save = true) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     const target = document.getElementById(screenId);
@@ -687,6 +733,52 @@
     initAudio();
     playTone(523, 0.2);
     goToScreen('screen-setup');
+    playDiffIntroChat(); // 난이도 화면 도입 텍스트 타자기 연출 실행
+  }
+
+  // 난이도 선택 화면 도입 스토리 타자기 연출
+  const diffIntroLines = [
+    { name: "해치", avatar: "haechi.png", text: "소망 숲에 어둠이 찾아와 크리스마스 빛이 모두 사라졌어..." },
+    { name: "주작", avatar: "ju.png", text: "우리의 수호 마법을 되찾으려면 6가지 시련을 통과해야 해!" }
+  ];
+
+  function playDiffIntroChat() {
+    const wrapper = document.getElementById("diff-chat-wrapper");
+    if (!wrapper) return;
+    wrapper.innerHTML = "";
+
+    let lineIdx = 0;
+    function showNextLine() {
+      if (lineIdx >= diffIntroLines.length) return;
+      const data = diffIntroLines[lineIdx];
+      lineIdx++;
+
+      const container = document.createElement("div");
+      container.className = "chat-container";
+      container.innerHTML = `
+        <div class="chat-profile-col">
+          <div class="chat-avatar"><img src="${data.avatar}" alt="${data.name}"></div>
+          <span class="chat-sender">${data.name}</span>
+        </div>
+        <div class="chat-bubble"><span></span></div>
+      `;
+      wrapper.appendChild(container);
+      setTimeout(() => container.classList.add("show"), 50);
+
+      const textSpan = container.querySelector(".chat-bubble span");
+      let charIdx = 0;
+      const timer = setInterval(() => {
+        if (charIdx < data.text.length) {
+          textSpan.innerText += data.text.charAt(charIdx);
+          playKeyClickTone();
+          charIdx++;
+        } else {
+          clearInterval(timer);
+          setTimeout(showNextLine, 300);
+        }
+      }, 35);
+    }
+    showNextLine();
   }
 
   function startGamePlay() {
@@ -716,6 +808,20 @@
   function initAudio() {
     if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     if (audioCtx.state === 'suspended') audioCtx.resume();
+  }
+
+  function playKeyClickTone() {
+    initAudio();
+    if (!audioCtx) return;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.frequency.setValueAtTime(700 + Math.random() * 200, audioCtx.currentTime);
+    gain.gain.setValueAtTime(0.01, audioCtx.currentTime);
+    gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + 0.02);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.022);
   }
 
   function playTone(freq, duration, type = 'sine') {
