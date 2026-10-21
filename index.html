@@ -508,7 +508,6 @@
       <img src="outro.gif" alt="공간 상황 이미지" onerror="this.style.display='none';">
     </div>
 
-    <!-- 터치 가능한 채팅 박스 (setup 화면) -->
     <div class="layout-chat-box" onclick="onSetupChatClick()">
       <div class="layout-profile-area">
         <div class="layout-avatar"><img id="setup-avatar-img" src="haechi.gif" alt="프로필"></div>
@@ -529,7 +528,7 @@
     </div>
   </div>
 
-  <!-- 3. 스토리 채팅 진행 화면 (클릭 시 다음 대화 전환) -->
+  <!-- 3. 스토리 채팅 진행 화면 -->
   <div id="screen-story" class="screen">
     <header>
       <div style="display:flex; align-items:center; gap:8px;">
@@ -547,7 +546,6 @@
           <img src="outro.gif" alt="공간 이미지" onerror="this.style.display='none';">
         </div>
 
-        <!-- 터치 가능한 스토리 채팅 박스 -->
         <div class="layout-chat-box" onclick="onStoryChatClick()">
           <div class="layout-profile-area">
             <div class="layout-avatar"><img id="story-avatar" src="haechi.gif" alt="프로필"></div>
@@ -669,7 +667,7 @@
           </div>
           <button class="action-btn" style="background:#f3f4f6; color:#6b7280; border:2px solid #9ca3af; padding:10px; font-size:14px;" onclick="resetCarol()">🔄 초기화</button>
           <details><summary>💡 힌트 보기</summary>미-미-미 / 미-미-미 / 미-솔-도-레-미 순서입니다.</details>
-          <button class="cheat-btn" onclick="nextStage()">⚡ 테스트용: 다음 문제로 건너뛰기</button>
+          <button class="cheat-btn" onclick="nextStage()">⚡ 테스트용: 바로 다음 문제로 건너뛰기</button>
         </div>
       </div>
     </div>
@@ -785,13 +783,12 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // 상단 '◀ 앞으로' 버튼 동작 (현재 화면에 따라 이전 단계로 분기)
+  // 상단 '◀ 앞으로' 버튼 동작
   function goToPrevStep() {
     const activeScreen = document.querySelector('.screen.active');
     if (!activeScreen) return;
 
     if (activeScreen.id === 'screen-game') {
-      // 문제 풀이 화면이면 직전 스토리 브리핑 화면으로 이동
       goToScreen('screen-story');
       startStoryChatSequence(currentStage);
     } else if (activeScreen.id === 'screen-story') {
@@ -800,7 +797,6 @@
         goToScreen('screen-story');
         startStoryChatSequence(currentStage);
       } else {
-        // 1스테이지 브리핑이면 난이도 선택 화면으로
         goToScreen('screen-setup');
         startSetupChatSequence();
       }
@@ -823,9 +819,9 @@
   }
 
   const setupChatLines = [
-    { name: "해치", avatar: "haechi.png", text: "안녕 모험가 친구! 소망 숲에 짙은 어둠이 찾아와 크리스마스의 마법 빛과 자명종 소리가 모두 멈춰버렸어..." },
+    { name: "해치", avatar: "haechi.gif", text: "안녕 모험가 친구! 소망 숲에 짙은 어둠이 찾아와 크리스마스의 마법 빛과 자명종 소리가 모두 멈춰버렸어..." },
     { name: "주작", avatar: "ju.png", text: "이대로 두면 올해 크리스마스는 없어! 숲을 구하려면 총 6가지의 시련(미션)을 돌파해 봉인을 해제해야만 해." },
-    { name: "해치", avatar: "haechi.png", text: "각 공간마다 숨겨진 비밀을 풀고 빛과 소리를 되찾아주면 돼. 우리와 함께 모험을 시작해 줄 거지?" }
+    { name: "해치", avatar: "haechi.gif", text: "각 공간마다 숨겨진 비밀을 풀고 빛과 소리를 되찾아주면 돼. 우리와 함께 모험을 시작해 줄 거지?" }
   ];
 
   function startSetupChatSequence() {
@@ -1055,7 +1051,7 @@
     osc.connect(gain);
     gain.connect(audioCtx.destination);
     osc.start();
-    osc.stop(audioCtx.currentTime + 0.022);
+    osc.stop(audioCtx.currentTime + 0.02);
   }
 
   function playTone(freq, duration, type = 'sine') {
