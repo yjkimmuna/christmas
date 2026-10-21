@@ -36,7 +36,7 @@
       color: var(--text-dark);
       display: flex;
       justify-content: center;
-      align-items: flex-start; /* 상단 여백 제거를 위해 flex-start 적용 */
+      align-items: flex-start;
       min-height: 100vh;
       overflow: hidden;
       padding-top: 0;
@@ -47,7 +47,7 @@
       position: relative;
       width: 100vw;
       max-width: 440px;
-      aspect-ratio: 1 / 1.8; /* 가로 대비 세로 180% 비율 고정 */
+      aspect-ratio: 1 / 1.8;
       max-height: 98vh;
       background: var(--pink-bg);
       display: flex;
@@ -55,7 +55,7 @@
       overflow: hidden;
       border: 4px solid var(--pink-deep);
       box-shadow: 4px 4px 0px #831843, 8px 8px 0px rgba(219, 39, 119, 0.3);
-      border-radius: 0 0 12px 12px; /* 상단 딱 붙게 하단만 둥글게 */
+      border-radius: 0 0 12px 12px;
     }
 
     /* 화면 전환용 공통 클래스 */
@@ -133,7 +133,7 @@
       z-index: 20;
     }
 
-    /* 2. 난이도 및 캐릭터 선택 화면 (채팅창 바로 아래 밀착) */
+    /* 2. 난이도 및 캐릭터 선택 화면 */
     #screen-setup {
       justify-content: flex-start;
       align-items: center;
@@ -153,7 +153,7 @@
       flex-direction: column;
       gap: 10px;
       box-shadow: 5px 5px 0px rgba(219, 39, 119, 0.2);
-      margin-top: 6px; /* 채팅창 아래 적당한 여백만 부여 */
+      margin-top: 6px;
     }
 
     .diff-title {
@@ -367,13 +367,37 @@
     .music-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; width: 100%; }
     .music-key { background: #fff; border: 2px solid var(--pink-deep); border-radius: 6px; padding: 10px 0; font-size: 13px; font-weight: bold; color: var(--pink-deep); cursor: pointer; box-shadow: 0 3px 0px var(--pink-primary); }
 
-    /* 4. 엔딩 화면 */
+    /* 4. 엔딩 화면 (outro.gif 배경 및 하단 140px 대화 상자) */
     #screen-ending {
-      justify-content: space-between;
+      background: #000;
+      justify-content: flex-end;
       align-items: center;
-      padding: 24px 20px;
-      text-align: center;
+      padding: 0;
       z-index: 20;
+    }
+
+    .outro-bg-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #000;
+      z-index: 1;
+    }
+
+    .outro-dialog-box {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      height: 140px; /* 요청하신 하단 140px 고정 높이 */
+      background: rgba(255, 241, 245, 0.92);
+      border-top: 3px solid var(--pink-deep);
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 -4px 10px rgba(0,0,0,0.2);
     }
 
     .modal { display: none; position: absolute; inset: 0; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(4px); z-index: 150; justify-content: center; align-items: center; padding: 22px; }
@@ -388,7 +412,7 @@
     <img src="intro.gif" alt="인트로 배경" class="intro-bg-img" onerror="this.style.display='none';">
     <div class="intro-header-box">
       <span class="intro-badge">SEOUL GALLERY WINTER EVENT</span>
-      <h1 class="intro-title">해치 크리스마스</h1>
+      <h1 class="intro-title">해치 크리스마스:<br>소망 숲 모험</h1>
     </div>
     <button class="intro-transparent-btn" onclick="goToDifficulty()"></button>
   </div>
@@ -397,10 +421,9 @@
   <div id="screen-setup" class="screen">
     <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; margin-top: 6px; width: 100%;">
       <span class="badge" style="background:var(--pine-green);">LEVEL & CHARACTER SELECT</span>
-      <h1 style="font-size: 17px; color: var(--pink-deep);">크리스마스 서울갤러리 모험</h1>
+      <h1 style="font-size: 18px; color: var(--pink-deep);">수호대와 함께 떠나는 크리스마스 모험</h1>
     </div>
 
-    <!-- 채팅창 바로 아래에 바짝 붙는 카드 -->
     <div class="chat-wrapper" id="diff-chat-wrapper" style="width: 100%; margin-top: 4px;"></div>
 
     <div class="diff-card">
@@ -525,8 +548,8 @@
             <button class="music-key" onclick="playCarolNote('파', 349.23)">파</button>
             <button class="music-key" onclick="playCarolNote('솔', 392.00)">솔</button>
             <button class="music-key" onclick="playCarolNote('라', 440.00)" style="grid-column: span 1;">라</button>
-            <button class="music-key" onclick="playCarolNote('시', 493.88)" style="grid-column: span 1;">시</button>
-            <button class="music-key" onclick="resetCarol()" style="grid-column: span 3; background:#f3f4f6; color:#6b7280;">🔄 초기화</button>
+            <button class="music-key" onclick="playCarolNote('시', 493.88)" style="grid-column: span 2;">시</button>
+            <button class="music-key" onclick="resetCarol()" style="grid-column: span 2; background:#f3f4f6; color:#6b7280;">🔄 초기화</button>
           </div>
           <details><summary>💡 힌트 보기</summary>미-미-미 / 미-미-미 / 미-솔-도-레-미 순서입니다.</details>
           <button class="cheat-btn" onclick="nextStage()">⚡ 테스트용: 바로 다음 문제로 건너뛰기</button>
@@ -535,37 +558,13 @@
     </div>
   </div>
 
-  <!-- 4. 엔딩 화면 -->
-  <div id="screen-ending" class="screen" style="padding: 24px; text-align: center;">
-    <div style="margin-top: 20px;">
-      <span class="badge" style="background:var(--crimson-red); border-color:#7f1d1d;">MISSION COMPLETE</span>
-      <h1 style="font-size: 20px; color: var(--pink-deep); margin-top: 5px;">6단계 방탈출 완전 정복 성공!</h1>
+  <!-- 4. 엔딩 화면 (outro.gif 배경 및 하단 140px 타자기 대화 박스) -->
+  <div id="screen-ending" class="screen">
+    <img src="outro.gif" alt="아웃트로 배경" class="outro-bg-img" onerror="this.style.display='none';">
+    <div class="outro-dialog-box">
+      <div class="chat-wrapper" id="outro-chat-wrapper" style="gap: 4px;"></div>
+      <button class="action-btn" onclick="resetGameCompletely()" style="padding: 8px; font-size: 14px;">처음으로 돌아가기</button>
     </div>
-    <div style="width: 100%; height: 150px; background: rgba(255,255,255,0.6); border: 3px solid var(--pink-deep); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--pink-deep); font-size: 14px; margin: 15px 0;">
-      [ 🎉 크리스마스 축하 엔딩 ]
-    </div>
-    <div class="interactive-box" style="width: 100%;">
-      <div class="quest-title-bar">🎁 축하합니다!</div>
-      <div class="quest-inner-content" style="padding: 12px;">
-        <div class="chat-wrapper">
-          <div class="chat-container show">
-            <div class="chat-profile-col">
-              <div class="chat-avatar"><img src="haechi.png" alt="해치"></div>
-              <span class="chat-sender">해치</span>
-            </div>
-            <div class="chat-bubble">모든 미션을 완벽하게 풀고 숲에 따뜻한 크리스마스를 되찾았어!</div>
-          </div>
-          <div class="chat-container show">
-            <div class="chat-profile-col">
-              <div class="chat-avatar"><img src="ju.png" alt="주작"></div>
-              <span class="chat-sender">주작</span>
-            </div>
-            <div class="chat-bubble">안내 데스크에 가면 선물을 받을 수 있어! 정말 수고했어 🎁</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <button class="action-btn" onclick="resetGameCompletely()" style="margin-top: 15px;">처음으로 돌아가기</button>
   </div>
 
   <!-- 결과 알림 모달 -->
@@ -602,7 +601,8 @@
     if (savedScreen && savedScreen !== 'screen-intro' && savedStage) {
       currentStage = parseInt(savedStage);
       goToScreen(savedScreen, false);
-      showStage(currentStage);
+      if(savedScreen === 'screen-game') showStage(currentStage);
+      if(savedScreen === 'screen-ending') playOutroChat();
     } else {
       goToScreen('screen-intro', false);
     }
@@ -670,7 +670,52 @@
     showNextLine();
   }
 
-  // 문제 페이지별 해치(중심 내용) & 주작(문제 푸는 방법 설명) 대화 데이터
+  // 엔딩 아웃트로 타자기 대화 데이터
+  const outroChatLines = [
+    { name: "해치", avatar: "haechi.png", text: "모든 시련을 극복하고 숲에 따뜻한 크리스마스를 되찾았어!" },
+    { name: "주작", avatar: "ju.png", text: "안내 데스크에 가면 멋진 선물이 기다리고 있어! 축하해 🎁" }
+  ];
+
+  function playOutroChat() {
+    const wrapper = document.getElementById("outro-chat-wrapper");
+    if (!wrapper) return;
+    wrapper.innerHTML = "";
+
+    let lineIdx = 0;
+    function showNextLine() {
+      if (lineIdx >= outroChatLines.length) return;
+      const data = outroChatLines[lineIdx];
+      lineIdx++;
+
+      const container = document.createElement("div");
+      container.className = "chat-container";
+      container.innerHTML = `
+        <div class="chat-profile-col">
+          <div class="chat-avatar" style="width:30px; height:30px;"><img src="${data.avatar}" alt="${data.name}"></div>
+          <span class="chat-sender" style="font-size:10px;">${data.name}</span>
+        </div>
+        <div class="chat-bubble" style="padding:6px 9px; font-size:12px;"><span></span></div>
+      `;
+      wrapper.appendChild(container);
+      setTimeout(() => container.classList.add("show"), 50);
+
+      const textSpan = container.querySelector(".chat-bubble span");
+      let charIdx = 0;
+      const timer = setInterval(() => {
+        if (charIdx < data.text.length) {
+          textSpan.innerText += data.text.charAt(charIdx);
+          playKeyClickTone();
+          charIdx++;
+        } else {
+          clearInterval(timer);
+          setTimeout(showNextLine, 250);
+        }
+      }, 25);
+    }
+    showNextLine();
+  }
+
+  // 문제 페이지별 해치 & 주작 대화 데이터
   const stageChatData = {
     1: [
       { name: "해치", avatar: "haechi.png", text: "다섯 수호대의 상징 기호(◆) 색상과 이름을 올바르게 찾아야 해!" },
@@ -834,9 +879,9 @@
     }
   }
 
-  // [미션 2] 다이얼 자물쇠 로직 (HAECHI 시작 세팅 및 상하 인접 글자 표시)
+  // [미션 2] 다이얼 자물쇠 로직
   const dialChars = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','♥'];
-  let currentDialIndices = [7, 0, 4, 2, 7, 8]; // H, A, E, C, H, I 초기값
+  let currentDialIndices = [7, 0, 4, 2, 7, 8];
 
   function initWheels() {
     const wrap = document.getElementById("wheel-columns-wrap");
@@ -887,7 +932,7 @@
     }
   }
 
-  // [미션 3] 진실/거짓 스와이프 OX 로직 (문항 교체 반영)
+  // [미션 3] 진실/거짓 스와이프 OX 로직
   const factList = [
     { text: "서울갤러리의 개관일은 2월 5일이다.", answer: true },
     { text: "군기시는 조선시대 학문을 공부하던 곳이다.", answer: false }
@@ -950,7 +995,7 @@
     renderSwitches();
   }
 
-  // [미션 5] 4x4 마법진 성물 배치 로직 (첫 줄 정답 적용)
+  // [미션 5] 4x4 마법진 성물 배치 로직
   let selectedShape = null;
   let matrixState = Array(16).fill("");
 
@@ -999,7 +1044,7 @@
     renderMatrix();
   }
 
-  // [미션 6] 캐럴 멜로디 연주 로직 (음계 전체 제공)
+  // [미션 6] 캐럴 멜로디 연주 로직
   const carolMelodyTarget = ['미', '미', '미', '미', '미', '미', '미', '솔', '도', '레', '미'];
   let carolInput = [];
 
@@ -1035,6 +1080,7 @@
     document.getElementById("modal").style.display = "none";
     if (currentStage === 6) {
       goToScreen('screen-ending');
+      playOutroChat();
       return;
     }
     currentStage++;
