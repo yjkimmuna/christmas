@@ -36,25 +36,26 @@
       color: var(--text-dark);
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start; /* 상단 여백 제거를 위해 flex-start 적용 */
       min-height: 100vh;
       overflow: hidden;
+      padding-top: 0;
     }
 
-    /* 가로폭 기준, 세로 비율 160% 유지 모바일 컨테이너 */
+    /* 가로폭 기준, 세로 비율 180% 유지 모바일 컨테이너 */
     #app {
       position: relative;
       width: 100vw;
       max-width: 440px;
-      aspect-ratio: 1 / 1.6; /* 가로 대비 세로 160% 비율 고정 */
-      max-height: 95vh;
+      aspect-ratio: 1 / 1.8; /* 가로 대비 세로 180% 비율 고정 */
+      max-height: 98vh;
       background: var(--pink-bg);
       display: flex;
       flex-direction: column;
       overflow: hidden;
       border: 4px solid var(--pink-deep);
       box-shadow: 4px 4px 0px #831843, 8px 8px 0px rgba(219, 39, 119, 0.3);
-      border-radius: 12px;
+      border-radius: 0 0 12px 12px; /* 상단 딱 붙게 하단만 둥글게 */
     }
 
     /* 화면 전환용 공통 클래스 */
@@ -132,11 +133,11 @@
       z-index: 20;
     }
 
-    /* 2. 난이도 및 캐릭터 선택 화면 */
+    /* 2. 난이도 및 캐릭터 선택 화면 (채팅창 바로 아래 밀착) */
     #screen-setup {
       justify-content: flex-start;
       align-items: center;
-      padding: 20px;
+      padding: 16px 18px;
       text-align: center;
       gap: 10px;
       overflow-y: auto;
@@ -152,6 +153,7 @@
       flex-direction: column;
       gap: 10px;
       box-shadow: 5px 5px 0px rgba(219, 39, 119, 0.2);
+      margin-top: 6px; /* 채팅창 아래 적당한 여백만 부여 */
     }
 
     .diff-title {
@@ -224,12 +226,12 @@
 
     .content {
       flex: 1;
-      padding: 16px 18px 24px;
+      padding: 14px 16px 20px;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
     }
 
     .interactive-box {
@@ -249,7 +251,7 @@
       width: 100%;
       background: var(--pine-green);
       color: #ffffff;
-      padding: 12px 16px;
+      padding: 10px 16px;
       font-size: 15px;
       font-weight: bold;
       text-align: center;
@@ -258,17 +260,17 @@
 
     .quest-inner-content {
       width: 100%;
-      padding: 16px;
+      padding: 14px;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 12px;
       align-items: center;
     }
 
     .chat-wrapper {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
       width: 100%;
     }
 
@@ -296,7 +298,7 @@
     }
 
     .chat-avatar {
-      width: 40px; height: 40px; border-radius: 4px; background: #fdf2f8;
+      width: 38px; height: 38px; border-radius: 4px; background: #fdf2f8;
       display: flex; justify-content: center;
       align-items: center; overflow: hidden;
     }
@@ -306,36 +308,31 @@
 
     .chat-bubble {
       background: #fdf2f8; border: 2px solid var(--pink-primary); border-radius: 6px;
-      padding: 10px 12px; font-size: 14px; line-height: 1.5; color: #374151; word-break: break-all; flex: 1;
-    }
-
-    .quest-desc {
-      font-size: 14px; color: var(--text-dark); line-height: 1.5; width: 100%;
-      background: #fff1f5; padding: 10px 12px; border-radius: 6px; border: 1.5px dashed var(--pink-primary);
+      padding: 9px 11px; font-size: 13.5px; line-height: 1.45; color: #374151; word-break: break-all; flex: 1;
     }
 
     .action-btn {
-      width: 100%; padding: 14px; background: var(--crimson-red); color: #ffffff;
-      border: 3px solid #7f1d1d; border-radius: 6px; font-size: 17px; font-weight: bold; cursor: pointer;
+      width: 100%; padding: 12px; background: var(--crimson-red); color: #ffffff;
+      border: 3px solid #7f1d1d; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer;
       box-shadow: 0 4px 0px #7f1d1d;
     }
     .action-btn:active { transform: translateY(4px); box-shadow: 0 0px 0px #7f1d1d; }
 
     details {
       width: 100%; background: #f0fdf4; border: 2px solid var(--pine-green);
-      padding: 10px 12px; border-radius: 6px; font-size: 13px; color: var(--pine-dark); text-align: left;
+      padding: 9px 11px; border-radius: 6px; font-size: 12.5px; color: var(--pine-dark); text-align: left;
     }
     summary { cursor: pointer; font-weight: bold; color: var(--pine-green); }
 
     /* 테스트용 치트 버튼 */
     .cheat-btn {
       width: 100%;
-      padding: 8px;
+      padding: 7px;
       background: #fef08a;
       color: #854d0e;
       border: 2px dashed #ca8a04;
       border-radius: 6px;
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: bold;
       cursor: pointer;
     }
@@ -354,21 +351,21 @@
     .sub-letter { font-size: 12px; font-weight: bold; color: #9ca3af; height: 16px; opacity: 0.6; }
     .main-letter { width: 38px; height: 42px; background: var(--pink-deep); color: #fff; border-radius: 4px; display: flex; justify-content: center; align-items: center; font-size: 18px; font-weight: bold; margin: 2px 0; }
 
-    .swipe-card { width: 100%; background: #fff5f8; border: 2px solid var(--pink-primary); border-radius: 8px; padding: 18px; font-size: 15px; font-weight: bold; min-height: 80px; display: flex; align-items: center; justify-content: center; text-align: center; }
+    .swipe-card { width: 100%; background: #fff5f8; border: 2px solid var(--pink-primary); border-radius: 8px; padding: 16px; font-size: 15px; font-weight: bold; min-height: 75px; display: flex; align-items: center; justify-content: center; text-align: center; }
 
-    .switch-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 220px; margin: 0 auto; }
-    .light-switch { height: 60px; background: #e2e8f0; border: 3px solid #cbd5e1; border-radius: 8px; font-size: 22px; display: flex; justify-content: center; align-items: center; cursor: pointer; }
+    .switch-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 210px; margin: 0 auto; }
+    .light-switch { height: 55px; background: #e2e8f0; border: 3px solid #cbd5e1; border-radius: 8px; font-size: 22px; display: flex; justify-content: center; align-items: center; cursor: pointer; }
     .light-switch.on { background: #fef08a; border-color: #ca8a04; box-shadow: 0 0 10px #fde047; }
 
-    .matrix-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; width: 220px; margin: 0 auto; }
-    .matrix-cell { height: 48px; background: #f8fafc; border: 2px solid var(--pine-dark); border-radius: 6px; font-size: 20px; display: flex; justify-content: center; align-items: center; cursor: pointer; }
+    .matrix-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; width: 210px; margin: 0 auto; }
+    .matrix-cell { height: 44px; background: #f8fafc; border: 2px solid var(--pine-dark); border-radius: 6px; font-size: 18px; display: flex; justify-content: center; align-items: center; cursor: pointer; }
     .matrix-cell.placed { background: var(--soft-pink); border-color: var(--crimson-red); }
     .shape-pool { display: flex; gap: 10px; justify-content: center; }
-    .shape-btn { padding: 8px 14px; background: #fff; border: 2px solid var(--pink-deep); border-radius: 6px; font-size: 18px; font-weight: bold; cursor: pointer; }
+    .shape-btn { padding: 6px 12px; background: #fff; border: 2px solid var(--pink-deep); border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; }
     .shape-btn.selected { background: var(--soft-pink); border-color: var(--crimson-red); }
 
     .music-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; width: 100%; }
-    .music-key { background: #fff; border: 2px solid var(--pink-deep); border-radius: 6px; padding: 12px 0; font-size: 14px; font-weight: bold; color: var(--pink-deep); cursor: pointer; box-shadow: 0 3px 0px var(--pink-primary); }
+    .music-key { background: #fff; border: 2px solid var(--pink-deep); border-radius: 6px; padding: 10px 0; font-size: 13px; font-weight: bold; color: var(--pink-deep); cursor: pointer; box-shadow: 0 3px 0px var(--pink-primary); }
 
     /* 4. 엔딩 화면 */
     #screen-ending {
@@ -398,14 +395,15 @@
 
   <!-- 2. 난이도 및 캐릭터 선택 화면 -->
   <div id="screen-setup" class="screen">
-    <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; margin-top: 10px; width: 100%;">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; margin-top: 6px; width: 100%;">
       <span class="badge" style="background:var(--pine-green);">LEVEL & CHARACTER SELECT</span>
-      <h1 style="font-size: 18px; color: var(--pink-deep);">수호대와 함께 떠나는 크리스마스 모험</h1>
+      <h1 style="font-size: 17px; color: var(--pink-deep);">수호대와 함께 떠나는 크리스마스 모험</h1>
     </div>
 
-    <div class="chat-wrapper" id="diff-chat-wrapper" style="width: 100%; margin-top: 5px;"></div>
+    <!-- 채팅창 바로 아래에 바짝 붙는 카드 -->
+    <div class="chat-wrapper" id="diff-chat-wrapper" style="width: 100%; margin-top: 4px;"></div>
 
-    <div class="diff-card" style="margin-top: auto;">
+    <div class="diff-card">
       <div class="diff-title">🎯 난이도 선택</div>
       <div class="diff-options" style="display: flex; flex-direction: column; gap: 8px;">
         <button class="diff-btn" onclick="startGamePlay()">
@@ -436,7 +434,6 @@
         <div class="quest-title-bar">🔔 미션 1: 수호대별 상징 기호 연결</div>
         <div class="quest-inner-content">
           <div class="chat-wrapper" id="stage-1-chat"></div>
-          <div class="quest-desc">왼쪽 컬러 기호를 고른 뒤, 오른쪽 올바른 수호대 이름을 선택하세요!</div>
           <div class="wire-container">
             <div class="wire-col">
               <div class="wire-node" style="color:#0284c7;" onclick="selectLeftWire(1, this)"><span style="font-size:16px;">◆</span></div>
@@ -491,7 +488,6 @@
         <div class="quest-title-bar">🔔 미션 4: 메인 트리 전등 연쇄 켜기</div>
         <div class="quest-inner-content">
           <div class="chat-wrapper" id="stage-4-chat"></div>
-          <div class="quest-desc">스위치를 눌러 모든 전등을 노란색(ON)으로 만드세요!</div>
           <div class="switch-grid" id="switch-board"></div>
           <button class="action-btn" style="background:#9ca3af; padding:8px; font-size:14px;" onclick="resetSwitches()">스위치 초기화</button>
           <details><summary>💡 힌트 보기</summary>스위치를 연쇄적으로 눌러보세요.</details>
@@ -504,7 +500,6 @@
         <div class="quest-title-bar">🔔 미션 5: 4x4 마법진 성물 배치</div>
         <div class="quest-inner-content">
           <div class="chat-wrapper" id="stage-5-chat"></div>
-          <div class="quest-desc">배치할 성물을 먼저 고른 뒤, 첫 번째 줄 세 칸(첫 줄 왼쪽부터 3칸)에 순서대로 배치하세요!</div>
           <div class="shape-pool" id="shape-pool">
             <div class="shape-btn" onclick="selectShape('⭐', this)">⭐</div>
             <div class="shape-btn" onclick="selectShape('🎄', this)">🎄</div>
@@ -522,7 +517,7 @@
         <div class="quest-title-bar">🔔 미션 6: 캐럴 멜로디 연주</div>
         <div class="quest-inner-content">
           <div class="chat-wrapper" id="stage-6-chat"></div>
-          <div class="quest-desc" id="music-status">진행 상황: (0/11 음표 입력)</div>
+          <div class="quest-desc" id="music-status" style="padding:6px; background:#fff1f5; border-radius:6px; font-size:13px; font-weight:bold; color:var(--pink-deep); width:100%;">진행 상황: (0/11 음표 입력)</div>
           <div class="music-grid">
             <button class="music-key" onclick="playCarolNote('도', 261.63)">도</button>
             <button class="music-key" onclick="playCarolNote('레', 293.66)">레</button>
@@ -675,31 +670,31 @@
     showNextLine();
   }
 
-  // 문제 페이지 내부 순차적 채팅 타이핑 연출 데이터
+  // 문제 페이지별 해치(중심 내용) & 주작(문제 푸는 방법 설명) 대화 데이터
   const stageChatData = {
     1: [
-      { name: "해치", avatar: "haechi.png", text: "다섯 수호대의 상징 기호(◆) 색상과 이름을 올바르게 연결해 줘!" },
-      { name: "주작", avatar: "ju.png", text: "헷갈리지 않게 신중하게 선을 이어봐야 할 것 같아!" }
+      { name: "해치", avatar: "haechi.png", text: "다섯 수호대의 상징 기호(◆) 색상과 이름을 올바르게 찾아야 해!" },
+      { name: "주작", avatar: "ju.png", text: "왼쪽 컬러 기호를 먼저 고른 뒤, 오른쪽에서 올바른 수호대 이름을 선택해 줘!" }
     ],
     2: [
-      { name: "해치", avatar: "haechi.png", text: "다이얼을 돌려 행복의 단어♥ [H-A-P-P-Y-♥]를 완성해 줘!" },
-      { name: "주작", avatar: "ju.png", text: "마지막 글자는 알파벳이 아니라 하트라는 거 잊지 마!" }
+      { name: "해치", avatar: "haechi.png", text: "잠겨버린 자물쇠를 열고 행복의 단어를 완성해 보자!" },
+      { name: "주작", avatar: "ju.png", text: "다이얼을 위아래로 굴려서 H-A-P-P-Y-♥ 순서대로 글자를 맞춰줘!" }
     ],
     3: [
-      { name: "해치", avatar: "haechi.png", text: "제시되는 서울갤러리 상식이 참(O)인지 거짓(X)인지 판별해 줘!" },
-      { name: "주작", avatar: "ju.png", text: "내용을 꼼꼼히 읽어봐야 함정을 피할 수 있어." }
+      { name: "해치", avatar: "haechi.png", text: "서울갤러리 역사와 관련된 팩트체크 결계를 해제해야 해!" },
+      { name: "주작", avatar: "ju.png", text: "제시되는 문장을 꼼꼼히 읽고 참(O)인지 거짓(X)인지 판별해 줘!" }
     ],
     4: [
-      { name: "해치", avatar: "haechi.png", text: "스위치를 누르면 주변 전등도 함께 켜지고 꺼져! 모든 전등(3x3)을 동시에 켜 줘!" },
-      { name: "주작", avatar: "ju.png", text: "서로 연동되니까 순서를 잘 계산해서 눌러보자!" }
+      { name: "해치", avatar: "haechi.png", text: "메인 트리의 불이 꺼졌어. 모든 전등을 동시에 켜야 해!" },
+      { name: "주작", avatar: "ju.png", text: "스위치를 누르면 주변 전등도 함께 켜지고 꺼지니까 순서를 잘 계산해 봐!" }
     ],
     5: [
-      { name: "해치", avatar: "haechi.png", text: "4x4 마법진 격자 위에 올바른 크리스마스 성물 3개를 정확히 배치해 줘!" },
-      { name: "주작", avatar: "ju.png", text: "첫 번째 줄에 나란히 배치해야 결계가 열릴 거야!" }
+      { name: "해치", avatar: "haechi.png", text: "4x4 마법진의 봉인을 해제할 성물 배치가 필요해!" },
+      { name: "주작", avatar: "ju.png", text: "상단에서 성물을 고른 뒤 첫 번째 줄 세 칸에 나란히 배치해 줘!" }
     ],
     6: [
-      { name: "해치", avatar: "haechi.png", text: "징글벨 도입부 멜로디 [미-미-미 / 미-미-미 / 미-솔-도-레-미]를 연주해 줘!" },
-      { name: "주작", avatar: "ju.png", text: "마지막 관문이야! 아름다운 캐럴을 완성해 줘!" }
+      { name: "해치", avatar: "haechi.png", text: "자명종을 울릴 마지막 오르골 멜로디를 연주할 시간이야!" },
+      { name: "주작", avatar: "ju.png", text: "하단의 음계 버튼을 눌러 징글벨 도입부[미-미-미 / 미-미-미 / 미-솔-도-레-미]를 연주해 줘!" }
     ]
   };
 
