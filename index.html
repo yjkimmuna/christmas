@@ -241,7 +241,6 @@
       object-fit: cover;
     }
 
-    /* 채팅 박스 공통 정렬 (여백 문제 해결) */
     .layout-chat-box {
       display: flex;
       width: 100%;
@@ -276,48 +275,45 @@
       object-fit: cover;
     }
 
+    /* 채팅 메시지 상단 정렬 및 줄바꿈형 인디케이터 배치를 위한 수정 */
     .layout-msg-area {
       width: 72%;
       background: #fff1f5;
       color: var(--text-dark);
-      padding: 10px 14px;
-      font-size: 14px;
-      line-height: 1.45;
+      padding: 8px 12px;
+      font-size: 13.5px;
+      line-height: 1.4;
       text-align: left;
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
+      justify-content: flex-start; /* 맨 위부터 채워지도록 정렬 */
       position: relative;
       overflow-y: auto;
       word-break: break-all;
     }
     .layout-msg-sender {
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: bold;
       color: var(--pink-deep);
-      margin-bottom: 4px;
+      margin-bottom: 2px;
+      flex-shrink: 0;
     }
     .layout-msg-content {
-      flex: 1;
-      display: flex;
-      align-items: center;
       width: 100%;
-      position: relative;
+      display: block; /* 인라인 블록 흐름으로 메시지 바로 아래에 인디케이터가 오도록 수정 */
     }
 
-    /* 텍스트형 인디케이터 ('▶ 응 내가 도와줄게!', '▶ 다음 (문제 풀기) ➔') */
+    /* 텍스트형 인디케이터 ('▶ 응 내가 도와줄게!', '▶ 다음 (문제 풀기) ➔')를 메시지 바로 아래 줄에 출력 */
     .next-indicator-text {
-      position: absolute;
-      right: 2px;
-      bottom: 2px;
+      display: inline-block;
+      margin-top: 4px;
       font-size: 12px;
       font-weight: bold;
       color: var(--pink-deep);
       background: #ffe4e6;
-      padding: 2px 6px;
+      padding: 1px 5px;
       border-radius: 4px;
       animation: blinkIndicator 0.8s infinite alternate;
-      display: none;
     }
     @keyframes blinkIndicator {
       0% { opacity: 0.3; }
@@ -457,8 +453,9 @@
     .shape-btn { padding: 10px 18px; background: #fff; border: 2px solid var(--pink-deep); border-radius: 8px; font-size: 20px; font-weight: bold; cursor: pointer; }
     .shape-btn.selected { background: var(--soft-pink); border-color: var(--crimson-red); }
 
+    /* 6번 오르골 건반 세로 길이 5배(대폭) 확장 */
     .music-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; width: 100%; }
-    .music-key { background: #fff; border: 2px solid var(--pink-deep); border-radius: 6px; padding: 16px 0; font-size: 13.5px; font-weight: bold; color: var(--pink-deep); cursor: pointer; box-shadow: 0 3px 0px var(--pink-primary); text-align: center; }
+    .music-key { background: #fff; border: 2px solid var(--pink-deep); border-radius: 6px; padding: 75px 0; font-size: 15px; font-weight: bold; color: var(--pink-deep); cursor: pointer; box-shadow: 0 4px 0px var(--pink-primary); text-align: center; }
 
     #screen-branch {
       justify-content: center;
@@ -583,7 +580,7 @@
     <button class="intro-transparent-btn" onclick="goToDifficulty()"></button>
   </div>
 
-  <!-- 2. 인트로 직후 스토리 브리핑 화면 (수동 터치 넘김 및 "응 내가 도와줄게!" 반영) -->
+  <!-- 2. 인트로 직후 스토리 브리핑 화면 -->
   <div id="screen-setup" class="screen" onclick="progressSetupChat()">
     <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; margin-top: 6px; width: 100%;">
       <span class="badge" style="background:var(--pine-green);">STORY INTRODUCTION</span>
@@ -601,14 +598,16 @@
       <div class="layout-msg-area">
         <div class="layout-msg-sender" id="setup-sender-name">해치</div>
         <div class="layout-msg-content">
-          <span id="setup-msg-text">...</span>
-          <span class="next-indicator-text" id="setup-next-indicator">▶ 응 내가 도와줄게!</span>
+          <div>
+            <span id="setup-msg-text">...</span>
+            <span class="next-indicator-text" id="setup-next-indicator" style="display:none;">▶ 응 내가 도와줄게!</span>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- 3. 스토리 채팅 진행 화면 (분리된 페이지 1) -->
+  <!-- 3. 스토리 채팅 진행 화면 -->
   <div id="screen-story" class="screen" onclick="progressStoryChat()">
     <header>
       <div style="display:flex; align-items:center; gap:8px;">
@@ -633,8 +632,10 @@
           <div class="layout-msg-area">
             <div class="layout-msg-sender" id="story-sender">해치</div>
             <div class="layout-msg-content">
-              <span id="story-msg">...</span>
-              <span class="next-indicator-text" id="story-next-indicator">▶문제 풀기</span>
+              <div>
+                <span id="story-msg">...</span>
+                <span class="next-indicator-text" id="story-next-indicator" style="display:none;">▶문제 풀기</span>
+              </div>
             </div>
           </div>
         </div>
@@ -642,7 +643,7 @@
     </div>
   </div>
 
-  <!-- 4. 실제 문제 풀이 화면 (분리된 페이지 2) -->
+  <!-- 4. 실제 문제 풀이 화면 -->
   <div id="screen-game" class="screen">
     <header>
       <div style="display:flex; align-items:center; gap:8px;">
@@ -724,13 +725,13 @@
             <div class="shape-btn" onclick="selectShape('🎁', this)">🎁</div>
           </div>
           <div class="matrix-grid" id="matrix-board"></div>
-          <button class="action-btn" style="background:#9ca3af; padding:10px; font-size:14px;" onclick="resetMatrix()">배치 초기화</button>
+          <button class="action-btn" style="background:#9ca3af; padding:10px; font-size:13px;" onclick="resetMatrix()">배치 초기화</button>
           <details><summary>💡 힌트 보기</summary>4x4 격자의 맨 윗줄(인덱스 0, 1, 2)에 성물 3개를 채워보세요.</details>
           <button class="cheat-btn" onclick="nextStage()">⚡ 테스트용: 다음 문제로 건너뛰기</button>
         </div>
       </div>
 
-      <!-- [STAGE 6] 캐럴 연주 -->
+      <!-- [STAGE 6] 캐럴 연주 (건반 세로 길이 5배 확장) -->
       <div id="stage-6" class="sub-page-box" style="display:none;">
         <div class="quest-title-bar">🔔 미션 6: 캐럴 연주</div>
         <div class="quest-inner-content" style="padding: 20px;">
@@ -744,7 +745,7 @@
             <button class="music-key" onclick="playCarolNote('라', 440.00)">라</button>
             <button class="music-key" onclick="playCarolNote('시', 493.88)">시</button>
           </div>
-          <button class="action-btn" onclick="resetCarol()" style="background:#f3f4f6; color:#6b7280; border:2px solid #9ca3af; box-shadow:0 3px 0px #9ca3af; font-size:14px; padding:10px;">🔄 초기화</button>
+          <button class="action-btn" onclick="resetCarol()" style="background:#f3f4f6; color:#6b7280; border:2px solid #9ca3af; box-shadow:0 3px 0px #9ca3af; font-size:14px; padding:10px; margin-top:8px;">🔄 초기화</button>
           <details><summary>💡 힌트 보기</summary>미-미-미 / 미-미-미 / 미-솔-도-레-미 순서입니다.</details>
           <button class="cheat-btn" onclick="nextStage()">⚡ 테스트용: 다음 문제로 건너뛰기</button>
         </div>
@@ -782,8 +783,10 @@
         <div class="outro-msg-area">
           <div class="layout-msg-sender" id="outro-sender-name">해치</div>
           <div class="layout-msg-content">
-            <span id="outro-msg-text">...</span>
-            <span class="next-indicator-text" id="outro-next-indicator">▶</span>
+            <div>
+              <span id="outro-msg-text">...</span>
+              <span class="next-indicator-text" id="outro-next-indicator" style="display:none;">▶</span>
+            </div>
           </div>
         </div>
       </div>
@@ -807,10 +810,8 @@
   let audioCtx = null;
   let selectedEnding = 'festival';
 
-  // --- 오디오 중단 관리 변수 ---
   let activeOscillator = null;
 
-  // --- 수동 터치 넘김 타자기 대화 엔진 ---
   let setupChatIdx = 0;
   let setupTypingInterval = null;
   const setupChatLines = [
@@ -918,7 +919,6 @@
     textEl.innerText = "";
     indicator.style.display = "none";
 
-    // 마지막 대사일 경우 '▶ 응 내가 도와줄게!' 텍스트로 표시
     if (setupChatIdx === setupChatLines.length - 1) {
       indicator.innerText = "▶ 응 내가 도와줄게!";
     } else {
@@ -951,7 +951,6 @@
         setupChatIdx++;
         playSetupLine();
       } else {
-        // 마지막 대사 터치 시 게임 시작
         startGamePlay();
       }
     }
@@ -1025,9 +1024,8 @@
     textEl.innerText = "";
     indicator.style.display = "none";
 
-    // 마지막 대사일 경우 '▶ 다음 (문제 풀기) ➔' 텍스트 표시
     if (storyChatIdx === lines.length - 1) {
-      indicator.innerText = "▶ 다음 (문제 풀기) ➔";
+      indicator.innerText = "▶문제 풀기";
     } else {
       indicator.innerText = "▶";
     }
@@ -1059,7 +1057,6 @@
         storyChatIdx++;
         playStoryLine(currentStage);
       } else {
-        // 마지막 대사 터치 시 문제 풀이 화면으로 이동
         goToProblemScreen();
       }
     }
