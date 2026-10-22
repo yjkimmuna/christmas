@@ -132,7 +132,7 @@
       z-index: 20;
     }
 
-    /* 2. 난이도 및 캐릭터 선택 화면 (여백 문제 해결) */
+    /* 2. 난이도 및 캐릭터 선택 화면 */
     #screen-setup {
       justify-content: flex-start;
       align-items: center;
@@ -241,11 +241,11 @@
       object-fit: cover;
     }
 
-    /* 채팅 영역 정렬 및 여백 수정 */
+    /* 채팅 박스 공통 정렬 (여백 문제 해결) */
     .layout-chat-box {
       display: flex;
       width: 100%;
-      height: 115px;
+      height: 105px;
       background: #ffffff;
       border-bottom: 3px dashed var(--pink-primary);
       flex-shrink: 0;
@@ -254,6 +254,7 @@
 
     .layout-profile-area {
       width: 28%;
+      height: 100%;
       background: #fdf2f8;
       border-right: 3px solid var(--pink-deep);
       display: flex;
@@ -303,18 +304,24 @@
       width: 100%;
       position: relative;
     }
-    .next-indicator {
+
+    /* 텍스트형 인디케이터 ('▶ 응 내가 도와줄게!', '▶ 다음 (문제 풀기) ➔') */
+    .next-indicator-text {
       position: absolute;
       right: 2px;
       bottom: 2px;
-      font-size: 14px;
+      font-size: 12px;
+      font-weight: bold;
       color: var(--pink-deep);
+      background: #ffe4e6;
+      padding: 2px 6px;
+      border-radius: 4px;
       animation: blinkIndicator 0.8s infinite alternate;
       display: none;
     }
     @keyframes blinkIndicator {
-      0% { opacity: 0.2; transform: translateX(0); }
-      100% { opacity: 1; transform: translateX(3px); }
+      0% { opacity: 0.3; }
+      100% { opacity: 1; }
     }
 
     .sub-page-box {
@@ -413,7 +420,6 @@
 
     .swipe-card { width: 100%; background: #fff5f8; border: 2px solid var(--pink-primary); border-radius: 8px; padding: 18px; font-size: 16px; font-weight: bold; min-height: 85px; display: flex; align-items: center; justify-content: center; text-align: center; }
 
-    /* 미션 3 참/거짓 버튼 크기 조절 */
     .ox-btn-container {
       display: flex;
       gap: 12px;
@@ -440,6 +446,1000 @@
     }
     .ox-btn:active { transform: translateY(4px); box-shadow: 0 0px 0px #7f1d1d; }
 
-    /* 4번 전등 스위치 화면 */
     .switch-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; width: 100%; max-width: 300px; margin: 0 auto; }
-    .light-switch { height:
+    .light-switch { height: 75px; background: #e2e8f0; border: 3px solid #cbd5e1; border-radius: 10px; font-size: 28px; display: flex; justify-content: center; align-items: center; cursor: pointer; }
+    .light-switch.on { background: #fef08a; border-color: #ca8a04; box-shadow: 0 0 12px #fde047; }
+
+    .matrix-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; width: 100%; max-width: 300px; margin: 0 auto; }
+    .matrix-cell { height: 62px; background: #f8fafc; border: 2px solid var(--pine-dark); border-radius: 8px; font-size: 24px; display: flex; justify-content: center; align-items: center; cursor: pointer; }
+    .matrix-cell.placed { background: var(--soft-pink); border-color: var(--crimson-red); }
+    .shape-pool { display: flex; gap: 12px; justify-content: center; margin-bottom: 4px; }
+    .shape-btn { padding: 10px 18px; background: #fff; border: 2px solid var(--pink-deep); border-radius: 8px; font-size: 20px; font-weight: bold; cursor: pointer; }
+    .shape-btn.selected { background: var(--soft-pink); border-color: var(--crimson-red); }
+
+    .music-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; width: 100%; }
+    .music-key { background: #fff; border: 2px solid var(--pink-deep); border-radius: 6px; padding: 16px 0; font-size: 13.5px; font-weight: bold; color: var(--pink-deep); cursor: pointer; box-shadow: 0 3px 0px var(--pink-primary); text-align: center; }
+
+    #screen-branch {
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      text-align: center;
+      gap: 16px;
+    }
+    .branch-card {
+      width: 100%;
+      background: #ffffff;
+      border: 3px solid var(--pink-deep);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: 5px 5px 0px rgba(219, 39, 119, 0.2);
+    }
+    .branch-btn {
+      width: 100%;
+      padding: 14px 10px;
+      background: #fff5f8;
+      border: 2px solid var(--pink-primary);
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: bold;
+      color: var(--text-dark);
+      cursor: pointer;
+      text-align: center;
+      box-shadow: 2px 2px 0px var(--border-pink);
+      word-break: keep-all;
+    }
+    .branch-btn:hover { background: var(--soft-pink); border-color: var(--pink-deep); }
+
+    #screen-ending {
+      background: #000;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 0;
+      z-index: 20;
+    }
+
+    .outro-bg-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #000;
+      z-index: 1;
+    }
+
+    .outro-dialog-box {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      height: 150px;
+      background: rgba(255, 241, 245, 0.96);
+      border-top: 3px solid var(--pink-deep);
+      padding: 10px 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 -4px 10px rgba(0,0,0,0.3);
+      cursor: pointer;
+    }
+    .outro-chat-layout {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      width: 100%;
+      height: 90px;
+    }
+    .outro-profile-area {
+      width: 28%;
+      height: 100%;
+      background: #fdf2f8;
+      border: 2px solid var(--pink-primary);
+      border-radius: 4px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .outro-profile-area img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .outro-msg-area {
+      width: 72%;
+      background: #fff1f5;
+      border: 2px solid var(--pink-primary);
+      border-radius: 6px;
+      padding: 8px 10px;
+      font-size: 13px;
+      line-height: 1.4;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      position: relative;
+      overflow-y: auto;
+      word-break: break-all;
+    }
+
+    .modal { display: none; position: absolute; inset: 0; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(4px); z-index: 150; justify-content: center; align-items: center; padding: 22px; }
+    .modal-card { background: #ffffff; border: 3px solid var(--pink-deep); border-radius: 12px; padding: 22px 18px; text-align: center; width: 100%; box-shadow: 6px 6px 0px rgba(219, 39, 119, 0.4); }
+  </style>
+</head>
+<body>
+
+<div id="app">
+  <!-- 1. 인트로 화면 -->
+  <div id="screen-intro" class="screen active">
+    <img src="intro.gif" alt="인트로 배경" class="intro-bg-img" onerror="this.style.display='none';">
+    <div class="intro-header-box">
+      <span class="intro-badge">서울갤러리 크리스마스 이벤트</span>
+      <h1 class="intro-title">해치 크리스마스</h1>
+    </div>
+    <button class="intro-transparent-btn" onclick="goToDifficulty()"></button>
+  </div>
+
+  <!-- 2. 인트로 직후 스토리 브리핑 화면 (수동 터치 넘김 및 "응 내가 도와줄게!" 반영) -->
+  <div id="screen-setup" class="screen" onclick="progressSetupChat()">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; margin-top: 6px; width: 100%;">
+      <span class="badge" style="background:var(--pine-green);">STORY INTRODUCTION</span>
+      <h1 style="font-size: 17px; color: var(--pink-deep);">해치 크리스마스: 소망 숲의 비밀</h1>
+    </div>
+
+    <div class="space-image-area" style="margin-top: 6px;">
+      <img src="outro.gif" alt="공간 상황 이미지" onerror="this.style.display='none';">
+    </div>
+
+    <div class="layout-chat-box">
+      <div class="layout-profile-area">
+        <div class="layout-avatar-fill"><img id="setup-avatar-img" src="haechi.gif" alt="프로필"></div>
+      </div>
+      <div class="layout-msg-area">
+        <div class="layout-msg-sender" id="setup-sender-name">해치</div>
+        <div class="layout-msg-content">
+          <span id="setup-msg-text">...</span>
+          <span class="next-indicator-text" id="setup-next-indicator">▶ 응 내가 도와줄게!</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. 스토리 채팅 진행 화면 (분리된 페이지 1) -->
+  <div id="screen-story" class="screen" onclick="progressStoryChat()">
+    <header>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span class="badge" id="story-badge">★★★★★★</span>
+        <span class="pink-tag">해치 크리스마스</span>
+      </div>
+      <button class="reset-btn" onclick="resetGameCompletely()">처음으로</button>
+    </header>
+
+    <div class="content">
+      <div class="story-page-box">
+        <div class="quest-title-bar" id="story-title-bar">🔔 미션 1 브리핑</div>
+        
+        <div class="space-image-area">
+          <img src="outro.gif" alt="공간 이미지" onerror="this.style.display='none';">
+        </div>
+
+        <div class="layout-chat-box">
+          <div class="layout-profile-area">
+            <div class="layout-avatar-fill"><img id="story-avatar" src="haechi.gif" alt="프로필"></div>
+          </div>
+          <div class="layout-msg-area">
+            <div class="layout-msg-sender" id="story-sender">해치</div>
+            <div class="layout-msg-content">
+              <span id="story-msg">...</span>
+              <span class="next-indicator-text" id="story-next-indicator">▶ 다음 (문제 풀기) ➔</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. 실제 문제 풀이 화면 (분리된 페이지 2) -->
+  <div id="screen-game" class="screen">
+    <header>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span class="badge" id="game-badge">★★★★★★</span>
+        <span class="pink-tag">해치 크리스마스</span>
+      </div>
+      <button class="reset-btn" onclick="resetGameCompletely()">처음으로</button>
+    </header>
+
+    <div class="content">
+      <!-- [STAGE 1] 와이어 전선 연결 -->
+      <div id="stage-1" class="sub-page-box" style="display:none;">
+        <div class="quest-title-bar">🔔 미션 1: 컬러 코드</div>
+        <div class="quest-inner-content" style="padding: 16px;">
+          <div style="font-size:13px; font-weight:bold; color:var(--pink-deep); margin-bottom:-4px;">상단 기호를 선택한 뒤 아래 수호대 이름을 누르세요!</div>
+          <div class="wire-top-container">
+            <div class="wire-top-node" style="color:#0284c7;" onclick="selectLeftWire(1, this)">◆</div>
+            <div class="wire-top-node" style="color:#16a34a;" onclick="selectLeftWire(2, this)">◆</div>
+            <div class="wire-top-node" style="color:#ea580c;" onclick="selectLeftWire(3, this)">◆</div>
+            <div class="wire-top-node" style="color:#db2777;" onclick="selectLeftWire(4, this)">◆</div>
+            <div class="wire-top-node" style="color:#475569;" onclick="selectLeftWire(5, this)">◇</div>
+          </div>
+          <div class="wire-bottom-list">
+            <div class="wire-bottom-node" onclick="selectRightWire(4, this)">해치</div>
+            <div class="wire-bottom-node" onclick="selectRightWire(1, this)">청룡</div>
+            <div class="wire-bottom-node" onclick="selectRightWire(5, this)">백호</div>
+            <div class="wire-bottom-node" onclick="selectRightWire(2, this)">현무</div>
+            <div class="wire-bottom-node" onclick="selectRightWire(3, this)">주작</div>
+          </div>
+          <div id="wire-status" style="font-weight: bold; color: var(--pine-green); font-size: 15px;">0/5 완료</div>
+          <details><summary>💡 힌트 보기</summary>하늘색-청룡, 연녹색-현무, 주황색-주작, 분홍색-해치, 흰색-백호 입니다.</details>
+          <button class="cheat-btn" onclick="nextStage()">⚡ 테스트용: 다음 문제로 건너뛰기</button>
+        </div>
+      </div>
+
+      <!-- [STAGE 2] 다이얼 자물쇠 -->
+      <div id="stage-2" class="sub-page-box" style="display:none;">
+        <div class="quest-title-bar">🔔 미션 2: 다이얼 자물쇠</div>
+        <div class="quest-inner-content" style="padding: 20px;">
+          <div class="dial-container" id="wheel-columns-wrap"></div>
+          <button class="action-btn" onclick="checkDialStage()">잠금 해제</button>
+          <details><summary>💡 힌트 보기</summary>글자를 차례대로 H, A, P, P, Y, ♥ 로 맞추세요.</details>
+          <button class="cheat-btn" onclick="nextStage()">⚡ 테스트용: 다음 문제로 건너뛰기</button>
+        </div>
+      </div>
+
+      <!-- [STAGE 3] OX 퀴즈 -->
+      <div id="stage-3" class="sub-page-box" style="display:none;">
+        <div class="quest-title-bar">🔔 미션 3: 팩트체크 OX</div>
+        <div class="quest-inner-content" style="padding: 20px;">
+          <div class="swipe-card" id="fact-card">제시문 로딩중...</div>
+          <div class="ox-btn-container">
+            <button class="ox-btn true-btn" onclick="answerFact(true)">O</button>
+            <button class="ox-btn" onclick="answerFact(false)">X</button>
+          </div>
+          <details><summary>💡 힌트 보기</summary>군기시의 역사적 의미를 생각해보세요.</details>
+          <button class="cheat-btn" onclick="nextStage()">⚡ 테스트용: 다음 문제로 건너뛰기</button>
+        </div>
+      </div>
+      
+      <!-- [STAGE 4] 전등 스위치 -->
+      <div id="stage-4" class="sub-page-box" style="display:none;">
+        <div class="quest-title-bar">🔔 미션 4: 메인 트리 전등 켜기</div>
+        <div class="quest-inner-content" style="padding: 20px;">
+          <div class="switch-grid" id="switch-board"></div>
+          <button class="action-btn" style="background:#9ca3af; padding:10px; font-size:14px;" onclick="resetSwitches()">스위치 초기화</button>
+          <details><summary>💡 힌트 보기</summary>스위치를 연쇄적으로 눌러보세요.</details>
+          <button class="cheat-btn" onclick="nextStage()">⚡ 테스트용: 다음 문제로 건너뛰기</button>
+        </div>
+      </div>
+
+      <!-- [STAGE 5] 성물 배치 -->
+      <div id="stage-5" class="sub-page-box" style="display:none;">
+        <div class="quest-title-bar">🔔 미션 5: 성물 배치</div>
+        <div class="quest-inner-content" style="padding: 20px;">
+          <div class="shape-pool" id="shape-pool">
+            <div class="shape-btn" onclick="selectShape('⭐', this)">⭐</div>
+            <div class="shape-btn" onclick="selectShape('🎄', this)">🎄</div>
+            <div class="shape-btn" onclick="selectShape('🎁', this)">🎁</div>
+          </div>
+          <div class="matrix-grid" id="matrix-board"></div>
+          <button class="action-btn" style="background:#9ca3af; padding:10px; font-size:14px;" onclick="resetMatrix()">배치 초기화</button>
+          <details><summary>💡 힌트 보기</summary>4x4 격자의 맨 윗줄(인덱스 0, 1, 2)에 성물 3개를 채워보세요.</details>
+          <button class="cheat-btn" onclick="nextStage()">⚡ 테스트용: 다음 문제로 건너뛰기</button>
+        </div>
+      </div>
+
+      <!-- [STAGE 6] 캐럴 연주 -->
+      <div id="stage-6" class="sub-page-box" style="display:none;">
+        <div class="quest-title-bar">🔔 미션 6: 캐럴 연주</div>
+        <div class="quest-inner-content" style="padding: 20px;">
+          <div class="quest-desc" id="music-status" style="padding:8px; background:#fff1f5; border-radius:6px; font-size:14px; font-weight:bold; color:var(--pink-deep); width:100%;">진행 상황: (0/11 음표 입력)</div>
+          <div class="music-grid">
+            <button class="music-key" onclick="playCarolNote('도', 261.63)">도</button>
+            <button class="music-key" onclick="playCarolNote('레', 293.66)">레</button>
+            <button class="music-key" onclick="playCarolNote('미', 329.63)">미</button>
+            <button class="music-key" onclick="playCarolNote('파', 349.23)">파</button>
+            <button class="music-key" onclick="playCarolNote('솔', 392.00)">솔</button>
+            <button class="music-key" onclick="playCarolNote('라', 440.00)">라</button>
+            <button class="music-key" onclick="playCarolNote('시', 493.88)">시</button>
+          </div>
+          <button class="action-btn" onclick="resetCarol()" style="background:#f3f4f6; color:#6b7280; border:2px solid #9ca3af; box-shadow:0 3px 0px #9ca3af; font-size:14px; padding:10px;">🔄 초기화</button>
+          <details><summary>💡 힌트 보기</summary>미-미-미 / 미-미-미 / 미-솔-도-레-미 순서입니다.</details>
+          <button class="cheat-btn" onclick="nextStage()">⚡ 테스트용: 다음 문제로 건너뛰기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. 최종 엔딩 분기 선택 화면 -->
+  <div id="screen-branch" class="screen">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%; margin-top: 20px;">
+      <span class="badge" style="background:var(--crimson-red);">FINAL CHOICE</span>
+      <h1 style="font-size: 17px; color: var(--pink-deep);">마지막 자명종을 울릴 마법의 집중점은?</h1>
+    </div>
+    <div class="branch-card" style="margin: 20px; width: calc(100% - 40px);">
+      <div class="diff-title">✨ 엔딩 분기점 선택</div>
+      <div class="diff-options" style="display: flex; flex-direction: column; gap: 10px;">
+        <button class="branch-btn" onclick="selectEndingBranch('festival')">
+          <span>🌟 크리스마스의 화려한 빛과 축제에 집중한다!</span>
+        </button>
+        <button class="branch-btn" onclick="selectEndingBranch('warmth')">
+          <span>🔥 모두가 함께 모이는 따뜻한 온기와 휴식에 집중한다!</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. 엔딩 화면 -->
+  <div id="screen-ending" class="screen" onclick="progressOutroChat()">
+    <img src="outro.gif" alt="아웃트로 배경" class="outro-bg-img" onerror="this.style.display='none';">
+    <div class="outro-dialog-box" onclick="event.stopPropagation();">
+      <div class="outro-chat-layout" onclick="progressOutroChat()">
+        <div class="outro-profile-area">
+          <img id="outro-avatar-img" src="haechi.gif" alt="프로필">
+        </div>
+        <div class="outro-msg-area">
+          <div class="layout-msg-sender" id="outro-sender-name">해치</div>
+          <div class="layout-msg-content">
+            <span id="outro-msg-text">...</span>
+            <span class="next-indicator-text" id="outro-next-indicator">▶</span>
+          </div>
+        </div>
+      </div>
+      <button class="action-btn" onclick="resetGameCompletely()" style="padding: 6px; font-size: 13px;">처음으로 돌아가기</button>
+    </div>
+  </div>
+
+  <!-- 결과 알림 모달 -->
+  <div id="modal" class="modal">
+    <div class="modal-card">
+      <div style="font-size: 42px; margin-bottom: 6px;">✨</div>
+      <h3 id="modal-title" style="color:var(--pink-deep); margin-bottom: 6px;">미션 클리어!</h3>
+      <p id="modal-desc" style="font-size:14px; color:#4b5563; line-height: 1.5; margin-bottom: 16px;">설명</p>
+      <button class="action-btn" id="modal-btn" onclick="nextStage()">다음 단계로</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let currentStage = 1;
+  let audioCtx = null;
+  let selectedEnding = 'festival';
+
+  // --- 오디오 중단 관리 변수 ---
+  let activeOscillator = null;
+
+  // --- 수동 터치 넘김 타자기 대화 엔진 ---
+  let setupChatIdx = 0;
+  let setupTypingInterval = null;
+  const setupChatLines = [
+    { name: "해치", avatar: "haechi.gif", text: "안녕 모험가 친구! 소망 숲에 짙은 어둠이 찾아와 크리스마스의 마법 빛과 자명종 소리가 모두 멈춰버렸어..." },
+    { name: "주작", avatar: "ju.png", text: "이대로 두면 올해 크리스마스는 없어! 숲을 구하려면 총 6가지의 시련(미션)을 돌파해 봉인을 해제해야만 해." },
+    { name: "해치", avatar: "haechi.gif", text: "각 공간마다 숨겨진 비밀을 풀고 빛과 소리를 되찾아주면 돼. 우리와 함께 모험을 시작해 줄 거지?" }
+  ];
+
+  let storyChatIdx = 0;
+  let storyTypingInterval = null;
+
+  let outroChatIdx = 0;
+  let outroTypingInterval = null;
+  const outroChatData = {
+    'festival': [
+      { name: "해치", avatar: "haechi.gif", text: "화려한 빛과 축제의 마법으로 숲이 온통 반짝이기 시작했어!" },
+      { name: "주작", avatar: "ju.png", text: "안내 데스크에 가면 엄청난 축제 선물이 기다리고 있어! 수고했어 🎁" }
+    ],
+    'warmth': [
+      { name: "해치", avatar: "haechi.gif", text: "모두가 함께 모이는 포근한 온기로 크리스마스가 따뜻해졌어..." },
+      { name: "주작", avatar: "ju.png", text: "안내 데스크에 가면 따뜻한 선물이 기다리고 있어! 정말 고마워 🎁" }
+    ]
+  };
+
+  window.addEventListener("DOMContentLoaded", () => {
+    loadGameProgress();
+    initWheels();
+    initFactGame();
+    initSwitchGame();
+    initMatrixGame();
+  });
+
+  function saveGameProgress(screenId, stageNum) {
+    localStorage.setItem("haechi_screen", screenId);
+    localStorage.setItem("haechi_stage", stageNum);
+  }
+
+  function loadGameProgress() {
+    const savedScreen = localStorage.getItem("haechi_screen");
+    const savedStage = localStorage.getItem("haechi_stage");
+
+    if (savedScreen && savedScreen !== 'screen-intro' && savedStage) {
+      currentStage = parseInt(savedStage);
+      if (savedScreen === 'screen-story') {
+        goToScreen('screen-story');
+        startStoryChat(currentStage);
+      } else if (savedScreen === 'screen-game') {
+        goToScreen('screen-game');
+        showProblemStage(currentStage);
+      } else if (savedScreen === 'screen-branch') {
+        goToScreen('screen-branch');
+      } else if (savedScreen === 'screen-ending') {
+        goToScreen('screen-ending');
+        startOutroChat();
+      }
+    } else {
+      goToScreen('screen-intro', false);
+    }
+  }
+
+  function stopAllTypingAndSound() {
+    if (setupTypingInterval) { clearInterval(setupTypingInterval); setupTypingInterval = null; }
+    if (storyTypingInterval) { clearInterval(storyTypingInterval); storyTypingInterval = null; }
+    if (outroTypingInterval) { clearInterval(outroTypingInterval); outroTypingInterval = null; }
+    if (activeOscillator) {
+      try { activeOscillator.stop(); } catch(e){}
+      activeOscillator = null;
+    }
+  }
+
+  function goToScreen(screenId, save = true) {
+    stopAllTypingAndSound();
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    const target = document.getElementById(screenId);
+    if (target) {
+      target.classList.add('active');
+    }
+    if (save) saveGameProgress(screenId, currentStage);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function goToDifficulty() {
+    initAudio();
+    playTone(523, 0.2);
+    goToScreen('screen-setup');
+    setupChatIdx = 0;
+    playSetupLine();
+  }
+
+  function playSetupLine() {
+    if (setupTypingInterval) clearInterval(setupTypingInterval);
+    const imgEl = document.getElementById("setup-avatar-img");
+    const nameEl = document.getElementById("setup-sender-name");
+    const textEl = document.getElementById("setup-msg-text");
+    const indicator = document.getElementById("setup-next-indicator");
+
+    if (setupChatIdx >= setupChatLines.length) {
+      return;
+    }
+
+    const data = setupChatLines[setupChatIdx];
+    imgEl.src = data.avatar;
+    nameEl.innerText = data.name;
+    textEl.innerText = "";
+    indicator.style.display = "none";
+
+    // 마지막 대사일 경우 '▶ 응 내가 도와줄게!' 텍스트로 표시
+    if (setupChatIdx === setupChatLines.length - 1) {
+      indicator.innerText = "▶ 응 내가 도와줄게!";
+    } else {
+      indicator.innerText = "▶";
+    }
+
+    let charIdx = 0;
+    setupTypingInterval = setInterval(() => {
+      if (charIdx < data.text.length) {
+        textEl.innerText += data.text.charAt(charIdx);
+        playKeyClickTone();
+        charIdx++;
+      } else {
+        clearInterval(setupTypingInterval);
+        setupTypingInterval = null;
+        indicator.style.display = "inline";
+      }
+    }, 25);
+  }
+
+  function progressSetupChat() {
+    if (setupTypingInterval) {
+      clearInterval(setupTypingInterval);
+      setupTypingInterval = null;
+      const data = setupChatLines[setupChatIdx];
+      document.getElementById("setup-msg-text").innerText = data.text;
+      document.getElementById("setup-next-indicator").style.display = "inline";
+    } else {
+      if (setupChatIdx < setupChatLines.length - 1) {
+        setupChatIdx++;
+        playSetupLine();
+      } else {
+        // 마지막 대사 터치 시 게임 시작
+        startGamePlay();
+      }
+    }
+  }
+
+  function startGamePlay() {
+    playTone(650, 0.15);
+    currentStage = 1;
+    goToScreen('screen-story');
+    startStoryChat(currentStage);
+  }
+
+  const stageChatData = {
+    1: [
+      { name: "주작", avatar: "ju.png", text: "여기가 첫 번째 시련의 공간인 '컬러 코드' 구역이야. 다섯 수호대의 마법 전선이 완전히 뒤엉켜 버렸어." },
+      { name: "해치", avatar: "haechi.gif", text: "맞아! 상단에 있는 상징 기호와 아래의 수호대 이름을 올바르게 짝지어 연결해야 다음 장소로 가는 문이 열릴 거야." }
+    ],
+    2: [
+      { name: "주작", avatar: "ju.png", text: "쉿! 두 번째 관문 앞이야. 여기는 강력한 봉인 자물쇠가 걸려 있어서 아무 단어나 치면 경보가 울려." },
+      { name: "해치", avatar: "haechi.gif", text: "우리가 찾던 행복의 단어를 기억하지? 다이얼을 위아래로 굴려서 글자를 정확히 맞춰보자!" }
+    ],
+    3: [
+      { name: "주작", avatar: "ju.png", text: "조심해! 여기는 서울갤러리의 과거 기록을 심사하는 팩트체크 결계야. 엉터리 대답하면 정답 초기화야!" },
+      { name: "해치", avatar: "haechi.gif", text: "제시되는 문장을 꼼꼼히 읽고, 그것이 사실인지 아닌지 O와 X 버튼으로 판별해 주면 돼." }
+    ],
+    4: [
+      { name: "주작", avatar: "ju.png", text: "어두컴컴한 네 번째 구역이야. 메인 트리의 전등이 전부 꺼져서 앞이 안 보여!" },
+      { name: "해치", avatar: "haechi.gif", text: "스위치를 누르면 주변 전등도 함께 연동되어 켜지고 꺼져. 모든 전등을 동시에 노란색으로 켜 보자!" }
+    ],
+    5: [
+      { name: "주작", avatar: "ju.png", text: "다섯 번째는 고대 마법진 봉인 구역이야. 정해진 자리에 성물을 바치지 않으면 결계가 안 풀려." },
+      { name: "해치", avatar: "haechi.gif", text: "상단에서 성물(⭐, 🎄, 🎁)을 고른 뒤, 첫 번째 줄 세 칸에 나란히 안착시켜 줘!" }
+    ],
+    6: [
+      { name: "주작", avatar: "ju.png", text: "드디어 마지막 여섯 번째 관문이야! 멈춰버린 자명종을 깨울 마지막 기회야." },
+      { name: "해치", avatar: "haechi.gif", text: "하단의 오르골 건반을 눌러서 징글벨 도입부 멜로디를 완벽하게 연주해 줘!" }
+    ]
+  };
+
+  const stageTitles = {
+    1: "🔔 미션 1: 컬러 코드 브리핑",
+    2: "🔔 미션 2: 다이얼 자물쇠 브리핑",
+    3: "🔔 미션 3: 팩트체크 브리핑",
+    4: "🔔 미션 4: 메인 트리 전등 브리핑",
+    5: "🔔 미션 5: 성물 배치 브리핑",
+    6: "🔔 미션 6: 캐럴 연주 브리핑"
+  };
+
+  function startStoryChat(stageNum) {
+    document.getElementById("story-badge").innerText = `미션 ${stageNum}/6`;
+    document.getElementById("story-title-bar").innerText = stageTitles[stageNum] || "미션 브리핑";
+    storyChatIdx = 0;
+    playStoryLine(stageNum);
+  }
+
+  function playStoryLine(stageNum) {
+    if (storyTypingInterval) clearInterval(storyTypingInterval);
+    const imgEl = document.getElementById("story-avatar");
+    const nameEl = document.getElementById("story-sender");
+    const textEl = document.getElementById("story-msg");
+    const indicator = document.getElementById("story-next-indicator");
+
+    const lines = stageChatData[stageNum] || [];
+    if (storyChatIdx >= lines.length) {
+      return;
+    }
+
+    const data = lines[storyChatIdx];
+    imgEl.src = data.avatar;
+    nameEl.innerText = data.name;
+    textEl.innerText = "";
+    indicator.style.display = "none";
+
+    // 마지막 대사일 경우 '▶ 다음 (문제 풀기) ➔' 텍스트 표시
+    if (storyChatIdx === lines.length - 1) {
+      indicator.innerText = "▶ 다음 (문제 풀기) ➔";
+    } else {
+      indicator.innerText = "▶";
+    }
+
+    let charIdx = 0;
+    storyTypingInterval = setInterval(() => {
+      if (charIdx < data.text.length) {
+        textEl.innerText += data.text.charAt(charIdx);
+        playKeyClickTone();
+        charIdx++;
+      } else {
+        clearInterval(storyTypingInterval);
+        storyTypingInterval = null;
+        indicator.style.display = "inline";
+      }
+    }, 25);
+  }
+
+  function progressStoryChat() {
+    const lines = stageChatData[currentStage] || [];
+    if (storyTypingInterval) {
+      clearInterval(storyTypingInterval);
+      storyTypingInterval = null;
+      const data = lines[storyChatIdx];
+      document.getElementById("story-msg").innerText = data.text;
+      document.getElementById("story-next-indicator").style.display = "inline";
+    } else {
+      if (storyChatIdx < lines.length - 1) {
+        storyChatIdx++;
+        playStoryLine(currentStage);
+      } else {
+        // 마지막 대사 터치 시 문제 풀이 화면으로 이동
+        goToProblemScreen();
+      }
+    }
+  }
+
+  function goToProblemScreen() {
+    playTone(580, 0.15);
+    goToScreen('screen-game');
+    showProblemStage(currentStage);
+  }
+
+  function showProblemStage(stageNum) {
+    for (let i = 1; i <= 6; i++) {
+      const box = document.getElementById(`stage-${i}`);
+      if (box) box.style.display = (i === stageNum) ? "flex" : "none";
+    }
+    let stars = "";
+    for (let i = 1; i <= 6; i++) { stars += (i <= stageNum) ? "★" : "☆"; }
+    const badge = document.getElementById("game-badge");
+    if (badge) badge.innerText = stars;
+    saveGameProgress('screen-game', stageNum);
+  }
+
+  function initAudio() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+  }
+
+  function playKeyClickTone() {
+    initAudio();
+    if (!audioCtx) return;
+    try {
+      if (activeOscillator) {
+        activeOscillator.stop();
+        activeOscillator = null;
+      }
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.frequency.setValueAtTime(700 + Math.random() * 200, audioCtx.currentTime);
+      gain.gain.setValueAtTime(0.01, audioCtx.currentTime);
+      gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + 0.02);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.025);
+      activeOscillator = osc;
+    } catch(e) {}
+  }
+
+  function playTone(freq, duration, type = 'sine') {
+    try {
+      initAudio();
+      if (!audioCtx) return;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+      gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+      gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + duration);
+    } catch(e) {}
+  }
+
+  // [미션 1] ◆ 기호 전선 연결 로직
+  let selectedLeft = null;
+  let wireCount = 0;
+  function selectLeftWire(id, el) {
+    document.querySelectorAll('.wire-top-node').forEach(n => n.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedLeft = id;
+  }
+  function selectRightWire(id, el) {
+    if (!selectedLeft) { alert("먼저 상단에서 컬러 기호를 선택하세요!"); return; }
+    if (selectedLeft === id) {
+      el.style.background = "#bbf7d0";
+      el.style.pointerEvents = "none";
+      document.querySelectorAll('.wire-top-node').forEach(n => {
+        if(n.classList.contains('selected')) {
+          n.style.background = "#f1f5f9";
+          n.style.color = "#94a3b8";
+          n.style.pointerEvents = "none";
+          n.classList.remove('selected');
+        }
+      });
+      wireCount++;
+      document.getElementById("wire-status").innerText = `${wireCount}/5 완료`;
+      selectedLeft = null;
+      if (wireCount === 5) {
+        showModal("🔔 미션 1 클리어!", "모든 수호대의 상징 기호가 올바르게 연결되었습니다!");
+      }
+    } else {
+      alert("전선 스파크가 튀었습니다! 올바른 수호대 이름을 찾아주세요.");
+      selectedLeft = null;
+      document.querySelectorAll('.wire-top-node').forEach(n => n.classList.remove('selected'));
+    }
+  }
+
+  // [미션 2] 다이얼 자물쇠 로직
+  const dialChars = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','♥'];
+  let currentDialIndices = [7, 0, 4, 2, 7, 8];
+
+  function initWheels() {
+    const wrap = document.getElementById("wheel-columns-wrap");
+    if(!wrap) return;
+    wrap.innerHTML = "";
+    for (let c = 0; c < 6; c++) {
+      const col = document.createElement("div");
+      col.className = "dial-column";
+      col.innerHTML = `
+        <button class="dial-arrow" onclick="spinDial(${c}, -1)">▲</button>
+        <div class="dial-drum">
+          <div class="sub-letter" id="wheel-prev-${c}"></div>
+          <div class="main-letter" id="wheel-curr-${c}"></div>
+          <div class="sub-letter" id="wheel-next-${c}"></div>
+        </div>
+        <button class="dial-arrow" onclick="spinDial(${c}, 1)">▼</button>
+      `;
+      wrap.appendChild(col);
+      renderDial(c);
+    }
+  }
+
+  function renderDial(c) {
+    const L = dialChars.length;
+    const cur = currentDialIndices[c];
+    const prev = (cur - 1 + L) % L;
+    const next = (cur + 1) % L;
+
+    document.getElementById(`wheel-prev-${c}`).innerText = dialChars[prev];
+    document.getElementById(`wheel-curr-${c}`).innerText = dialChars[cur];
+    document.getElementById(`wheel-next-${c}`).innerText = dialChars[next];
+  }
+
+  function spinDial(colIndex, delta) {
+    initAudio();
+    const L = dialChars.length;
+    currentDialIndices[colIndex] = (currentDialIndices[colIndex] + delta + L) % L;
+    renderDial(colIndex);
+    playTone(320, 0.03);
+  }
+
+  function checkDialStage() {
+    let word = currentDialIndices.map(i => dialChars[i]).join("");
+    if (word === "HAPPY♥") {
+      showModal("🔔 미션 2 클리어!", "다이얼이 정확히 일치하며 문이 열렸습니다!");
+    } else {
+      alert(`자물쇠가 열리지 않습니다! (현재 입력: ${word}, 힌트: HAPPY♥)`);
+    }
+  }
+
+  // [미션 3] 진실/거짓 스와이프 OX 로직
+  const factList = [
+    { text: "서울갤러리의 개관일은 2월 5일이다.", answer: true },
+    { text: "군기시는 조선시대 학문을 공부하던 곳이다.", answer: false }
+  ];
+  let factIdx = 0;
+  function initFactGame() {
+    factIdx = 0;
+    const card = document.getElementById("fact-card");
+    if(card && factList.length > 0) card.innerText = factList[0].text;
+  }
+  function answerFact(userChoice) {
+    if (userChoice === factList[factIdx].answer) {
+      factIdx++;
+      if (factIdx < factList.length) {
+        document.getElementById("fact-card").innerText = factList[factIdx].text;
+      } else {
+        showModal("🔔 미션 3 클리어!", "모든 팩트체크 결계가 해제되었습니다!");
+      }
+    } else {
+      alert("틀렸습니다! 군기시는 조선시대 군기(무기)를 만들던 곳입니다.");
+      factIdx = 0;
+      document.getElementById("fact-card").innerText = factList[factIdx].text;
+    }
+  }
+
+  // [미션 4] 연쇄 전등 스위치 로직
+  let switchState = Array(9).fill(false);
+  function initSwitchGame() {
+    switchState = [true, false, true, false, true, false, true, false, true];
+    renderSwitches();
+  }
+  function renderSwitches() {
+    const board = document.getElementById("switch-board");
+    if (!board) return;
+    board.innerHTML = "";
+    switchState.forEach((isOn, idx) => {
+      const sw = document.createElement("div");
+      sw.className = "light-switch" + (isOn ? " on" : "");
+      sw.innerText = isOn ? "💡" : "🔌";
+      sw.onclick = () => toggleSwitch(idx);
+      board.appendChild(sw);
+    });
+  }
+  function toggleSwitch(idx) {
+    const row = Math.floor(idx / 3);
+    const col = idx % 3;
+    const targets = [idx];
+    if (row > 0) targets.push(idx - 3);
+    if (row < 2) targets.push(idx + 3);
+    if (col > 0) targets.push(idx - 1);
+    if (col < 2) targets.push(idx + 1);
+    targets.forEach(t => { switchState[t] = !switchState[t]; });
+    renderSwitches();
+    if (switchState.every(val => val === true)) {
+      showModal("🔔 미션 4 클리어!", "모든 전등이 연쇄적으로 점등되었습니다!");
+    }
+  }
+  function resetSwitches() {
+    switchState = [false, true, false, true, false, true, false, true, false];
+    renderSwitches();
+  }
+
+  // [미션 5] 4x4 마법진 성물 배치 로직
+  let selectedShape = null;
+  let matrixState = Array(16).fill("");
+
+  function selectShape(shape, el) {
+    document.querySelectorAll('.shape-btn').forEach(b => b.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedShape = shape;
+  }
+
+  function initMatrixGame() {
+    matrixState = Array(16).fill("");
+    renderMatrix();
+  }
+
+  function renderMatrix() {
+    const board = document.getElementById("matrix-board");
+    if (!board) return;
+    board.innerHTML = "";
+    matrixState.forEach((val, idx) => {
+      const cell = document.createElement("div");
+      cell.className = "matrix-cell" + (val ? " placed" : "");
+      cell.innerText = val;
+      cell.onclick = () => placeShapeOnMatrix(idx);
+      board.appendChild(cell);
+    });
+  }
+
+  function placeShapeOnMatrix(idx) {
+    if (!selectedShape) { alert("상단에서 먼저 배치할 성물을 선택하세요!"); return; }
+    matrixState[idx] = selectedShape;
+    renderMatrix();
+
+    let placedCount = matrixState.filter(s => s !== "").length;
+    if (placedCount === 3) {
+      if (matrixState[0] && matrixState[1] && matrixState[2]) {
+        showModal("🔔 미션 5 클리어!", "4x4 마법진의 첫 번째 줄에 성물이 완벽하게 안착되었습니다!");
+      } else {
+        alert("성물의 배치 위치가 올바르지 않습니다! 첫 번째 줄에 나란히 배치해 보세요.");
+        resetMatrix();
+      }
+    }
+  }
+
+  function resetMatrix() {
+    matrixState = Array(16).fill("");
+    renderMatrix();
+  }
+
+  // [미션 6] 캐럴 멜로디 연주 로직
+  const carolMelodyTarget = ['미', '미', '미', '미', '미', '미', '미', '솔', '도', '레', '미'];
+  let carolInput = [];
+
+  function playCarolNote(noteName, freq) {
+    playTone(freq, 0.25, 'triangle');
+    carolInput.push(noteName);
+    document.getElementById("music-status").innerText = `진행 상황: (${carolInput.length}/11 음표 입력)`;
+
+    if (carolInput.length === carolMelodyTarget.length) {
+      if (carolInput.toString() === carolMelodyTarget.toString()) {
+        playTone(523.25, 0.4);
+        setTimeout(() => playTone(659.25, 0.4), 200);
+        showModal("🔔 미션 6 클리어!", "아름다운 징글벨 캐럴 연주가 완성되었습니다!");
+      } else {
+        alert("캐럴 멜로디 순서가 틀렸습니다! 다시 시도하세요.");
+        resetCarol();
+      }
+    }
+  }
+
+  function resetCarol() {
+    carolInput = [];
+    document.getElementById("music-status").innerText = "진행 상황: (0/11 음표 입력)";
+  }
+
+  function showModal(title, desc) {
+    document.getElementById("modal-title").innerText = title;
+    document.getElementById("modal-desc").innerHTML = desc;
+    document.getElementById("modal").style.display = "flex";
+  }
+
+  function nextStage() {
+    document.getElementById("modal").style.display = "none";
+    if (currentStage === 6) {
+      goToScreen('screen-branch');
+      return;
+    }
+    currentStage++;
+    goToScreen('screen-story');
+    startStoryChat(currentStage);
+  }
+
+  function selectEndingBranch(branchType) {
+    selectedEnding = branchType;
+    saveGameProgress('screen-ending', 6);
+    goToScreen('screen-ending');
+    startOutroChat();
+  }
+
+  function startOutroChat() {
+    outroChatIdx = 0;
+    playOutroLine();
+  }
+
+  function playOutroLine() {
+    if (outroTypingInterval) clearInterval(outroTypingInterval);
+    const imgEl = document.getElementById("outro-avatar-img");
+    const nameEl = document.getElementById("outro-sender-name");
+    const textEl = document.getElementById("outro-msg-text");
+    const indicator = document.getElementById("outro-next-indicator");
+
+    const lines = outroChatData[selectedEnding] || outroChatData['festival'];
+    if (outroChatIdx >= lines.length) {
+      return;
+    }
+
+    const data = lines[outroChatIdx];
+    imgEl.src = data.avatar;
+    nameEl.innerText = data.name;
+    textEl.innerText = "";
+    indicator.style.display = "none";
+
+    let charIdx = 0;
+    outroTypingInterval = setInterval(() => {
+      if (charIdx < data.text.length) {
+        textEl.innerText += data.text.charAt(charIdx);
+        playKeyClickTone();
+        charIdx++;
+      } else {
+        clearInterval(outroTypingInterval);
+        outroTypingInterval = null;
+        indicator.style.display = "inline";
+      }
+    }, 25);
+  }
+
+  function progressOutroChat() {
+    const lines = outroChatData[selectedEnding] || outroChatData['festival'];
+    if (outroTypingInterval) {
+      clearInterval(outroTypingInterval);
+      outroTypingInterval = null;
+      const data = lines[outroChatIdx];
+      document.getElementById("outro-msg-text").innerText = data.text;
+      document.getElementById("outro-next-indicator").style.display = "inline";
+    } else {
+      if (outroChatIdx < lines.length - 1) {
+        outroChatIdx++;
+        playOutroLine();
+      }
+    }
+  }
+
+  function resetGameCompletely() {
+    localStorage.clear();
+    currentStage = 1;
+    wireCount = 0;
+    selectedLeft = null;
+    currentDialIndices = [7, 0, 4, 2, 7, 8];
+    initWheels();
+    initFactGame();
+    resetSwitches();
+    resetMatrix();
+    resetCarol();
+    goToScreen('screen-intro', false);
+  }
+</script>
+</body>
+</html>
