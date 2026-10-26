@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>해치 크리스마스: 우리의 첫 겨울</title>
+  <title>해치 크리스마스: 서울갤러리의 비밀 기적</title>
   <link href="https://fonts.googleapis.com/css2?family=DungGeunMo&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -36,17 +36,16 @@
       color: var(--text-dark);
       display: flex;
       justify-content: center;
-      align-items: flex-start;
+      align-items: center;
       min-height: 100vh;
       overflow: hidden;
-      padding-top: 0;
     }
 
     #app {
       position: relative;
       width: 100vw;
       max-width: 440px;
-      aspect-ratio: 1 / 1.65;
+      aspect-ratio: 1 / 1.8;
       max-height: 98vh;
       background: var(--pink-bg);
       display: flex;
@@ -78,76 +77,19 @@
       align-items: center;
       text-align: center;
       z-index: 10;
-    }
-
-    .intro-bg-img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      background: #000;
-      z-index: 1;
-    }
-
-    .intro-header-box {
-      position: absolute;
-      top: 15%;
-      left: 10%;
-      right: 10%;
-      z-index: 10;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .intro-badge {
-      background: var(--pine-green);
-      color: #fff;
-      font-size: 12px;
-      padding: 4px 10px;
-      border-radius: 4px;
-      border: 1.5px solid var(--pine-dark);
+      padding: 20px;
     }
 
     .intro-title {
       font-size: 26px;
       font-weight: 900;
       color: #ffffff;
-      line-height: 1.3;
-      text-shadow: 3px 3px 0px var(--pink-deep), 6px 6px 0px #831843;
-      letter-spacing: 2.5px;
+      line-height: 1.4;
+      text-shadow: 3px 3px 0px var(--pink-deep);
+      margin-bottom: 20px;
     }
 
-    .intro-transparent-btn {
-      position: absolute;
-      bottom: 12%;
-      left: 18%;
-      right: 18%;
-      height: 65px;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      z-index: 20;
-    }
-
-    /* 2. 난이도 및 캐릭터 선택 화면 */
-    #screen-setup {
-      justify-content: flex-start;
-      align-items: center;
-      padding: 12px 14px;
-      text-align: center;
-      gap: 8px;
-      overflow-y: auto;
-    }
-
-    /* 3. 게임 플레이 화면 공통 */
-    #screen-game {
-      flex-direction: column;
-      background: #fff1f5;
-    }
-
+    /* 2. 스토리 브리핑 및 게임 공통 레이아웃 */
     header {
       padding: 8px 14px;
       background: #ffffff;
@@ -156,7 +98,6 @@
       justify-content: space-between;
       align-items: center;
       flex-shrink: 0;
-      z-index: 10;
     }
     .badge {
       background: var(--pine-green);
@@ -165,7 +106,6 @@
       padding: 3px 8px;
       border-radius: 4px;
       border: 2px solid var(--pine-dark);
-      letter-spacing: 1px;
     }
     .pink-tag {
       background: var(--soft-pink);
@@ -189,14 +129,13 @@
     .content {
       flex: 1;
       padding: 10px 12px 14px;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
       display: flex;
       flex-direction: column;
       gap: 10px;
+      overflow-y: auto;
     }
 
-    .story-page-box {
+    .story-page-box, .sub-page-box {
       background: #ffffff;
       border: 3px solid var(--pink-deep);
       border-radius: 8px;
@@ -205,10 +144,9 @@
       align-items: center;
       text-align: center;
       box-shadow: 4px 4px 0px rgba(219, 39, 119, 0.2);
-      overflow: hidden;
       width: 100%;
       height: 100%;
-      position: relative;
+      overflow: hidden;
     }
 
     .quest-title-bar {
@@ -218,27 +156,24 @@
       padding: 8px 12px;
       font-size: 15px;
       font-weight: bold;
-      text-align: center;
       border-bottom: 3px dashed #86efac;
       flex-shrink: 0;
     }
 
-    .space-image-area {
-      position: relative;
+    .space-art-area {
       width: 100%;
       flex: 1;
-      min-height: 260px;
-      background: #2b1117;
+      min-height: 200px;
+      background: linear-gradient(135deg, #2b1117, #4a1525);
       border-bottom: 3px solid var(--pink-deep);
-      overflow: hidden;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-    }
-    .space-image-area img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+      color: #ffd700;
+      font-size: 22px;
+      gap: 8px;
+      text-shadow: 2px 2px 0px #000;
     }
 
     .layout-chat-box {
@@ -252,30 +187,16 @@
     }
 
     .layout-profile-area {
-      width: 30%;
+      width: 28%;
       height: 100%;
       background: #fdf2f8;
       border-right: 3px solid var(--pink-deep);
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 0;
-      overflow: hidden;
-    }
-    .layout-avatar-fill {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .layout-avatar-fill img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+      font-size: 32px;
     }
 
-    /* 채팅 메시지 상단 정렬 및 줄바꿈형 인디케이터 배치를 위한 수정 */
     .layout-msg-area {
       width: 72%;
       background: #fff1f5;
@@ -286,10 +207,9 @@
       text-align: left;
       display: flex;
       flex-direction: column;
-      justify-content: flex-start; /* 맨 위부터 채워지도록 정렬 */
+      justify-content: flex-start;
       position: relative;
       overflow-y: auto;
-      word-break: break-all;
     }
     .layout-msg-sender {
       font-size: 11.5px;
@@ -300,10 +220,8 @@
     }
     .layout-msg-content {
       width: 100%;
-      display: block; /* 인라인 블록 흐름으로 메시지 바로 아래에 인디케이터가 오도록 수정 */
+      display: block;
     }
-
-    /* 텍스트형 인디케이터 ('▶ 응 내가 도와줄게!', '▶ 다음 (문제 풀기) ➔')를 메시지 바로 아래 줄에 출력 */
     .next-indicator-text {
       display: inline-block;
       margin-top: 4px;
@@ -313,25 +231,6 @@
       background: #ffe4e6;
       padding: 1px 5px;
       border-radius: 4px;
-      animation: blinkIndicator 0.8s infinite alternate;
-    }
-    @keyframes blinkIndicator {
-      0% { opacity: 0.3; }
-      100% { opacity: 1; }
-    }
-
-    .sub-page-box {
-      background: #ffffff;
-      border: 3px solid var(--pink-deep);
-      border-radius: 8px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      box-shadow: 4px 4px 0px rgba(219, 39, 119, 0.2);
-      overflow: hidden;
-      flex-shrink: 0;
-      width: 100%;
     }
 
     .quest-inner-content {
@@ -341,6 +240,7 @@
       flex-direction: column;
       gap: 14px;
       align-items: center;
+      overflow-y: auto;
     }
 
     .action-btn {
@@ -358,54 +258,16 @@
     summary { cursor: pointer; font-weight: bold; color: var(--pine-green); }
 
     .cheat-btn {
-      width: 100%;
-      padding: 8px;
-      background: #fef08a;
-      color: #854d0e;
-      border: 2px dashed #ca8a04;
-      border-radius: 6px;
-      font-size: 12px;
-      font-weight: bold;
-      cursor: pointer;
+      width: 100%; padding: 8px; background: #fef08a; color: #854d0e;
+      border: 2px dashed #ca8a04; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer;
     }
-    .cheat-btn:hover { background: #fde047; }
 
-    /* 1번 미션 레이아웃 */
-    .wire-top-container {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      width: 100%;
-      margin-bottom: 6px;
-    }
-    .wire-top-node {
-      background: #fff;
-      border: 2px solid var(--pine-dark);
-      border-radius: 6px;
-      padding: 8px 12px;
-      font-size: 18px;
-      font-weight: bold;
-      cursor: pointer;
-      text-align: center;
-    }
+    /* 퍼즐별 스타일 */
+    .wire-top-container { display: flex; justify-content: center; gap: 8px; width: 100%; margin-bottom: 6px; }
+    .wire-top-node { background: #fff; border: 2px solid var(--pine-dark); border-radius: 6px; padding: 8px 12px; font-size: 18px; font-weight: bold; cursor: pointer; }
     .wire-top-node.selected { background: var(--soft-pink); border-color: var(--crimson-red); }
-
-    .wire-bottom-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      width: 100%;
-    }
-    .wire-bottom-node {
-      background: #fff;
-      border: 2px solid var(--pine-dark);
-      border-radius: 6px;
-      padding: 12px;
-      font-size: 15px;
-      font-weight: bold;
-      cursor: pointer;
-      text-align: center;
-    }
+    .wire-bottom-list { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+    .wire-bottom-node { background: #fff; border: 2px solid var(--pine-dark); border-radius: 6px; padding: 12px; font-size: 15px; font-weight: bold; cursor: pointer; text-align: center; }
 
     .dial-container { display: flex; gap: 6px; justify-content: center; width: 100%; }
     .dial-column { display: flex; flex-direction: column; align-items: center; background: #fff; border: 2px solid var(--pink-deep); border-radius: 6px; padding: 4px; }
@@ -414,33 +276,10 @@
     .sub-letter { font-size: 12px; font-weight: bold; color: #9ca3af; height: 16px; opacity: 0.6; }
     .main-letter { width: 40px; height: 44px; background: var(--pink-deep); color: #fff; border-radius: 4px; display: flex; justify-content: center; align-items: center; font-size: 18px; font-weight: bold; margin: 2px 0; }
 
-    .swipe-card { width: 100%; background: #fff5f8; border: 2px solid var(--pink-primary); border-radius: 8px; padding: 18px; font-size: 16px; font-weight: bold; min-height: 85px; display: flex; align-items: center; justify-content: center; text-align: center; }
-
-    .ox-btn-container {
-      display: flex;
-      gap: 12px;
-      width: 100%;
-      justify-content: center;
-    }
-    .ox-btn {
-      flex: 1;
-      max-width: 140px;
-      padding: 14px;
-      font-size: 20px;
-      font-weight: bold;
-      border-radius: 6px;
-      cursor: pointer;
-      color: #fff;
-      border: 3px solid #7f1d1d;
-      background: var(--crimson-red);
-      box-shadow: 0 4px 0px #7f1d1d;
-    }
-    .ox-btn.true-btn {
-      background: var(--pine-green);
-      border-color: var(--pine-dark);
-      box-shadow: 0 4px 0px var(--pine-dark);
-    }
-    .ox-btn:active { transform: translateY(4px); box-shadow: 0 0px 0px #7f1d1d; }
+    .swipe-card { width: 100%; background: #fff5f8; border: 2px solid var(--pink-primary); border-radius: 8px; padding: 18px; font-size: 15px; font-weight: bold; min-height: 85px; display: flex; align-items: center; justify-content: center; text-align: center; }
+    .ox-btn-container { display: flex; gap: 12px; width: 100%; justify-content: center; }
+    .ox-btn { flex: 1; max-width: 140px; padding: 14px; font-size: 20px; font-weight: bold; border-radius: 6px; cursor: pointer; color: #fff; border: 3px solid #7f1d1d; background: var(--crimson-red); box-shadow: 0 4px 0px #7f1d1d; }
+    .ox-btn.true-btn { background: var(--pine-green); border-color: var(--pine-dark); box-shadow: 0 4px 0px var(--pine-dark); }
 
     .switch-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; width: 100%; max-width: 300px; margin: 0 auto; }
     .light-switch { height: 75px; background: #e2e8f0; border: 3px solid #cbd5e1; border-radius: 10px; font-size: 28px; display: flex; justify-content: center; align-items: center; cursor: pointer; }
@@ -453,115 +292,19 @@
     .shape-btn { padding: 10px 18px; background: #fff; border: 2px solid var(--pink-deep); border-radius: 8px; font-size: 20px; font-weight: bold; cursor: pointer; }
     .shape-btn.selected { background: var(--soft-pink); border-color: var(--crimson-red); }
 
-    /* 6번 오르골 건반 세로 길이 5배(대폭) 확장 */
     .music-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; width: 100%; }
     .music-key { background: #fff; border: 2px solid var(--pink-deep); border-radius: 6px; padding: 75px 0; font-size: 15px; font-weight: bold; color: var(--pink-deep); cursor: pointer; box-shadow: 0 4px 0px var(--pink-primary); text-align: center; }
 
-    #screen-branch {
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      text-align: center;
-      gap: 16px;
-    }
-    .branch-card {
-      width: 100%;
-      background: #ffffff;
-      border: 3px solid var(--pink-deep);
-      border-radius: 12px;
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      box-shadow: 5px 5px 0px rgba(219, 39, 119, 0.2);
-    }
-    .branch-btn {
-      width: 100%;
-      padding: 14px 10px;
-      background: #fff5f8;
-      border: 2px solid var(--pink-primary);
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: bold;
-      color: var(--text-dark);
-      cursor: pointer;
-      text-align: center;
-      box-shadow: 2px 2px 0px var(--border-pink);
-      word-break: keep-all;
-    }
-    .branch-btn:hover { background: var(--soft-pink); border-color: var(--pink-deep); }
+    /* 분기 및 엔딩 */
+    #screen-branch { justify-content: center; align-items: center; padding: 20px; text-align: center; gap: 16px; }
+    .branch-card { width: 100%; background: #ffffff; border: 3px solid var(--pink-deep); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 12px; box-shadow: 5px 5px 0px rgba(219, 39, 119, 0.2); }
+    .branch-btn { width: 100%; padding: 14px 10px; background: #fff5f8; border: 2px solid var(--pink-primary); border-radius: 8px; font-size: 13px; font-weight: bold; color: var(--text-dark); cursor: pointer; text-align: center; box-shadow: 2px 2px 0px var(--border-pink); }
 
-    #screen-ending {
-      background: #000;
-      justify-content: flex-end;
-      align-items: center;
-      padding: 0;
-      z-index: 20;
-    }
-
-    .outro-bg-img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      background: #000;
-      z-index: 1;
-    }
-
-    .outro-dialog-box {
-      position: relative;
-      z-index: 10;
-      width: 100%;
-      height: 150px;
-      background: rgba(255, 241, 245, 0.96);
-      border-top: 3px solid var(--pink-deep);
-      padding: 10px 14px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      box-shadow: 0 -4px 10px rgba(0,0,0,0.3);
-      cursor: pointer;
-    }
-    .outro-chat-layout {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      width: 100%;
-      height: 90px;
-    }
-    .outro-profile-area {
-      width: 28%;
-      height: 100%;
-      background: #fdf2f8;
-      border: 2px solid var(--pink-primary);
-      border-radius: 4px;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .outro-profile-area img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .outro-msg-area {
-      width: 72%;
-      background: #fff1f5;
-      border: 2px solid var(--pink-primary);
-      border-radius: 6px;
-      padding: 8px 10px;
-      font-size: 13px;
-      line-height: 1.4;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      position: relative;
-      overflow-y: auto;
-      word-break: break-all;
-    }
+    #screen-ending { background: #000; justify-content: flex-end; align-items: center; padding: 0; z-index: 20; }
+    .outro-dialog-box { position: relative; z-index: 10; width: 100%; height: 150px; background: rgba(255, 241, 245, 0.96); border-top: 3px solid var(--pink-deep); padding: 10px 14px; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; }
+    .outro-chat-layout { display: flex; gap: 10px; align-items: center; width: 100%; height: 90px; }
+    .outro-profile-area { width: 28%; height: 100%; background: #fdf2f8; border: 2px solid var(--pink-primary); border-radius: 4px; display: flex; justify-content: center; align-items: center; font-size: 32px; }
+    .outro-msg-area { width: 72%; background: #fff1f5; border: 2px solid var(--pink-primary); border-radius: 6px; padding: 8px 10px; font-size: 13px; line-height: 1.4; height: 100%; display: flex; flex-direction: column; justify-content: flex-start; overflow-y: auto; }
 
     .modal { display: none; position: absolute; inset: 0; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(4px); z-index: 150; justify-content: center; align-items: center; padding: 22px; }
     .modal-card { background: #ffffff; border: 3px solid var(--pink-deep); border-radius: 12px; padding: 22px 18px; text-align: center; width: 100%; box-shadow: 6px 6px 0px rgba(219, 39, 119, 0.4); }
@@ -572,29 +315,27 @@
 <div id="app">
   <!-- 1. 인트로 화면 -->
   <div id="screen-intro" class="screen active">
-    <img src="intro.gif" alt="인트로 배경" class="intro-bg-img" onerror="this.style.display='none';">
-    <div class="intro-header-box">
-      <span class="intro-badge">서울갤러리 크리스마스 이벤트</span>
-      <h1 class="intro-title">해치 크리스마스</h1>
-    </div>
-    <button class="intro-transparent-btn" onclick="goToDifficulty()"></button>
+    <div class="intro-title">🏛️ 서울갤러리<br>크리스마스의 비밀 기적</div>
+    <p style="color:#fce7f3; font-size:14px; margin-bottom:30px; line-height:1.5;">
+      시청 지하 서울갤러리 대형 트리에 불이 꺼졌다!<br>해치와 사방신과 함께하는 긴급 방탈출
+    </p>
+    <button class="action-btn" onclick="goToDifficulty()">모험 시작하기 ✨</button>
   </div>
 
   <!-- 2. 인트로 직후 스토리 브리핑 화면 -->
   <div id="screen-setup" class="screen" onclick="progressSetupChat()">
     <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; margin-top: 6px; width: 100%;">
       <span class="badge" style="background:var(--pine-green);">STORY INTRODUCTION</span>
-      <h1 style="font-size: 17px; color: var(--pink-deep);">해치 크리스마스: 소망 숲의 비밀</h1>
+      <h1 style="font-size: 17px; color: var(--pink-deep);">서울갤러리의 비밀 기적</h1>
     </div>
 
-    <div class="space-image-area" style="margin-top: 6px;">
-      <img src="treeoff.jpg" alt="공간 상황 이미지" onerror="this.style.display='none';">
+    <div class="space-art-area" style="margin-top: 6px;">
+      <span>🎄🏛️✨</span>
+      <span style="font-size: 14px; color: #fff;">[ 서울갤러리 로비 ]</span>
     </div>
 
     <div class="layout-chat-box">
-      <div class="layout-profile-area">
-        <div class="layout-avatar-fill"><img id="setup-avatar-img" src="haechi.gif" alt="프로필"></div>
-      </div>
+      <div class="layout-profile-area" id="setup-avatar-emoji">🦁</div>
       <div class="layout-msg-area">
         <div class="layout-msg-sender" id="setup-sender-name">해치</div>
         <div class="layout-msg-content">
@@ -611,7 +352,7 @@
   <div id="screen-story" class="screen" onclick="progressStoryChat()">
     <header>
       <div style="display:flex; align-items:center; gap:8px;">
-        <span class="badge" id="story-badge">★★★★★★</span>
+        <span class="badge" id="story-badge">미션 1/6</span>
         <span class="pink-tag">해치 크리스마스</span>
       </div>
       <button class="reset-btn" onclick="resetGameCompletely()">처음으로</button>
@@ -621,14 +362,13 @@
       <div class="story-page-box">
         <div class="quest-title-bar" id="story-title-bar">🔔 미션 1 브리핑</div>
         
-        <div class="space-image-area">
-          <img src="outro.gif" alt="공간 이미지" onerror="this.style.display='none';">
+        <div class="space-art-area">
+          <span>⚡🏛️🔌</span>
+          <span style="font-size: 14px; color: #fff;">[ 공간 상황 ]</span>
         </div>
 
         <div class="layout-chat-box">
-          <div class="layout-profile-area">
-            <div class="layout-avatar-fill"><img id="story-avatar" src="haechi.gif" alt="프로필"></div>
-          </div>
+          <div class="layout-profile-area" id="story-avatar-emoji">🦁</div>
           <div class="layout-msg-area">
             <div class="layout-msg-sender" id="story-sender">해치</div>
             <div class="layout-msg-content">
@@ -657,8 +397,8 @@
       <!-- [STAGE 1] 와이어 전선 연결 -->
       <div id="stage-1" class="sub-page-box" style="display:none;">
         <div class="quest-title-bar">🔔 미션 1: 컬러 코드</div>
-        <div class="quest-inner-content" style="padding: 16px;">
-          <div style="font-size:13px; font-weight:bold; color:var(--pink-deep); margin-bottom:-4px;">상단 기호를 선택한 뒤 아래 수호대 이름을 누르세요!</div>
+        <div class="quest-inner-content">
+          <div style="font-size:13px; font-weight:bold; color:var(--pink-deep);">상단 기호를 선택한 뒤 아래 수호대 이름을 누르세요!</div>
           <div class="wire-top-container">
             <div class="wire-top-node" style="color:#0284c7;" onclick="selectLeftWire(1, this)">◆</div>
             <div class="wire-top-node" style="color:#16a34a;" onclick="selectLeftWire(2, this)">◆</div>
@@ -673,7 +413,7 @@
             <div class="wire-bottom-node" onclick="selectRightWire(2, this)">현무</div>
             <div class="wire-bottom-node" onclick="selectRightWire(3, this)">주작</div>
           </div>
-          <div id="wire-status" style="font-weight: bold; color: var(--pine-green); font-size: 15px;">0/5 완료</div>
+          <div id="wire-status" style="font-weight: bold; color: var(--pine-green);">0/5 완료</div>
           <details><summary>💡 힌트 보기</summary>하늘색-청룡, 연녹색-현무, 주황색-주작, 분홍색-해치, 흰색-백호 입니다.</details>
           <button class="cheat-btn" onclick="nextStage()">⚡ 테스트용: 다음 문제로 건너뛰기</button>
         </div>
@@ -682,7 +422,7 @@
       <!-- [STAGE 2] 다이얼 자물쇠 -->
       <div id="stage-2" class="sub-page-box" style="display:none;">
         <div class="quest-title-bar">🔔 미션 2: 다이얼 자물쇠</div>
-        <div class="quest-inner-content" style="padding: 20px;">
+        <div class="quest-inner-content">
           <div class="dial-container" id="wheel-columns-wrap"></div>
           <button class="action-btn" onclick="checkDialStage()">잠금 해제</button>
           <details><summary>💡 힌트 보기</summary>글자를 차례대로 H, A, P, P, Y, ♥ 로 맞추세요.</details>
@@ -693,7 +433,7 @@
       <!-- [STAGE 3] OX 퀴즈 -->
       <div id="stage-3" class="sub-page-box" style="display:none;">
         <div class="quest-title-bar">🔔 미션 3: 팩트체크 OX</div>
-        <div class="quest-inner-content" style="padding: 20px;">
+        <div class="quest-inner-content">
           <div class="swipe-card" id="fact-card">제시문 로딩중...</div>
           <div class="ox-btn-container">
             <button class="ox-btn true-btn" onclick="answerFact(true)">O</button>
@@ -707,7 +447,7 @@
       <!-- [STAGE 4] 전등 스위치 -->
       <div id="stage-4" class="sub-page-box" style="display:none;">
         <div class="quest-title-bar">🔔 미션 4: 메인 트리 전등 켜기</div>
-        <div class="quest-inner-content" style="padding: 20px;">
+        <div class="quest-inner-content">
           <div class="switch-grid" id="switch-board"></div>
           <button class="action-btn" style="background:#9ca3af; padding:10px; font-size:14px;" onclick="resetSwitches()">스위치 초기화</button>
           <details><summary>💡 힌트 보기</summary>스위치를 연쇄적으로 눌러보세요.</details>
@@ -718,7 +458,7 @@
       <!-- [STAGE 5] 성물 배치 -->
       <div id="stage-5" class="sub-page-box" style="display:none;">
         <div class="quest-title-bar">🔔 미션 5: 성물 배치</div>
-        <div class="quest-inner-content" style="padding: 20px;">
+        <div class="quest-inner-content">
           <div class="shape-pool" id="shape-pool">
             <div class="shape-btn" onclick="selectShape('⭐', this)">⭐</div>
             <div class="shape-btn" onclick="selectShape('🎄', this)">🎄</div>
@@ -731,10 +471,10 @@
         </div>
       </div>
 
-      <!-- [STAGE 6] 캐럴 연주 (건반 세로 길이 5배 확장) -->
+      <!-- [STAGE 6] 캐럴 연주 -->
       <div id="stage-6" class="sub-page-box" style="display:none;">
         <div class="quest-title-bar">🔔 미션 6: 캐럴 연주</div>
-        <div class="quest-inner-content" style="padding: 20px;">
+        <div class="quest-inner-content">
           <div class="quest-desc" id="music-status" style="padding:8px; background:#fff1f5; border-radius:6px; font-size:14px; font-weight:bold; color:var(--pink-deep); width:100%;">진행 상황: (0/11 음표 입력)</div>
           <div class="music-grid">
             <button class="music-key" onclick="playCarolNote('도', 261.63)">도</button>
@@ -745,7 +485,7 @@
             <button class="music-key" onclick="playCarolNote('라', 440.00)">라</button>
             <button class="music-key" onclick="playCarolNote('시', 493.88)">시</button>
           </div>
-          <button class="action-btn" onclick="resetCarol()" style="background:#f3f4f6; color:#6b7280; border:2px solid #9ca3af; box-shadow:0 3px 0px #9ca3af; font-size:14px; padding:10px; margin-top:8px;">🔄 초기화</button>
+          <button class="action-btn" onclick="resetCarol()" style="background:#f3f4f6; color:#6b7280; border:2px solid #9ca3af; font-size:14px; padding:10px; margin-top:6px;">🔄 초기화</button>
           <details><summary>💡 힌트 보기</summary>미-미-미 / 미-미-미 / 미-솔-도-레-미 순서입니다.</details>
           <button class="cheat-btn" onclick="nextStage()">⚡ 테스트용: 다음 문제로 건너뛰기</button>
         </div>
@@ -760,7 +500,7 @@
       <h1 style="font-size: 17px; color: var(--pink-deep);">마지막 자명종을 울릴 마법의 집중점은?</h1>
     </div>
     <div class="branch-card" style="margin: 20px; width: calc(100% - 40px);">
-      <div class="diff-title">✨ 엔딩 분기점 선택</div>
+      <div class="diff-title" style="color:var(--pink-deep);">✨ 엔딩 분기점 선택</div>
       <div class="diff-options" style="display: flex; flex-direction: column; gap: 10px;">
         <button class="branch-btn" onclick="selectEndingBranch('festival')">
           <span>🌟 크리스마스의 화려한 빛과 축제에 집중한다!</span>
@@ -774,12 +514,13 @@
 
   <!-- 6. 엔딩 화면 -->
   <div id="screen-ending" class="screen" onclick="progressOutroChat()">
-    <img src="outro.gif" alt="아웃트로 배경" class="outro-bg-img" onerror="this.style.display='none';">
+    <div class="space-art-area" style="flex:1;">
+      <span>🎄✨🏛️🎉</span>
+      <span style="font-size: 15px; color: #fff;">[ 빛을 되찾은 서울갤러리 ]</span>
+    </div>
     <div class="outro-dialog-box" onclick="event.stopPropagation();">
       <div class="outro-chat-layout" onclick="progressOutroChat()">
-        <div class="outro-profile-area">
-          <img id="outro-avatar-img" src="haechi.gif" alt="프로필">
-        </div>
+        <div class="outro-profile-area" id="outro-avatar-emoji">🦁</div>
         <div class="outro-msg-area">
           <div class="layout-msg-sender" id="outro-sender-name">해치</div>
           <div class="layout-msg-content">
@@ -809,69 +550,65 @@
   let currentStage = 1;
   let audioCtx = null;
   let selectedEnding = 'festival';
-
   let activeOscillator = null;
 
   let setupChatIdx = 0;
   let setupTypingInterval = null;
   const setupChatLines = [
-    { name: "해치", avatar: "haechi.gif", text: "안녕! 소망 숲에 온 걸 환영해!!" },
-    { name: "주작", avatar: "ju.gif", text: "지금 인사할 여유가 어디있어!! 큰일났어. 숲에 조명이 모두 꺼졌어." },
-    { name: "해치", avatar: "haechi.gif", text: "맞아 오자마자 미안한데, 혹시 우릴 도와줄 수 있어? 소망 숲을 돌아다니며 꺼진 불을 켜야 해." },
-    { name: "해치", avatar: "haechi.gif", text: "우리끼린 좀 어려울 것 같은데, 같이 가 줄 거지?" }
+    { name: "해치", emoji: "🦁", text: "안녕! 서울갤러리에 온 걸 환영해!!" },
+    { name: "주작", emoji: "🦅", text: "지금 인사할 여유가 어디있어!! 큰일났어. 로비 대형 트리 조명이 모두 꺼졌어." },
+    { name: "해치", emoji: "🦁", text: "맞아 오자마자 미안한데, 혹시 우릴 도와줄 수 있어? 갤러리를 돌아다니며 불을 켜야 해." },
+    { name: "해치", emoji: "🦁", text: "우리끼린 좀 어려울 것 같은데, 같이 가 줄 거지?" }
   ];
 
   let storyChatIdx = 0;
   let storyTypingInterval = null;
+  const stageChatData = {
+    1: [
+      { name: "주작", emoji: "🦅", text: "여기는 대형트리야. 첫 번째 불을 켜려면 다섯 수호대와 마법 전선을 연결해야 해." },
+      { name: "해치", emoji: "🦁", text: "상단에 있는 색과 아래 수호대 이름을 올바로 연결해야 불이 들어올 거야." }
+    ],
+    2: [
+      { name: "주작", emoji: "🦅", text: "배전함 자물쇠가 걸려 있네? 이거 어떻게 풀지..." },
+      { name: "해치", emoji: "🦁", text: "우리가 찾던 단어 기억하지? 행복♥이야, 잊지마!" }
+    ],
+    3: [
+      { name: "주작", emoji: "🦅", text: "조심해! 여기는 서울갤러리의 과거 기록을 심사하는 팩트체크 결계야." },
+      { name: "해치", emoji: "🦁", text: "제시되는 문장을 꼼꼼히 읽고, OX로 정답을 맞춰줘!" }
+    ],
+    4: [
+      { name: "주작", emoji: "🦅", text: "어두컴컴한 구역이야. 메인 트리의 전등이 전부 꺼져서 앞이 안 보여!" },
+      { name: "해치", emoji: "🦁", text: "스위치를 누르면 주변 전등도 함께 연동되어 켜지고 꺼져. 모든 전등을 동시에 켜 보자!" }
+    ],
+    5: [
+      { name: "주작", emoji: "🦅", text: "다섯 번째는 고대 마법진 봉인 구역이야. 정해진 자리에 성물을 바쳐야 해." },
+      { name: "해치", emoji: "🦁", text: "상단에서 성물(⭐, 🎄, 🎁)을 고른 뒤, 첫 번째 줄 세 칸에 나란히 안착시켜 줘!" }
+    ],
+    6: [
+      { name: "주작", emoji: "🦅", text: "드디어 마지막 관문이야! 멈춰버린 자명종을 깨울 마지막 기회야." },
+      { name: "해치", emoji: "🦁", text: "하단의 오르골 건반을 눌러서 징글벨 도입부 멜로디를 완벽하게 연주해 줘!" }
+    ]
+  };
 
   let outroChatIdx = 0;
   let outroTypingInterval = null;
   const outroChatData = {
     'festival': [
-      { name: "해치", avatar: "haechi.gif", text: "화려한 빛과 축제의 마법으로 숲이 온통 반짝이기 시작했어!" },
-      { name: "주작", avatar: "ju.gif", text: "안내 데스크에 가면 엄청난 축제 선물이 기다리고 있어! 수고했어 🎁" }
+      { name: "해치", emoji: "🦁", text: "화려한 빛과 축제의 마법으로 서울갤러리가 온통 반짝이기 시작했어!" },
+      { name: "주작", emoji: "🦅", text: "안내 데스크에 가면 엄청난 축제 선물이 기다리고 있어! 정말 수고했어 🎁" }
     ],
     'warmth': [
-      { name: "해치", avatar: "haechi.gif", text: "모두가 함께 모이는 포근한 온기로 크리스마스가 따뜻해졌어..." },
-      { name: "주작", avatar: "ju.gif", text: "안내 데스크에 가면 따뜻한 선물이 기다리고 있어! 정말 고마워 🎁" }
+      { name: "해치", emoji: "🦁", text: "모두가 함께 모이는 포근한 온기로 크리스마스가 따뜻해졌어..." },
+      { name: "주작", emoji: "🦅", text: "안내 데스크에 가면 따뜻한 선물이 기다리고 있어! 정말 고마워 🎁" }
     ]
   };
 
   window.addEventListener("DOMContentLoaded", () => {
-    loadGameProgress();
     initWheels();
     initFactGame();
     initSwitchGame();
     initMatrixGame();
   });
-
-  function saveGameProgress(screenId, stageNum) {
-    localStorage.setItem("haechi_screen", screenId);
-    localStorage.setItem("haechi_stage", stageNum);
-  }
-
-  function loadGameProgress() {
-    const savedScreen = localStorage.getItem("haechi_screen");
-    const savedStage = localStorage.getItem("haechi_stage");
-
-    if (savedScreen && savedScreen !== 'screen-intro' && savedStage) {
-      currentStage = parseInt(savedStage);
-      if (savedScreen === 'screen-story') {
-        goToScreen('screen-story');
-        startStoryChat(currentStage);
-      } else if (savedScreen === 'screen-game') {
-        goToScreen('screen-game');
-        showProblemStage(currentStage);
-      } else if (savedScreen === 'screen-branch') {
-        goToScreen('screen-branch');
-      } else if (savedScreen === 'screen-ending') {
-        goToScreen('screen-ending');
-        startOutroChat();
-      }
-    } else {
-      goToScreen('screen-intro', false);
-    }
-  }
 
   function stopAllTypingAndSound() {
     if (setupTypingInterval) { clearInterval(setupTypingInterval); setupTypingInterval = null; }
@@ -883,14 +620,11 @@
     }
   }
 
-  function goToScreen(screenId, save = true) {
+  function goToScreen(screenId) {
     stopAllTypingAndSound();
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     const target = document.getElementById(screenId);
-    if (target) {
-      target.classList.add('active');
-    }
-    if (save) saveGameProgress(screenId, currentStage);
+    if (target) target.classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -904,17 +638,15 @@
 
   function playSetupLine() {
     if (setupTypingInterval) clearInterval(setupTypingInterval);
-    const imgEl = document.getElementById("setup-avatar-img");
+    const emojiEl = document.getElementById("setup-avatar-emoji");
     const nameEl = document.getElementById("setup-sender-name");
     const textEl = document.getElementById("setup-msg-text");
     const indicator = document.getElementById("setup-next-indicator");
 
-    if (setupChatIdx >= setupChatLines.length) {
-      return;
-    }
+    if (setupChatIdx >= setupChatLines.length) return;
 
     const data = setupChatLines[setupChatIdx];
-    imgEl.src = data.avatar;
+    emojiEl.innerText = data.emoji;
     nameEl.innerText = data.name;
     textEl.innerText = "";
     indicator.style.display = "none";
@@ -963,33 +695,6 @@
     startStoryChat(currentStage);
   }
 
-  const stageChatData = {
-    1: [
-      { name: "주작", avatar: "ju.gif", text: "여기는 대형트리야. 첫 번째 불을 켜려면 다섯 수호대와 마법 전선을 연결해야 해." },
-      { name: "해치", avatar: "haechi.gif", text: "상단에 있는 색과 아래 수호대 이름을 올바로 연결해야 불이 들어올 거야." }
-    ],
-    2: [
-      { name: "주작", avatar: "ju.gif", text: "자물쇠가 걸려 있네? 이거 어떻게 풀지..." },
-      { name: "해치", avatar: "haechi.gif", text: "우리가 찾던 단어 기억하지? 행복♥이야, 잊지마!" }
-    ],
-    3: [
-      { name: "주작", avatar: "ju.gif", text: "조심해! 여기는 서울갤러리의 과거 기록을 심사하는 팩트체크 결계야. 엉터리 대답하면 정답 초기화야!" },
-      { name: "해치", avatar: "haechi.gif", text: "제시되는 문장을 꼼꼼히 읽고, OX로 정답을 맞춰줘!" }
-    ],
-    4: [
-      { name: "주작", avatar: "ju.gif", text: "어두컴컴한 네 번째 구역이야. 메인 트리의 전등이 전부 꺼져서 앞이 안 보여!" },
-      { name: "해치", avatar: "haechi.gif", text: "스위치를 누르면 주변 전등도 함께 연동되어 켜지고 꺼져. 모든 전등을 동시에 노란색으로 켜 보자!" }
-    ],
-    5: [
-      { name: "주작", avatar: "ju.gif", text: "다섯 번째는 고대 마법진 봉인 구역이야. 정해진 자리에 성물을 바치지 않으면 결계가 안 풀려." },
-      { name: "해치", avatar: "haechi.gif", text: "상단에서 성물(⭐, 🎄, 🎁)을 고른 뒤, 첫 번째 줄 세 칸에 나란히 안착시켜 줘!" }
-    ],
-    6: [
-      { name: "주작", avatar: "ju.gif", text: "드디어 마지막 여섯 번째 관문이야! 멈춰버린 자명종을 깨울 마지막 기회야." },
-      { name: "해치", avatar: "haechi.gif", text: "하단의 오르골 건반을 눌러서 징글벨 도입부 멜로디를 완벽하게 연주해 줘!" }
-    ]
-  };
-
   const stageTitles = {
     1: "🔔 미션 1: 컬러 코드 브리핑",
     2: "🔔 미션 2: 다이얼 자물쇠 브리핑",
@@ -1008,18 +713,16 @@
 
   function playStoryLine(stageNum) {
     if (storyTypingInterval) clearInterval(storyTypingInterval);
-    const imgEl = document.getElementById("story-avatar");
+    const emojiEl = document.getElementById("story-avatar-emoji");
     const nameEl = document.getElementById("story-sender");
     const textEl = document.getElementById("story-msg");
     const indicator = document.getElementById("story-next-indicator");
 
     const lines = stageChatData[stageNum] || [];
-    if (storyChatIdx >= lines.length) {
-      return;
-    }
+    if (storyChatIdx >= lines.length) return;
 
     const data = lines[storyChatIdx];
-    imgEl.src = data.avatar;
+    emojiEl.innerText = data.emoji;
     nameEl.innerText = data.name;
     textEl.innerText = "";
     indicator.style.display = "none";
@@ -1075,9 +778,7 @@
     }
     let stars = "";
     for (let i = 1; i <= 6; i++) { stars += (i <= stageNum) ? "★" : "☆"; }
-    const badge = document.getElementById("game-badge");
-    if (badge) badge.innerText = stars;
-    saveGameProgress('screen-game', stageNum);
+    document.getElementById("game-badge").innerText = stars;
   }
 
   function initAudio() {
@@ -1123,7 +824,7 @@
     } catch(e) {}
   }
 
-  // [미션 1] ◆ 기호 전선 연결 로직
+  // 미션 1 로직
   let selectedLeft = null;
   let wireCount = 0;
   function selectLeftWire(id, el) {
@@ -1147,9 +848,7 @@
       wireCount++;
       document.getElementById("wire-status").innerText = `${wireCount}/5 완료`;
       selectedLeft = null;
-      if (wireCount === 5) {
-        showModal("🔔 미션 1 클리어!", "모든 수호대의 상징 기호가 올바르게 연결되었습니다!");
-      }
+      if (wireCount === 5) showModal("🔔 미션 1 클리어!", "마법 전선이 정상적으로 연결되었습니다!");
     } else {
       alert("전선 스파크가 튀었습니다! 올바른 수호대 이름을 찾아주세요.");
       selectedLeft = null;
@@ -1157,10 +856,9 @@
     }
   }
 
-  // [미션 2] 다이얼 자물쇠 로직
+  // 미션 2 로직
   const dialChars = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','♥'];
   let currentDialIndices = [7, 0, 4, 2, 7, 8];
-
   function initWheels() {
     const wrap = document.getElementById("wheel-columns-wrap");
     if(!wrap) return;
@@ -1181,18 +879,13 @@
       renderDial(c);
     }
   }
-
   function renderDial(c) {
     const L = dialChars.length;
     const cur = currentDialIndices[c];
-    const prev = (cur - 1 + L) % L;
-    const next = (cur + 1) % L;
-
-    document.getElementById(`wheel-prev-${c}`).innerText = dialChars[prev];
+    document.getElementById(`wheel-prev-${c}`).innerText = dialChars[(cur - 1 + L) % L];
     document.getElementById(`wheel-curr-${c}`).innerText = dialChars[cur];
-    document.getElementById(`wheel-next-${c}`).innerText = dialChars[next];
+    document.getElementById(`wheel-next-${c}`).innerText = dialChars[(cur + 1) % L];
   }
-
   function spinDial(colIndex, delta) {
     initAudio();
     const L = dialChars.length;
@@ -1200,48 +893,31 @@
     renderDial(colIndex);
     playTone(320, 0.03);
   }
-
   function checkDialStage() {
     let word = currentDialIndices.map(i => dialChars[i]).join("");
-    if (word === "HAPPY♥") {
-      showModal("🔔 미션 2 클리어!", "다이얼이 정확히 일치하며 문이 열렸습니다!");
-    } else {
-      alert(`자물쇠가 열리지 않습니다! (현재 입력: ${word}, 힌트: HAPPY♥)`);
-    }
+    if (word === "HAPPY♥") showModal("🔔 미션 2 클리어!", "배전함 자물쇠가 열렸습니다!");
+    else alert(`자물쇠가 열리지 않습니다! (현재: ${word}, 힌트: HAPPY♥)`);
   }
 
-  // [미션 3] 진실/거짓 스와이프 OX 로직
-  const factList = [
-    { text: "서울갤러리의 개관일은 2월 5일이다.", answer: true },
-    { text: "군기시는 조선시대 학문을 공부하던 곳이다.", answer: false }
-  ];
+  // 미션 3 로직
+  const factList = [{ text: "서울갤러리는 서울시청 지하에 위치한다.", answer: true }, { text: "군기시는 조선시대 학문을 공부하던 곳이다.", answer: false }];
   let factIdx = 0;
-  function initFactGame() {
-    factIdx = 0;
-    const card = document.getElementById("fact-card");
-    if(card && factList.length > 0) card.innerText = factList[0].text;
-  }
+  function initFactGame() { factIdx = 0; const card = document.getElementById("fact-card"); if(card) card.innerText = factList[0].text; }
   function answerFact(userChoice) {
     if (userChoice === factList[factIdx].answer) {
       factIdx++;
-      if (factIdx < factList.length) {
-        document.getElementById("fact-card").innerText = factList[factIdx].text;
-      } else {
-        showModal("🔔 미션 3 클리어!", "모든 팩트체크 결계가 해제되었습니다!");
-      }
+      if (factIdx < factList.length) document.getElementById("fact-card").innerText = factList[factIdx].text;
+      else showModal("🔔 미션 3 클리어!", "팩트체크 결계가 해제되었습니다!");
     } else {
-      alert("틀렸습니다! 군기시는 조선시대 군기(무기)를 만들던 곳입니다.");
+      alert("틀렸습니다! 군기시는 무기를 만들던 곳입니다.");
       factIdx = 0;
       document.getElementById("fact-card").innerText = factList[factIdx].text;
     }
   }
 
-  // [미션 4] 연쇄 전등 스위치 로직
+  // 미션 4 로직
   let switchState = Array(9).fill(false);
-  function initSwitchGame() {
-    switchState = [true, false, true, false, true, false, true, false, true];
-    renderSwitches();
-  }
+  function initSwitchGame() { switchState = [true, false, true, false, true, false, true, false, true]; renderSwitches(); }
   function renderSwitches() {
     const board = document.getElementById("switch-board");
     if (!board) return;
@@ -1255,8 +931,7 @@
     });
   }
   function toggleSwitch(idx) {
-    const row = Math.floor(idx / 3);
-    const col = idx % 3;
+    const row = Math.floor(idx / 3), col = idx % 3;
     const targets = [idx];
     if (row > 0) targets.push(idx - 3);
     if (row < 2) targets.push(idx + 3);
@@ -1264,30 +939,15 @@
     if (col < 2) targets.push(idx + 1);
     targets.forEach(t => { switchState[t] = !switchState[t]; });
     renderSwitches();
-    if (switchState.every(val => val === true)) {
-      showModal("🔔 미션 4 클리어!", "모든 전등이 연쇄적으로 점등되었습니다!");
-    }
+    if (switchState.every(val => val === true)) showModal("🔔 미션 4 클리어!", "트리 전등이 모두 켜졌습니다!");
   }
-  function resetSwitches() {
-    switchState = [false, true, false, true, false, true, false, true, false];
-    renderSwitches();
-  }
+  function resetSwitches() { switchState = [false, true, false, true, false, true, false, true, false]; renderSwitches(); }
 
-  // [미션 5] 4x4 마법진 성물 배치 로직
+  // 미션 5 로직
   let selectedShape = null;
   let matrixState = Array(16).fill("");
-
-  function selectShape(shape, el) {
-    document.querySelectorAll('.shape-btn').forEach(b => b.classList.remove('selected'));
-    el.classList.add('selected');
-    selectedShape = shape;
-  }
-
-  function initMatrixGame() {
-    matrixState = Array(16).fill("");
-    renderMatrix();
-  }
-
+  function selectShape(shape, el) { document.querySelectorAll('.shape-btn').forEach(b => b.classList.remove('selected')); el.classList.add('selected'); selectedShape = shape; }
+  function initMatrixGame() { matrixState = Array(16).fill(""); renderMatrix(); }
   function renderMatrix() {
     const board = document.getElementById("matrix-board");
     if (!board) return;
@@ -1300,53 +960,33 @@
       board.appendChild(cell);
     });
   }
-
   function placeShapeOnMatrix(idx) {
-    if (!selectedShape) { alert("상단에서 먼저 배치할 성물을 선택하세요!"); return; }
+    if (!selectedShape) { alert("상단에서 성물을 먼저 선택하세요!"); return; }
     matrixState[idx] = selectedShape;
     renderMatrix();
-
-    let placedCount = matrixState.filter(s => s !== "").length;
-    if (placedCount === 3) {
-      if (matrixState[0] && matrixState[1] && matrixState[2]) {
-        showModal("🔔 미션 5 클리어!", "4x4 마법진의 첫 번째 줄에 성물이 완벽하게 안착되었습니다!");
-      } else {
-        alert("성물의 배치 위치가 올바르지 않습니다! 첫 번째 줄에 나란히 배치해 보세요.");
-        resetMatrix();
-      }
+    if (matrixState.filter(s => s !== "").length === 3) {
+      if (matrixState[0] && matrixState[1] && matrixState[2]) showModal("🔔 미션 5 클리어!", "마법진 봉인이 해제되었습니다!");
+      else { alert("첫 번째 줄에 나란히 배치해야 합니다."); resetMatrix(); }
     }
   }
+  function resetMatrix() { matrixState = Array(16).fill(""); renderMatrix(); }
 
-  function resetMatrix() {
-    matrixState = Array(16).fill("");
-    renderMatrix();
-  }
-
-  // [미션 6] 캐럴 멜로디 연주 로직
+  // 미션 6 로직
   const carolMelodyTarget = ['미', '미', '미', '미', '미', '미', '미', '솔', '도', '레', '미'];
   let carolInput = [];
-
   function playCarolNote(noteName, freq) {
     playTone(freq, 0.25, 'triangle');
     carolInput.push(noteName);
     document.getElementById("music-status").innerText = `진행 상황: (${carolInput.length}/11 음표 입력)`;
-
     if (carolInput.length === carolMelodyTarget.length) {
       if (carolInput.toString() === carolMelodyTarget.toString()) {
         playTone(523.25, 0.4);
         setTimeout(() => playTone(659.25, 0.4), 200);
-        showModal("🔔 미션 6 클리어!", "아름다운 징글벨 캐럴 연주가 완성되었습니다!");
-      } else {
-        alert("캐럴 멜로디 순서가 틀렸습니다! 다시 시도하세요.");
-        resetCarol();
-      }
+        showModal("🔔 미션 6 클리어!", "자명종을 깨울 캐럴 연주가 완성되었습니다!");
+      } else { alert("순서가 틀렸습니다!"); resetCarol(); }
     }
   }
-
-  function resetCarol() {
-    carolInput = [];
-    document.getElementById("music-status").innerText = "진행 상황: (0/11 음표 입력)";
-  }
+  function resetCarol() { carolInput = []; document.getElementById("music-status").innerText = "진행 상황: (0/11 음표 입력)"; }
 
   function showModal(title, desc) {
     document.getElementById("modal-title").innerText = title;
@@ -1356,10 +996,7 @@
 
   function nextStage() {
     document.getElementById("modal").style.display = "none";
-    if (currentStage === 6) {
-      goToScreen('screen-branch');
-      return;
-    }
+    if (currentStage === 6) { goToScreen('screen-branch'); return; }
     currentStage++;
     goToScreen('screen-story');
     startStoryChat(currentStage);
@@ -1367,30 +1004,23 @@
 
   function selectEndingBranch(branchType) {
     selectedEnding = branchType;
-    saveGameProgress('screen-ending', 6);
     goToScreen('screen-ending');
     startOutroChat();
   }
 
-  function startOutroChat() {
-    outroChatIdx = 0;
-    playOutroLine();
-  }
-
+  function startOutroChat() { outroChatIdx = 0; playOutroLine(); }
   function playOutroLine() {
     if (outroTypingInterval) clearInterval(outroTypingInterval);
-    const imgEl = document.getElementById("outro-avatar-img");
+    const emojiEl = document.getElementById("outro-avatar-emoji");
     const nameEl = document.getElementById("outro-sender-name");
     const textEl = document.getElementById("outro-msg-text");
     const indicator = document.getElementById("outro-next-indicator");
 
     const lines = outroChatData[selectedEnding] || outroChatData['festival'];
-    if (outroChatIdx >= lines.length) {
-      return;
-    }
+    if (outroChatIdx >= lines.length) return;
 
     const data = lines[outroChatIdx];
-    imgEl.src = data.avatar;
+    emojiEl.innerText = data.emoji;
     nameEl.innerText = data.name;
     textEl.innerText = "";
     indicator.style.display = "none";
@@ -1414,29 +1044,18 @@
     if (outroTypingInterval) {
       clearInterval(outroTypingInterval);
       outroTypingInterval = null;
-      const data = lines[outroChatIdx];
-      document.getElementById("outro-msg-text").innerText = data.text;
+      document.getElementById("outro-msg-text").innerText = lines[outroChatIdx].text;
       document.getElementById("outro-next-indicator").style.display = "inline";
     } else {
-      if (outroChatIdx < lines.length - 1) {
-        outroChatIdx++;
-        playOutroLine();
-      }
+      if (outroChatIdx < lines.length - 1) { outroChatIdx++; playOutroLine(); }
     }
   }
 
   function resetGameCompletely() {
-    localStorage.clear();
-    currentStage = 1;
-    wireCount = 0;
-    selectedLeft = null;
+    currentStage = 1; wireCount = 0; selectedLeft = null;
     currentDialIndices = [7, 0, 4, 2, 7, 8];
-    initWheels();
-    initFactGame();
-    resetSwitches();
-    resetMatrix();
-    resetCarol();
-    goToScreen('screen-intro', false);
+    initWheels(); initFactGame(); resetSwitches(); resetMatrix(); resetCarol();
+    goToScreen('screen-intro');
   }
 </script>
 </body>
