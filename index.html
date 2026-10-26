@@ -36,12 +36,12 @@
       color: var(--text-dark);
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start; /* 상단 딱 붙이기 */
       min-height: 100vh;
       overflow: hidden;
+      padding-top: 0;
     }
 
-    /* 화면 쉐이크(흔들림) 애니메이션 클래스 */
     @keyframes shake {
       0% { transform: translate(0, 0); }
       20% { transform: translate(-6px, 0); }
@@ -50,32 +50,28 @@
       80% { transform: translate(4px, 0); }
       100% { transform: translate(0, 0); }
     }
-    .shake-effect {
-      animation: shake 0.4s ease-in-out;
-    }
+    .shake-effect { animation: shake 0.4s ease-in-out; }
 
-    /* 아바타 바운스 애니메이션 */
     @keyframes bounce {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-4px); }
     }
-    .bounce-avatar {
-      animation: bounce 0.6s infinite ease-in-out;
-    }
+    .bounce-avatar { animation: bounce 0.6s infinite ease-in-out; }
 
     #app {
       position: relative;
       width: 100vw;
       max-width: 440px;
-      aspect-ratio: 1 / 1.8;
-      max-height: 98vh;
+      aspect-ratio: 1 / 1.65; /* 비율 1.65로 고정 */
+      max-height: 100vh;
       background: var(--pink-bg);
       display: flex;
       flex-direction: column;
       overflow: hidden;
       border: 4px solid var(--pink-deep);
       box-shadow: 4px 4px 0px #831843, 8px 8px 0px rgba(219, 39, 119, 0.3);
-      border-radius: 12px;
+      border-radius: 0 0 12px 12px;
+      margin-top: 0;
     }
 
     .screen {
@@ -88,11 +84,24 @@
       background: var(--pink-bg);
       overflow: hidden;
     }
-    .screen.active {
-      display: flex;
+    .screen.active { display: flex; }
+
+    /* 상단 BGM 토글 바 */
+    .audio-bar {
+      position: absolute;
+      top: 6px;
+      right: 10px;
+      z-index: 100;
+      background: rgba(255,255,255,0.8);
+      border: 2px solid var(--pink-deep);
+      border-radius: 20px;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: bold;
+      color: var(--pink-deep);
+      cursor: pointer;
     }
 
-    /* 1. 인트로 화면 */
     #screen-intro {
       background: #000;
       justify-content: center;
@@ -100,251 +109,79 @@
       text-align: center;
       z-index: 10;
     }
-
     .intro-bg-img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      background: #000;
-      z-index: 1;
+      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: #000; z-index: 1;
     }
-
     .intro-header-box {
-      position: absolute;
-      top: 15%;
-      left: 10%;
-      right: 10%;
-      z-index: 10;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
+      position: absolute; top: 15%; left: 10%; right: 10%; z-index: 10; display: flex; flex-direction: column; align-items: center; gap: 8px;
     }
-
-    .intro-badge {
-      background: var(--pine-green);
-      color: #fff;
-      font-size: 12px;
-      padding: 4px 10px;
-      border-radius: 4px;
-      border: 1.5px solid var(--pine-dark);
-    }
-
-    .intro-title {
-      font-size: 26px;
-      font-weight: 900;
-      color: #ffffff;
-      line-height: 1.3;
-      text-shadow: 3px 3px 0px var(--pink-deep), 6px 6px 0px #831843;
-      letter-spacing: 2.5px;
-    }
-
-    .intro-transparent-btn {
-      position: absolute;
-      bottom: 12%;
-      left: 18%;
-      right: 18%;
-      height: 65px;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      z-index: 20;
-    }
+    .intro-badge { background: var(--pine-green); color: #fff; font-size: 12px; padding: 4px 10px; border-radius: 4px; border: 1.5px solid var(--pine-dark); }
+    .intro-title { font-size: 26px; font-weight: 900; color: #ffffff; line-height: 1.3; text-shadow: 3px 3px 0px var(--pink-deep), 6px 6px 0px #831843; }
+    .intro-transparent-btn { position: absolute; bottom: 12%; left: 18%; right: 18%; height: 65px; background: transparent; border: none; cursor: pointer; z-index: 20; }
 
     header {
-      padding: 8px 14px;
-      background: #ffffff;
-      border-bottom: 3px solid var(--pink-deep);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-shrink: 0;
+      padding: 8px 14px; background: #ffffff; border-bottom: 3px solid var(--pink-deep); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;
     }
-    .badge {
-      background: var(--pine-green);
-      color: #fff;
-      font-size: 13px;
-      padding: 3px 8px;
-      border-radius: 4px;
-      border: 2px solid var(--pine-dark);
-    }
-    .pink-tag {
-      background: var(--soft-pink);
-      color: var(--pink-deep);
-      font-size: 11.5px;
-      padding: 3px 8px;
-      border-radius: 4px;
-      border: 2px solid var(--pink-primary);
-      font-weight: bold;
-    }
-    .reset-btn {
-      background: #f3f4f6;
-      border: 2px solid #9ca3af;
-      color: var(--text-muted);
-      font-size: 11px;
-      padding: 3px 6px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
+    .badge { background: var(--pine-green); color: #fff; font-size: 13px; padding: 3px 8px; border-radius: 4px; border: 2px solid var(--pine-dark); }
+    .pink-tag { background: var(--soft-pink); color: var(--pink-deep); font-size: 11.5px; padding: 3px 8px; border-radius: 4px; border: 2px solid var(--pink-primary); font-weight: bold; }
+    .reset-btn { background: #f3f4f6; border: 2px solid #9ca3af; color: var(--text-muted); font-size: 11px; padding: 3px 6px; border-radius: 4px; cursor: pointer; }
 
     .content {
-      flex: 1;
-      padding: 10px 12px 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      overflow-y: auto;
+      flex: 1; padding: 10px 12px 14px; display: flex; flex-direction: column; gap: 10px; overflow-y: auto;
     }
 
     .story-page-box, .sub-page-box {
-      background: #ffffff;
-      border: 3px solid var(--pink-deep);
-      border-radius: 8px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      box-shadow: 4px 4px 0px rgba(219, 39, 119, 0.2);
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
+      background: #ffffff; border: 3px solid var(--pink-deep); border-radius: 8px; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 4px 4px 0px rgba(219, 39, 119, 0.2); width: 100%; height: 100%; overflow: hidden;
     }
-
     .quest-title-bar {
-      width: 100%;
-      background: var(--pine-green);
-      color: #ffffff;
-      padding: 8px 12px;
-      font-size: 15px;
-      font-weight: bold;
-      border-bottom: 3px dashed #86efac;
-      flex-shrink: 0;
+      width: 100%; background: var(--pine-green); color: #ffffff; padding: 8px 12px; font-size: 15px; font-weight: bold; border-bottom: 3px dashed #86efac; flex-shrink: 0;
     }
-
     .space-image-area {
-      position: relative;
-      width: 100%;
-      flex: 1;
-      min-height: 260px;
-      background: #2b1117;
-      border-bottom: 3px solid var(--pink-deep);
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      position: relative; width: 100%; flex: 1; min-height: 200px; background: #2b1117; border-bottom: 3px solid var(--pink-deep); overflow: hidden; display: flex; justify-content: center; align-items: center;
     }
-    .space-image-area img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    .space-image-area img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* 공간 이동 안내 페이지 전용 스타일 */
+    .transit-box {
+      background: #ffffff; border: 3px solid var(--pink-deep); border-radius: 8px; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 14px; text-align: center; box-shadow: 4px 4px 0px rgba(219, 39, 119, 0.2);
+    }
+    .transit-img-placeholder {
+      width: 100%; flex: 1; background: #fdf2f8; border: 2px dashed var(--pink-primary); border-radius: 6px; display: flex; flex-direction: column; justify-content: center; align-items: center; color: var(--pink-deep); font-size: 13px; font-weight: bold; margin: 8px 0; gap: 6px;
     }
 
     .layout-chat-box {
-      display: flex;
-      width: 100%;
-      height: 105px;
-      background: #ffffff;
-      border-bottom: 3px dashed var(--pink-primary);
-      flex-shrink: 0;
-      cursor: pointer;
+      display: flex; width: 100%; height: 105px; background: #ffffff; border-bottom: 3px dashed var(--pink-primary); flex-shrink: 0; cursor: pointer;
     }
-
     .layout-profile-area {
-      width: 28%;
-      height: 100%;
-      background: #fdf2f8;
-      border-right: 3px solid var(--pink-deep);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 0;
-      overflow: hidden;
+      width: 28%; height: 100%; background: #fdf2f8; border-right: 3px solid var(--pink-deep); display: flex; justify-content: center; align-items: center; padding: 0; overflow: hidden;
     }
-    .layout-avatar-fill {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .layout-avatar-fill img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+    .layout-avatar-fill { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
+    .layout-avatar-fill img { width: 100%; height: 100%; object-fit: cover; }
 
     .layout-msg-area {
-      width: 72%;
-      background: #fff1f5;
-      color: var(--text-dark);
-      padding: 8px 12px;
-      font-size: 13.5px;
-      line-height: 1.4;
-      text-align: left;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      position: relative;
-      overflow-y: auto;
+      width: 72%; background: #fff1f5; color: var(--text-dark); padding: 8px 12px; font-size: 13.5px; line-height: 1.4; text-align: left; display: flex; flex-direction: column; justify-content: flex-start; position: relative; overflow-y: auto;
     }
-    .layout-msg-sender {
-      font-size: 11.5px;
-      font-weight: bold;
-      color: var(--pink-deep);
-      margin-bottom: 2px;
-      flex-shrink: 0;
-    }
-    .layout-msg-content {
-      width: 100%;
-      display: block;
-    }
+    .layout-msg-sender { font-size: 11.5px; font-weight: bold; color: var(--pink-deep); margin-bottom: 2px; flex-shrink: 0; }
+    .layout-msg-content { width: 100%; display: block; }
     .next-indicator-text {
-      display: inline-block;
-      margin-top: 4px;
-      font-size: 12px;
-      font-weight: bold;
-      color: var(--pink-deep);
-      background: #ffe4e6;
-      padding: 1px 5px;
-      border-radius: 4px;
+      display: inline-block; margin-top: 4px; font-size: 12px; font-weight: bold; color: var(--pink-deep); background: #ffe4e6; padding: 1px 5px; border-radius: 4px;
     }
 
     .quest-inner-content {
-      width: 100%;
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      align-items: center;
-      overflow-y: auto;
+      width: 100%; padding: 16px; display: flex; flex-direction: column; gap: 14px; align-items: center; overflow-y: auto;
     }
-
     .action-btn {
-      width: 100%; padding: 12px; background: var(--crimson-red); color: #ffffff;
-      border: 3px solid #7f1d1d; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer;
-      box-shadow: 0 4px 0px #7f1d1d;
-      flex-shrink: 0;
-      transition: transform 0.1s;
+      width: 100%; padding: 12px; background: var(--crimson-red); color: #ffffff; border: 3px solid #7f1d1d; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 0px #7f1d1d; flex-shrink: 0;
     }
     .action-btn:active { transform: translateY(4px); box-shadow: 0 0px 0px #7f1d1d; }
 
-    details {
-      width: 100%; background: #f0fdf4; border: 2px solid var(--pine-green);
-      padding: 10px 12px; border-radius: 6px; font-size: 13px; color: var(--pine-dark); text-align: left;
-    }
+    details { width: 100%; background: #f0fdf4; border: 2px solid var(--pine-green); padding: 10px 12px; border-radius: 6px; font-size: 13px; color: var(--pine-dark); text-align: left; }
     summary { cursor: pointer; font-weight: bold; color: var(--pine-green); }
-
-    .cheat-btn {
-      width: 100%; padding: 8px; background: #fef08a; color: #854d0e;
-      border: 2px dashed #ca8a04; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer;
-    }
+    .cheat-btn { width: 100%; padding: 8px; background: #fef08a; color: #854d0e; border: 2px dashed #ca8a04; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; }
 
     /* 퍼즐별 스타일 */
     .wire-top-container { display: flex; justify-content: center; gap: 8px; width: 100%; margin-bottom: 6px; }
-    .wire-top-node { background: #fff; border: 2px solid var(--pine-dark); border-radius: 6px; padding: 8px 12px; font-size: 18px; font-weight: bold; cursor: pointer; transition: transform 0.1s; }
-    .wire-top-node:active { transform: scale(0.95); }
+    .wire-top-node { background: #fff; border: 2px solid var(--pine-dark); border-radius: 6px; padding: 8px 12px; font-size: 18px; font-weight: bold; cursor: pointer; }
     .wire-top-node.selected { background: var(--soft-pink); border-color: var(--crimson-red); }
     .wire-bottom-list { display: flex; flex-direction: column; gap: 8px; width: 100%; }
     .wire-bottom-node { background: #fff; border: 2px solid var(--pine-dark); border-radius: 6px; padding: 12px; font-size: 15px; font-weight: bold; cursor: pointer; text-align: center; }
@@ -362,8 +199,7 @@
     .ox-btn.true-btn { background: var(--pine-green); border-color: var(--pine-dark); box-shadow: 0 4px 0px var(--pine-dark); }
 
     .switch-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; width: 100%; max-width: 300px; margin: 0 auto; }
-    .light-switch { height: 75px; background: #e2e8f0; border: 3px solid #cbd5e1; border-radius: 10px; font-size: 28px; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: transform 0.1s; }
-    .light-switch:active { transform: scale(0.92); }
+    .light-switch { height: 75px; background: #e2e8f0; border: 3px solid #cbd5e1; border-radius: 10px; font-size: 28px; display: flex; justify-content: center; align-items: center; cursor: pointer; }
     .light-switch.on { background: #fef08a; border-color: #ca8a04; box-shadow: 0 0 12px #fde047; }
 
     .matrix-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; width: 100%; max-width: 300px; margin: 0 auto; }
@@ -374,10 +210,8 @@
     .shape-btn.selected { background: var(--soft-pink); border-color: var(--crimson-red); }
 
     .music-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; width: 100%; }
-    .music-key { background: #fff; border: 2px solid var(--pink-deep); border-radius: 6px; padding: 75px 0; font-size: 15px; font-weight: bold; color: var(--pink-deep); cursor: pointer; box-shadow: 0 4px 0px var(--pink-primary); text-align: center; transition: transform 0.1s; }
-    .music-key:active { transform: translateY(3px); box-shadow: 0 1px 0px var(--pink-primary); }
+    .music-key { background: #fff; border: 2px solid var(--pink-deep); border-radius: 6px; padding: 75px 0; font-size: 15px; font-weight: bold; color: var(--pink-deep); cursor: pointer; box-shadow: 0 4px 0px var(--pink-primary); text-align: center; }
 
-    /* 분기 및 엔딩 */
     #screen-branch { justify-content: center; align-items: center; padding: 20px; text-align: center; gap: 16px; }
     .branch-card { width: 100%; background: #ffffff; border: 3px solid var(--pink-deep); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 12px; box-shadow: 5px 5px 0px rgba(219, 39, 119, 0.2); }
     .branch-btn { width: 100%; padding: 14px 10px; background: #fff5f8; border: 2px solid var(--pink-primary); border-radius: 8px; font-size: 13px; font-weight: bold; color: var(--text-dark); cursor: pointer; text-align: center; box-shadow: 2px 2px 0px var(--border-pink); }
@@ -390,6 +224,7 @@
     .outro-profile-area img { width: 100%; height: 100%; object-fit: cover; }
     .outro-msg-area { width: 72%; background: #fff1f5; border: 2px solid var(--pink-primary); border-radius: 6px; padding: 8px 10px; font-size: 13px; line-height: 1.4; height: 100%; display: flex; flex-direction: column; justify-content: flex-start; overflow-y: auto; }
 
+    /* 인게임 모달 팝업 */
     .modal { display: none; position: absolute; inset: 0; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(4px); z-index: 150; justify-content: center; align-items: center; padding: 22px; }
     .modal-card { background: #ffffff; border: 3px solid var(--pink-deep); border-radius: 12px; padding: 22px 18px; text-align: center; width: 100%; box-shadow: 6px 6px 0px rgba(219, 39, 119, 0.4); }
   </style>
@@ -397,6 +232,9 @@
 <body>
 
 <div id="app">
+  <!-- BGM 토글 바 -->
+  <button class="audio-bar" id="bgm-toggle-btn" onclick="toggleBGM()">🎵 캐럴 BGM OFF</button>
+
   <!-- 1. 인트로 화면 -->
   <div id="screen-intro" class="screen active">
     <img src="intro.gif" alt="인트로 배경" class="intro-bg-img" onerror="this.style.display='none';">
@@ -434,7 +272,7 @@
     </div>
   </div>
 
-  <!-- 3. 스토리 채팅 진행 화면 -->
+  <!-- 3. 스토리 브리핑 화면 -->
   <div id="screen-story" class="screen" onclick="progressStoryChat()">
     <header>
       <div style="display:flex; align-items:center; gap:8px;">
@@ -461,8 +299,43 @@
             <div class="layout-msg-content">
               <div>
                 <span id="story-msg">...</span>
-                <span class="next-indicator-text" id="story-next-indicator" style="display:none;">▶문제 풀기</span>
+                <span class="next-indicator-text" id="story-next-indicator" style="display:none;">▶ 공간 이동하기</span>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- [신설] 3-2. 공간 이동 동선 안내 페이지 -->
+  <div id="screen-transit" class="screen" onclick="goToProblemScreen()">
+    <header>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span class="badge" id="transit-badge">이동 안내</span>
+        <span class="pink-tag">서울갤러리 탐험</span>
+      </div>
+      <button class="reset-btn" onclick="resetGameCompletely()">처음으로</button>
+    </header>
+
+    <div class="content">
+      <div class="transit-box">
+        <div class="quest-title-bar" id="transit-title-bar">📍 장소 이동 중...</div>
+        
+        <div class="transit-img-placeholder">
+          <span>🖼️ [공간 이동 이미지 자리]</span>
+          <span style="font-size:11px; color:#9ca3af;">(현장 위치 사진이 들어갈 자리입니다)</span>
+        </div>
+
+        <div class="layout-chat-box" style="height: 110px;">
+          <div class="layout-profile-area">
+            <div class="layout-avatar-fill bounce-avatar"><img src="haechi.gif" alt="해치"></div>
+          </div>
+          <div class="layout-msg-area">
+            <div class="layout-msg-sender">해치</div>
+            <div class="layout-msg-content">
+              <span id="transit-msg-text">안내에 따라 이동하자!</span>
+              <span class="next-indicator-text" style="display:inline-block;">▶ 문제 풀이 시작하기</span>
             </div>
           </div>
         </div>
@@ -572,7 +445,7 @@
             <button class="music-key" onclick="playCarolNote('라', 440.00)">라</button>
             <button class="music-key" onclick="playCarolNote('시', 493.88)">시</button>
           </div>
-          <button class="action-btn" onclick="resetCarol()" style="background:#f3f4f6; color:#6b7280; border:2px solid #9ca3af; box-shadow:0 3px 0px #9ca3af; font-size:14px; padding:10px; margin-top:6px;">🔄 초기화</button>
+          <button class="action-btn" onclick="resetCarol()" style="background:#f3f4f6; color:#6b7280; border:2px solid #9ca3af; font-size:14px; padding:10px; margin-top:6px;">🔄 초기화</button>
           <details><summary>💡 힌트 보기</summary>미-미-미 / 미-미-미 / 미-솔-도-레-미 순서입니다.</details>
           <button class="cheat-btn" onclick="nextStage()">⚡ 테스트용: 다음 문제로 건너뛰기</button>
         </div>
@@ -621,7 +494,7 @@
     </div>
   </div>
 
-  <!-- 결과 알림 모달 -->
+  <!-- 결과 알림 모달 (인게임 팝업) -->
   <div id="modal" class="modal">
     <div class="modal-card">
       <div style="font-size: 42px; margin-bottom: 6px;">✨</div>
@@ -638,12 +511,47 @@
   let selectedEnding = 'festival';
   let activeOscillator = null;
 
+  // 햅틱 진동 함수 (지원 기기에서 작동)
+  function triggerVibrate(pattern = 40) {
+    if (navigator.vibrate) navigator.vibrate(pattern);
+  }
+
+  // 화면 흔들림 효과
   function triggerShake() {
+    triggerVibrate([50, 50, 50]);
     const appEl = document.getElementById("app");
     appEl.classList.add("shake-effect");
-    setTimeout(() => {
-      appEl.classList.remove("shake-effect");
+    setTimeout(() => { appEl.classList.remove("shake-effect"); }, 400);
+  }
+
+  // 8비트 캐럴 BGM 관련 변수
+  let bgmPlaying = false;
+  let bgmInterval = null;
+  function toggleBGM() {
+    initAudio();
+    bgmPlaying = !bgmPlaying;
+    const btn = document.getElementById("bgm-toggle-btn");
+    if (bgmPlaying) {
+      btn.innerText = "🎵 캐럴 BGM ON";
+      startBGM();
+    } else {
+      btn.innerText = "🎵 캐럴 BGM OFF";
+      stopBGM();
+    }
+  }
+
+  const carolNotes = [329.63, 329.63, 329.63, 329.63, 329.63, 329.63, 329.63, 392.00, 261.63, 293.66, 329.63];
+  let bgmNoteIdx = 0;
+  function startBGM() {
+    if (bgmInterval) clearInterval(bgmInterval);
+    bgmInterval = setInterval(() => {
+      if (!bgmPlaying) return;
+      playTone(carolNotes[bgmNoteIdx], 0.2, 'triangle', 0.05);
+      bgmNoteIdx = (bgmNoteIdx + 1) % carolNotes.length;
     }, 400);
+  }
+  function stopBGM() {
+    if (bgmInterval) { clearInterval(bgmInterval); bgmInterval = null; }
   }
 
   let setupChatIdx = 0;
@@ -657,9 +565,20 @@
 
   let storyChatIdx = 0;
   let storyTypingInterval = null;
+
+  // 각 미션별 공간 이동 안내 데이터 (서울갤러리 장소 연동)
+  const transitData = {
+    1: { title: "📍 [이동] 군기시유적전시실 앞", text: "대형 트리 전선을 연결하기 위해 지하 1층 '군기시유적전시실' 앞으로 이동하자!" },
+    2: { title: "📍 [이동] 배전함 통제실", text: "잠긴 배전함의 자물쇠를 풀기 위해 보안 통제실 복도로 이동하자!" },
+    3: { title: "📍 [이동] 팩트체크 결계 구역", text: "서울의 역사가 담긴 기록실 안쪽 결계 앞으로 이동하자!" },
+    4: { title: "📍 [이동] 메인 트리 조명 제어실", text: "연쇄 스위치가 숨겨진 갤러리 메인 조명 제어실로 이동하자!" },
+    5: { title: "📍 [이동] 고대 마법진 봉인실", text: "지하 깊은 곳에 잠들어 있는 성물 마법진 앞으로 이동하자!" },
+    6: { title: "📍 [이동] 중앙 자명종 타워", text: "멈춰버린 갤러리 자명종 앞 오르골 건반 위치로 이동하자!" }
+  };
+
   const stageChatData = {
     1: [
-      { name: "주작", avatar: "ju.png", text: "여기는 대형트리야. 첫 번째 불을 켜려면 다섯 수호대와 마법 전선을 연결해야 해." },
+      { name: "주작", avatar: "ju.png", text: "여기는 군기시유적전시실 앞이야. 첫 번째 불을 켜려면 다섯 수호대와 마법 전선을 연결해야 해." },
       { name: "해치", avatar: "haechi.gif", text: "상단에 있는 색과 아래 수호대 이름을 올바로 연결해야 불이 들어올 거야." }
     ],
     2: [
@@ -738,7 +657,6 @@
     const indicator = document.getElementById("setup-next-indicator");
 
     if (setupChatIdx >= setupChatLines.length) return;
-
     const data = setupChatLines[setupChatIdx];
     imgEl.src = data.avatar;
     nameEl.innerText = data.name;
@@ -822,7 +740,7 @@
     indicator.style.display = "none";
 
     if (storyChatIdx === lines.length - 1) {
-      indicator.innerText = "▶문제 풀기";
+      indicator.innerText = "▶ 공간 이동하기";
     } else {
       indicator.innerText = "▶";
     }
@@ -846,19 +764,29 @@
     if (storyTypingInterval) {
       clearInterval(storyTypingInterval);
       storyTypingInterval = null;
-      const data = lines[storyChatIdx];
-      document.getElementById("story-msg").innerText = data.text;
+      document.getElementById("story-msg").innerText = lines[storyChatIdx].text;
       document.getElementById("story-next-indicator").style.display = "inline";
     } else {
       if (storyChatIdx < lines.length - 1) {
         storyChatIdx++;
         playStoryLine(currentStage);
       } else {
-        goToProblemScreen();
+        // [변경] 브리핑 끝난 후 바로 문제 화면으로 안 가고 '공간 이동 안내 페이지'로 이동
+        goToTransitScreen(currentStage);
       }
     }
   }
 
+  // [신설] 공간 이동 화면으로 진입
+  function goToTransitScreen(stageNum) {
+    playTone(520, 0.15);
+    const transitInfo = transitData[stageNum] || { title: "📍 장소 이동", text: "다음 장소로 이동합니다." };
+    document.getElementById("transit-title-bar").innerText = transitInfo.title;
+    document.getElementById("transit-msg-text").innerText = transitInfo.text;
+    goToScreen('screen-transit');
+  }
+
+  // 공간 이동 페이지 터치 시 실제 문제 풀이 화면으로 진입
   function goToProblemScreen() {
     playTone(580, 0.15);
     goToScreen('screen-game');
@@ -884,10 +812,7 @@
     initAudio();
     if (!audioCtx) return;
     try {
-      if (activeOscillator) {
-        activeOscillator.stop();
-        activeOscillator = null;
-      }
+      if (activeOscillator) { activeOscillator.stop(); activeOscillator = null; }
       const osc = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
       osc.frequency.setValueAtTime(700 + Math.random() * 200, audioCtx.currentTime);
@@ -901,7 +826,7 @@
     } catch(e) {}
   }
 
-  function playTone(freq, duration, type = 'sine') {
+  function playTone(freq, duration, type = 'sine', volume = 0.15) {
     try {
       initAudio();
       if (!audioCtx) return;
@@ -909,7 +834,7 @@
       const gain = audioCtx.createGain();
       osc.type = type;
       osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-      gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+      gain.gain.setValueAtTime(volume, audioCtx.currentTime);
       gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + duration);
       osc.connect(gain);
       gain.connect(audioCtx.destination);
@@ -922,6 +847,7 @@
   let selectedLeft = null;
   let wireCount = 0;
   function selectLeftWire(id, el) {
+    triggerVibrate(20);
     document.querySelectorAll('.wire-top-node').forEach(n => n.classList.remove('selected'));
     el.classList.add('selected');
     selectedLeft = id;
@@ -929,6 +855,7 @@
   function selectRightWire(id, el) {
     if (!selectedLeft) { alert("먼저 상단에서 컬러 기호를 선택하세요!"); return; }
     if (selectedLeft === id) {
+      triggerVibrate(30);
       el.style.background = "#bbf7d0";
       el.style.pointerEvents = "none";
       document.querySelectorAll('.wire-top-node').forEach(n => {
@@ -945,7 +872,7 @@
       if (wireCount === 5) showModal("🔔 미션 1 클리어!", "마법 전선이 정상적으로 연결되었습니다!");
     } else {
       triggerShake();
-      alert("전선 스파크가 튀었습니다! 올바른 수호대 이름을 찾아주세요.");
+      showModal("⚡ 스파크 발생!", "전선 스파크가 튀었습니다! 올바른 수호대 이름을 찾아주세요.");
       selectedLeft = null;
       document.querySelectorAll('.wire-top-node').forEach(n => n.classList.remove('selected'));
     }
@@ -983,6 +910,7 @@
   }
   function spinDial(colIndex, delta) {
     initAudio();
+    triggerVibrate(15);
     const L = dialChars.length;
     currentDialIndices[colIndex] = (currentDialIndices[colIndex] + delta + L) % L;
     renderDial(colIndex);
@@ -990,10 +918,12 @@
   }
   function checkDialStage() {
     let word = currentDialIndices.map(i => dialChars[i]).join("");
-    if (word === "HAPPY♥") showModal("🔔 미션 2 클리어!", "배전함 자물쇠가 열렸습니다!");
-    else {
+    if (word === "HAPPY♥") {
+      triggerVibrate([40, 40, 80]);
+      showModal("🔔 미션 2 클리어!", "배전함 자물쇠가 열렸습니다!");
+    } else {
       triggerShake();
-      alert(`자물쇠가 열리지 않습니다! (현재: ${word}, 힌트: HAPPY♥)`);
+      showModal("🔒 잠금 해제 실패", `자물쇠가 열리지 않습니다!<br>(현재 입력: ${word}, 힌트: HAPPY♥)`);
     }
   }
 
@@ -1003,12 +933,13 @@
   function initFactGame() { factIdx = 0; const card = document.getElementById("fact-card"); if(card) card.innerText = factList[0].text; }
   function answerFact(userChoice) {
     if (userChoice === factList[factIdx].answer) {
+      triggerVibrate(30);
       factIdx++;
       if (factIdx < factList.length) document.getElementById("fact-card").innerText = factList[factIdx].text;
       else showModal("🔔 미션 3 클리어!", "팩트체크 결계가 해제되었습니다!");
     } else {
       triggerShake();
-      alert("틀렸습니다! 군기시는 무기를 만들던 곳입니다.");
+      showModal("❌ 오답!", "틀렸습니다! 군기시는 무기를 만들던 곳입니다.");
       factIdx = 0;
       document.getElementById("fact-card").innerText = factList[factIdx].text;
     }
@@ -1030,6 +961,7 @@
     });
   }
   function toggleSwitch(idx) {
+    triggerVibrate(20);
     const row = Math.floor(idx / 3), col = idx % 3;
     const targets = [idx];
     if (row > 0) targets.push(idx - 3);
@@ -1038,14 +970,22 @@
     if (col < 2) targets.push(idx + 1);
     targets.forEach(t => { switchState[t] = !switchState[t]; });
     renderSwitches();
-    if (switchState.every(val => val === true)) showModal("🔔 미션 4 클리어!", "트리 전등이 모두 켜졌습니다!");
+    if (switchState.every(val => val === true)) {
+      triggerVibrate([40, 40, 80]);
+      showModal("🔔 미션 4 클리어!", "트리 전등이 모두 켜졌습니다!");
+    }
   }
   function resetSwitches() { switchState = [false, true, false, true, false, true, false, true, false]; renderSwitches(); }
 
   // 미션 5 로직
   let selectedShape = null;
   let matrixState = Array(16).fill("");
-  function selectShape(shape, el) { document.querySelectorAll('.shape-btn').forEach(b => b.classList.remove('selected')); el.classList.add('selected'); selectedShape = shape; }
+  function selectShape(shape, el) {
+    triggerVibrate(15);
+    document.querySelectorAll('.shape-btn').forEach(b => b.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedShape = shape;
+  }
   function initMatrixGame() { matrixState = Array(16).fill(""); renderMatrix(); }
   function renderMatrix() {
     const board = document.getElementById("matrix-board");
@@ -1061,13 +1001,16 @@
   }
   function placeShapeOnMatrix(idx) {
     if (!selectedShape) { alert("상단에서 성물을 먼저 선택하세요!"); return; }
+    triggerVibrate(20);
     matrixState[idx] = selectedShape;
     renderMatrix();
     if (matrixState.filter(s => s !== "").length === 3) {
-      if (matrixState[0] && matrixState[1] && matrixState[2]) showModal("🔔 미션 5 클리어!", "마법진 봉인이 해제되었습니다!");
-      else {
+      if (matrixState[0] && matrixState[1] && matrixState[2]) {
+        triggerVibrate([40, 40, 80]);
+        showModal("🔔 미션 5 클리어!", "마법진 봉인이 해제되었습니다!");
+      } else {
         triggerShake();
-        alert("첫 번째 줄에 나란히 배치해야 합니다.");
+        showModal("⚠️ 배치 오류", "성물의 배치 위치가 올바르지 않습니다! 첫 번째 줄에 나란히 배치해 보세요.");
         resetMatrix();
       }
     }
@@ -1078,17 +1021,19 @@
   const carolMelodyTarget = ['미', '미', '미', '미', '미', '미', '미', '솔', '도', '레', '미'];
   let carolInput = [];
   function playCarolNote(noteName, freq) {
+    triggerVibrate(25);
     playTone(freq, 0.25, 'triangle');
     carolInput.push(noteName);
     document.getElementById("music-status").innerText = `진행 상황: (${carolInput.length}/11 음표 입력)`;
     if (carolInput.length === carolMelodyTarget.length) {
       if (carolInput.toString() === carolMelodyTarget.toString()) {
+        triggerVibrate([50, 50, 100]);
         playTone(523.25, 0.4);
         setTimeout(() => playTone(659.25, 0.4), 200);
         showModal("🔔 미션 6 클리어!", "자명종을 깨울 캐럴 연주가 완성되었습니다!");
       } else {
         triggerShake();
-        alert("순서가 틀렸습니다!");
+        showModal("🎵 음정 오류", "캐럴 멜로디 순서가 틀렸습니다! 다시 시도하세요.");
         resetCarol();
       }
     }
