@@ -4408,5 +4408,1081 @@ renderIntro();
 
 })();
 </script>
+  <style>
+/* ======================================================
+   대화창 높이 축소 / 글자 확대 / 오른쪽 화살표
+====================================================== */
+
+.vn-dialog{
+  bottom:16px;
+  height:122px;
+}
+
+.vn-dialog::before{
+  left:92px;
+}
+
+.vn-portrait{
+  left:-8px;
+  bottom:21px;
+  width:100px;
+  height:132px;
+}
+
+.vn-portrait::before{
+  width:77px;
+  height:81px;
+  bottom:7px;
+}
+
+.vn-copy{
+  padding:9px 11px 6px 92px;
+  gap:3px;
+}
+
+.vn-name{
+  font-size:12px;
+  padding:1px 7px;
+}
+
+.vn-text{
+  font-size:15px;
+  line-height:1.55;
+}
+
+/* 기존 아래 방향 표시를 오른쪽 방향으로 교체 */
+.vn-next{
+  min-height:24px;
+  padding:0 4px;
+  font-size:12px;
+}
+
+.vn-next::after{
+  content:"›";
+  margin-left:7px;
+  font-size:25px;
+  line-height:1;
+  animation:vn-arrow-right .85s ease-in-out infinite;
+}
+
+/* 지문에는 이름을 표시하지 않음 */
+.vn-dialog.is-narration{
+  height:100px;
+}
+
+.vn-dialog.is-narration .vn-name{
+  display:none;
+}
+
+.vn-dialog.is-narration .vn-copy{
+  padding:12px 15px 7px;
+}
+
+.vn-dialog.is-narration .vn-text{
+  color:#7b8290;
+  font-size:15px;
+  line-height:1.6;
+}
+
+.vn-dialog.is-narration::before{
+  left:16px;
+}
+
+/* ======================================================
+   난이도 선택
+====================================================== */
+
+.difficulty-caption{
+  margin:17px 0 11px;
+  color:#a54a72;
+  font-family:"Gaegu",sans-serif;
+  font-size:23px;
+  text-align:center;
+}
+
+.difficulty-buttons{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  width:100%;
+  margin-top:8px;
+}
+
+.difficulty-button{
+  position:relative;
+  min-height:86px;
+  padding:13px 8px;
+  border:3px solid white;
+  border-radius:18px 8px 17px 9px;
+  outline:2px solid #ce769d;
+  box-shadow:0 5px #c569963d;
+  background:linear-gradient(#ffd6e6,#f7adcb);
+  color:#9b355f;
+  text-align:center;
+  transition:transform .12s,filter .12s;
+}
+
+.difficulty-button.adult{
+  outline-color:#7cae94;
+  background:linear-gradient(#def4df,#b8dfc4);
+  box-shadow:0 5px #538a6840;
+  color:#396f50;
+  transform:rotate(2deg);
+}
+
+.difficulty-button.child{
+  transform:rotate(-2deg);
+}
+
+.difficulty-button strong{
+  display:block;
+  font-family:"Gaegu",sans-serif;
+  font-size:26px;
+  line-height:1.2;
+}
+
+.difficulty-button span{
+  display:block;
+  margin-top:6px;
+  font-size:11px;
+  line-height:1.5;
+}
+
+.difficulty-button:hover{
+  filter:brightness(1.04);
+}
+
+.difficulty-button:active{
+  transform:translateY(4px);
+  box-shadow:0 1px #c569963d;
+}
+
+/* ======================================================
+   1번 문제: 창고 자물쇠
+====================================================== */
+
+.puzzle-area.lock-scene{
+  inset:69px 13px 146px;
+  gap:11px;
+}
+
+/* 뒤쪽 캐비넷 문 */
+.cabinet-backdrop{
+  position:absolute;
+  z-index:-1;
+  left:7%;
+  right:7%;
+  top:14%;
+  bottom:12%;
+  border:5px solid #fff;
+  outline:2px solid #b88396;
+  border-radius:20px 20px 11px 11px;
+  background:
+    linear-gradient(
+      90deg,
+      #f3c1d2 0 49%,
+      #bc7895 49% 51%,
+      #f6d0de 51% 100%
+    );
+  box-shadow:0 10px #ab718d3b;
+  opacity:.72;
+}
+
+.cabinet-backdrop::before,
+.cabinet-backdrop::after{
+  content:"";
+  position:absolute;
+  top:43%;
+  width:10px;
+  height:49px;
+  border:3px solid white;
+  border-radius:9px;
+  background:#ce8da7;
+}
+
+.cabinet-backdrop::before{left:40%}
+.cabinet-backdrop::after{right:40%}
+
+.lock-clue{
+  position:relative;
+  flex:none;
+  width:96%;
+  padding:8px 12px;
+  background:#fffdf1;
+  border:3px solid white;
+  outline:1px solid #e8bd86;
+  border-radius:5px 12px 5px 11px;
+  box-shadow:2px 4px #c4945322;
+  text-align:center;
+  color:#925366;
+  font-size:12px;
+  line-height:1.6;
+  transform:rotate(-2deg);
+}
+
+.lock-clue strong{
+  color:#bc4474;
+}
+
+/* 자물쇠 전체 */
+.storage-lock{
+  position:relative;
+  isolation:isolate;
+  flex:none;
+  width:min(100%,350px);
+  padding-top:91px;
+  filter:drop-shadow(0 9px 0 #85436622);
+}
+
+/* 금속 고리 */
+.storage-shackle{
+  position:absolute;
+  z-index:-1;
+  top:0;
+  left:24%;
+  width:52%;
+  height:135px;
+  border:18px solid #f5df9c;
+  border-bottom-width:12px;
+  border-radius:90px 90px 14px 14px;
+  outline:3px solid #aa753c;
+  background:transparent;
+  box-shadow:
+    inset 0 0 0 3px #fff9d7,
+    0 0 0 3px white;
+  transform-origin:18% 85%;
+  transition:
+    transform .65s cubic-bezier(.2,.8,.25,1),
+    top .65s;
+}
+
+.storage-shackle::before{
+  content:"";
+  position:absolute;
+  left:-12px;
+  top:8px;
+  width:5px;
+  height:40px;
+  border-radius:5px;
+  background:#fff9;
+}
+
+/* 锁身 */
+.storage-lock-body{
+  position:relative;
+  z-index:2;
+  padding:13px 10px 12px;
+  background:linear-gradient(135deg,#ffd8e6,#ed9abe);
+  border:4px solid white;
+  outline:3px solid #b25a83;
+  border-radius:25px 25px 19px 19px;
+  box-shadow:
+    inset 0 4px #fff5,
+    inset 0 -9px #b6608c22,
+    0 7px #b56c8a55;
+}
+
+.storage-lock-label{
+  width:max-content;
+  max-width:95%;
+  margin:0 auto 11px;
+  padding:3px 11px;
+  background:#fff4d8;
+  border:2px solid #fff;
+  outline:1px solid #d2a56c;
+  border-radius:12px;
+  color:#976039;
+  font-size:11px;
+  font-weight:bold;
+  text-align:center;
+}
+
+.storage-lock .dials{
+  gap:5px;
+}
+
+.storage-lock .dial{
+  min-width:0;
+  max-width:49px;
+}
+
+.storage-lock .dial button{
+  min-height:22px;
+  padding:1px;
+  color:#a04671;
+}
+
+.storage-lock .drum{
+  height:75px;
+  margin:4px 0;
+  border:2px solid #a96385;
+  border-radius:8px;
+  background:
+    linear-gradient(
+      #d5bdc9,
+      #faf5f7 24%,
+      #fff 42%,
+      #fff 59%,
+      #faf5f7 76%,
+      #d5bdc9
+    );
+  box-shadow:
+    inset 0 3px 5px #75435a33,
+    0 2px #fff7;
+  color:#9d3766;
+}
+
+.storage-lock .drum .adjacent{
+  height:18px;
+  line-height:18px;
+  font-size:11px;
+}
+
+.storage-lock .drum .value{
+  height:35px;
+  line-height:35px;
+  font-size:23px;
+}
+
+.storage-keyhole{
+  position:relative;
+  width:14px;
+  height:14px;
+  margin:12px auto 5px;
+  background:#b7678d;
+  border-radius:50%;
+  box-shadow:0 1px #fff8;
+}
+
+.storage-keyhole::after{
+  content:"";
+  position:absolute;
+  top:8px;
+  left:4px;
+  width:6px;
+  height:11px;
+  background:#b7678d;
+  border-radius:0 0 3px 3px;
+}
+
+.storage-lock.unlocked .storage-shackle{
+  top:-15px;
+  transform:rotate(-23deg);
+}
+
+.storage-lock.unlocked .storage-lock-body{
+  background:linear-gradient(135deg,#fff2bd,#f4cb73);
+}
+
+.storage-star-reveal{
+  position:absolute;
+  z-index:4;
+  width:135px;
+  height:135px;
+  left:50%;
+  top:9px;
+  transform:translateX(-50%);
+  opacity:0;
+  pointer-events:none;
+}
+
+.storage-star-reveal img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+.storage-lock.unlocked .storage-star-reveal{
+  animation:storage-star-pop .7s .2s ease-out forwards;
+}
+
+/* 2번 문제의 별 그림 */
+.thread-star-image{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  pointer-events:none;
+}
+
+/* 이동 전환의 별 */
+.vn-travel-star img{
+  display:block;
+  width:65px;
+  height:80px;
+  object-fit:contain;
+}
+
+/* 마지막 빛 연출 */
+.final-star .star-image-final{
+  width:190px;
+  height:220px;
+  display:block;
+  object-fit:contain;
+}
+
+@keyframes vn-arrow-right{
+  50%{transform:translateX(4px)}
+}
+
+@keyframes storage-star-pop{
+  from{
+    opacity:0;
+    transform:translate(-50%,30px) scale(.75);
+  }
+  to{
+    opacity:1;
+    transform:translate(-50%,-17px) scale(1);
+  }
+}
+
+@media(max-height:650px){
+  .vn-dialog{
+    bottom:11px;
+    height:112px;
+  }
+
+  .vn-dialog.is-narration{
+    height:92px;
+  }
+
+  .vn-portrait{
+    width:91px;
+    height:118px;
+    bottom:23px;
+  }
+
+  .vn-copy{
+    padding-left:83px;
+  }
+
+  .storage-lock{
+    padding-top:65px;
+    width:min(100%,315px);
+  }
+
+  .storage-shackle{
+    height:107px;
+    border-width:15px;
+  }
+
+  .storage-lock-body{
+    padding:10px 8px;
+  }
+
+  .storage-lock-label{
+    margin-bottom:7px;
+  }
+
+  .storage-lock .drum{
+    height:64px;
+  }
+
+  .storage-lock .drum .adjacent{
+    height:15px;
+    line-height:15px;
+  }
+
+  .storage-lock .drum .value{
+    height:30px;
+    line-height:30px;
+    font-size:21px;
+  }
+
+  .storage-keyhole{
+    margin-top:8px;
+  }
+
+  .lock-clue{
+    font-size:11px;
+    padding:6px 9px;
+  }
+
+  .difficulty-button{
+    min-height:74px;
+    padding:10px 7px;
+  }
+
+  .difficulty-button strong{
+    font-size:23px;
+  }
+}
+
+@media(max-width:360px){
+  .vn-text,
+  .vn-dialog.is-narration .vn-text{
+    font-size:14px;
+  }
+
+  .storage-lock .dials{
+    gap:3px;
+  }
+
+  .storage-lock-body{
+    padding-left:7px;
+    padding-right:7px;
+  }
+
+  .storage-lock .drum .value{
+    font-size:21px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .storage-lock.unlocked .storage-star-reveal{
+    opacity:1;
+    transform:translate(-50%,-17px);
+  }
+}
+</style>
+
+<script>
+/*
+========================================================
+추가 수정 패치
+
+기준:
+이전 전체 HTML + 바로 전에 제공한 대화창/메모지 패치.
+
+파일 연결:
+image_01.png : 장식 상자 상황 배경
+image_02.png : 별이 걸린 트리 상황 배경
+
+star_01.png : 깨어난 별
+star_02.png : 잠든 별
+star_03.png : 밝게 빛나는 별
+
+주작 프로필은 첨부한 ju.gif를 사용합니다.
+
+난이도:
+선택값을 별도 저장합니다.
+현재 성인용도 같은 7문제 프로토타입으로 진행합니다.
+성인용 9문제를 추가할 때 difficulty 값을 이용해 분기할 수 있습니다.
+========================================================
+*/
+
+(()=>{
+  const DIFFICULTY_KEY = SAVE_KEY+"-difficulty";
+
+  const STAR_FILES = {
+    awake:"star_01.png",
+    sleep:"star_02.png",
+    light:"star_03.png"
+  };
+
+  let difficulty="child";
+
+  try{
+    const stored=localStorage.getItem(DIFFICULTY_KEY);
+    if(stored==="child"||stored==="adult"){
+      difficulty=stored;
+    }
+  }catch(e){}
+
+  function setDifficulty(value){
+    difficulty=value;
+
+    try{
+      localStorage.setItem(DIFFICULTY_KEY,value);
+    }catch(e){}
+
+    document.getElementById("app").dataset.difficulty=value;
+  }
+
+  setDifficulty(difficulty);
+
+  /*
+  다른 코드에서도 현재 선택값을 읽을 수 있습니다.
+  예: getGameDifficulty()==="adult"
+  */
+  window.getGameDifficulty=()=>difficulty;
+
+  /* 프로필 파일 연결 */
+  CHAR["주작"].file="ju.gif";
+  CHAR["별"].file=STAR_FILES.awake;
+
+  /* 첫 미션 제목과 이야기 수정 */
+  TITLES[0]="장식 창고를 열어라!";
+
+  BEFORE[0]=[
+    say("해치","안녕! 잘 왔어. 나랑 크리스마스 트리 좀 꾸며줄래?"),
+    say("해치","장식 상자는 이 창고에 있는데…… 어라? 비밀번호가 바뀌었잖아!"),
+    say("해치","원래는 내 이름, HAECHI였거든. 누가 메모를 붙여놨네."),
+    say("해치","“오늘은 이름 대신 행복한 마음과 하트!” 음…… 같이 풀어볼래?")
+  ];
+
+  AFTER[0]=[
+    note("달칵! 자물쇠가 열리고, 창고 안에서 오래된 장식 상자가 보였다."),
+    say("해치","열렸다! 역시 같이 하니까 금방이네."),
+    note("상자 뚜껑을 열자 낡은 별 장식 하나가 데굴, 굴러 나왔다."),
+    say("해치","앗, 별이다! 어디 가!"),
+    say("해치","잡았다. 상자 속에 오래 있었나 봐. 같이 트리로 데려가자!")
+  ];
+
+  ROUTES[0]={
+    place:"장식 창고 체험 지점",
+    info:"운영자가 지정한 장식 창고 또는 캐비넷 체험 지점으로 이동해 주세요.",
+    line:"장식 상자가 있는 창고로 가자! 문만 열면 트리 꾸밀 준비는 끝이야."
+  };
+
+  HINTS[0]=[
+    "처음에는 해치의 이름 HAECHI로 맞춰져 있어요. 새 메모를 읽어보세요.",
+    "행복한 마음은 영어로 HAPPY. 마지막에는 하트를 붙여요.",
+    "다이얼을 H · A · P · P · Y · ♥ 순서로 맞춰주세요."
+  ];
+
+  /* 테스트 메뉴 제목도 갱신 */
+  const firstOption=document.querySelector("#jump option[value='0']");
+  if(firstOption){
+    firstOption.textContent="1. "+TITLES[0];
+  }
+
+  /* ====================================================
+     1번 문제를 입체 자물쇠로 교체
+  ==================================================== */
+
+  puzzleBoxes=function(){
+    const letters=[
+      "A","B","C","D","E","F","G","H","I",
+      "J","K","L","M","N","O","P","Q","R",
+      "S","T","U","V","W","X","Y","Z","♥"
+    ];
+
+    const initial=[7,0,4,2,7,8]; // HAECHI
+    const values=[...initial];
+    const target="HAPPY♥";
+
+    const area=$("play-area");
+    area.classList.add("lock-scene");
+
+    area.innerHTML=`
+      <div class="cabinet-backdrop"></div>
+
+      <div class="lock-clue">
+        <strong>창고 문에 붙은 메모</strong><br>
+        “오늘은 해치 이름 대신,<br>
+        행복한 마음에 하트를 붙여줘!”
+      </div>
+
+      <div class="storage-lock" id="storage-lock">
+        <div class="storage-shackle"></div>
+
+        <div class="storage-star-reveal">
+          <img src="${STAR_FILES.sleep}" alt="잠든 별 장식"
+               onerror="this.hidden=true">
+        </div>
+
+        <div class="storage-lock-body">
+          <div class="storage-lock-label">장식 창고</div>
+          <div class="dials" id="storage-dials"></div>
+          <div class="storage-keyhole"></div>
+        </div>
+      </div>
+    `;
+
+    const runningSpins=[];
+
+    values.forEach((_,index)=>{
+      const column=document.createElement("div");
+      column.className="dial";
+      column.innerHTML=`
+        <button aria-label="${index+1}번째 다이얼 이전 글자">▲</button>
+
+        <div class="drum"
+             tabindex="0"
+             role="spinbutton"
+             aria-label="${index+1}번째 비밀번호"
+             aria-valuemin="0"
+             aria-valuemax="26">
+          <div class="adjacent"></div>
+          <div class="value"></div>
+          <div class="adjacent"></div>
+        </div>
+
+        <button aria-label="${index+1}번째 다이얼 다음 글자">▼</button>
+      `;
+
+      $("storage-dials").append(column);
+
+      const drum=column.querySelector(".drum");
+
+      let spinToken=0;
+      let dragging=false;
+      let lastY=0;
+      let lastTime=0;
+      let velocity=0;
+      let carry=0;
+
+      function render(){
+        const count=letters.length;
+        const value=values[index];
+
+        drum.children[0].textContent=letters[(value-1+count)%count];
+        drum.children[1].textContent=letters[value];
+        drum.children[2].textContent=letters[(value+1)%count];
+
+        drum.setAttribute("aria-valuenow",value);
+        drum.setAttribute("aria-valuetext",letters[value]);
+      }
+
+      function step(delta){
+        if(locked) return;
+
+        values[index]=
+          (values[index]+delta+letters.length)%letters.length;
+
+        render();
+        sfx(310,.025,.012);
+
+        status(
+          values.map(value=>letters[value]).join(" · ")
+        );
+      }
+
+      function stopSpin(){
+        spinToken++;
+        dragging=false;
+        drum.classList.remove("moving");
+      }
+
+      function coast(speed,token){
+        if(
+          Math.abs(speed)<.14 ||
+          token!==spinToken ||
+          locked
+        ){
+          drum.classList.remove("moving");
+          return;
+        }
+
+        step(speed>0?1:-1);
+
+        later(()=>{
+          coast(speed*.62,token);
+        },75);
+      }
+
+      column.children[0].onclick=()=>{
+        stopSpin();
+        step(-1);
+      };
+
+      column.children[2].onclick=()=>{
+        stopSpin();
+        step(1);
+      };
+
+      drum.onpointerdown=e=>{
+        if(locked) return;
+
+        spinToken++;
+        dragging=true;
+        lastY=e.clientY;
+        lastTime=performance.now();
+        velocity=0;
+        carry=0;
+
+        drum.setPointerCapture(e.pointerId);
+        drum.classList.add("moving");
+      };
+
+      drum.onpointermove=e=>{
+        if(!dragging||locked) return;
+
+        const now=performance.now();
+        const dy=lastY-e.clientY;
+
+        velocity=dy/Math.max(now-lastTime,1);
+        carry+=dy;
+
+        while(Math.abs(carry)>=22){
+          const direction=carry>0?1:-1;
+          step(direction);
+          carry-=direction*22;
+        }
+
+        lastY=e.clientY;
+        lastTime=now;
+      };
+
+      drum.onpointerup=()=>{
+        if(!dragging) return;
+
+        dragging=false;
+
+        if(performance.now()-lastTime>100){
+          velocity=0;
+        }
+
+        coast(clamp(velocity,-2.3,2.3),spinToken);
+      };
+
+      drum.onpointercancel=stopSpin;
+
+      drum.onkeydown=e=>{
+        if(e.key!=="ArrowUp"&&e.key!=="ArrowDown") return;
+
+        e.preventDefault();
+        stopSpin();
+
+        step(e.key==="ArrowUp"?1:-1);
+      };
+
+      drum.addEventListener("wheel",e=>{
+        e.preventDefault();
+        stopSpin();
+
+        step(e.deltaY>0?1:-1);
+      },{passive:false});
+
+      runningSpins.push(stopSpin);
+
+      cleanups.push(stopSpin);
+      render();
+    });
+
+    action("자물쇠 열기",()=>{
+      if(locked) return;
+
+      runningSpins.forEach(stop=>stop());
+
+      const answer=values.map(value=>letters[value]).join("");
+
+      if(answer!==target){
+        fail("아직 안 열렸네! 메모 속 ‘행복한 마음’과 하트를 생각해 보자.");
+        return;
+      }
+
+      $("storage-lock").classList.add("unlocked");
+      status("달칵! 창고 문이 열렸어!");
+
+      solve(
+        "자물쇠가 열렸어요. 안에 있던 장식 상자도 살펴볼까요?",
+        1100
+      );
+    });
+
+    $("reset-puzzle").hidden=false;
+    $("reset-puzzle").textContent="HAECHI로 초기화";
+    $("reset-puzzle").onclick=()=>{
+      if(locked) return;
+
+      runningSpins.forEach(stop=>stop());
+
+      values.forEach((_,index)=>{
+        values[index]=initial[index];
+      });
+
+      $("storage-dials")
+        .querySelectorAll(".drum")
+        .forEach((drum,index)=>{
+          const value=values[index];
+          const count=letters.length;
+
+          drum.children[0].textContent=
+            letters[(value-1+count)%count];
+
+          drum.children[1].textContent=letters[value];
+          drum.children[2].textContent=
+            letters[(value+1)%count];
+
+          drum.setAttribute("aria-valuenow",value);
+          drum.setAttribute("aria-valuetext",letters[value]);
+        });
+
+      status("H · A · E · C · H · I");
+    };
+
+    status("HAECHI를 새 비밀번호로 바꿔 창고 문을 열어주세요.");
+  };
+
+  /* ====================================================
+     두 번째 문제: 기존 별 도형 대신 잠든 별 이미지
+  ==================================================== */
+
+  const originalThread=puzzleThread;
+
+  puzzleThread=function(){
+    originalThread();
+
+    const board=$("thread-board");
+    if(!board) return;
+
+    const star=document.createElement("img");
+    star.className="thread-star-image";
+    star.src=STAR_FILES.sleep;
+    star.alt="새 끈을 달아줄 잠든 별";
+
+    star.onerror=()=>{
+      star.hidden=true;
+
+      board.querySelectorAll("svg>path").forEach(path=>{
+        path.style.opacity="";
+      });
+    };
+
+    board.prepend(star);
+
+    /*
+    원래 배경 별 모양만 감추고,
+    연결선·구멍은 그대로 유지합니다.
+    */
+    board.querySelectorAll("svg>path").forEach(path=>{
+      path.style.opacity="0";
+    });
+  };
+
+  /* ====================================================
+     대화 장면별 별 프로필 연결
+  ==================================================== */
+
+  const previousDialogue=renderDialogue;
+
+  renderDialogue=function(lines,done,title,image){
+    CHAR["별"].file=
+      state.stage===6&&state.phase==="after"
+        ? STAR_FILES.light
+        : STAR_FILES.awake;
+
+    /*
+    상황 배경은 기존 규칙과 동일:
+    1번 image_01.png / 2번 image_02.png
+    */
+    const sceneImage=
+      state.stage===0
+        ? "image_01.png"
+        : state.stage===1
+          ? "image_02.png"
+          : image;
+
+    previousDialogue(lines,done,title,sceneImage);
+  };
+
+  /* ====================================================
+     준비 메모의 시작 버튼을 난이도 두 버튼으로 분리
+  ==================================================== */
+
+  function installDifficultyButtons(){
+    const oldButton=$("vn-memo-start");
+
+    if(!oldButton) return;
+    if(document.getElementById("difficulty-buttons")) return;
+
+    /*
+    앞선 패치 내부의 준비 메모 종료 동작은 그대로 호출합니다.
+    */
+    const proceed=oldButton.onclick;
+
+    const caption=document.createElement("p");
+    caption.className="difficulty-caption";
+    caption.textContent="어떤 탐험으로 떠날까?";
+
+    const buttons=document.createElement("div");
+    buttons.id="difficulty-buttons";
+    buttons.className="difficulty-buttons";
+
+    buttons.innerHTML=`
+      <button class="difficulty-button child"
+              id="difficulty-child"
+              type="button">
+        <strong>어린이용</strong>
+        <span>해치와 함께 출발!</span>
+      </button>
+
+      <button class="difficulty-button adult"
+              id="difficulty-adult"
+              type="button">
+        <strong>성인용</strong>
+        <span>별의 기억을 찾아서!</span>
+      </button>
+    `;
+
+    oldButton.before(caption);
+    oldButton.replaceWith(buttons);
+
+    let chosen=false;
+
+    function choose(value){
+      if(chosen) return;
+      chosen=true;
+
+      setDifficulty(value);
+
+      $("difficulty-child").disabled=true;
+      $("difficulty-adult").disabled=true;
+
+      if(typeof proceed==="function"){
+        proceed();
+      }
+    }
+
+    $("difficulty-child").onclick=()=>choose("child");
+    $("difficulty-adult").onclick=()=>choose("adult");
+  }
+
+  const previousNavigate=navigate;
+
+  navigate=function(phase,stage=state.stage){
+    previousNavigate(phase,stage);
+    installDifficultyButtons();
+  };
+
+  /*
+  이미 메모 화면을 보고 있는 상태에 패치를 붙인 경우에도 적용.
+  */
+  installDifficultyButtons();
+
+  /* ====================================================
+     전환 장면 / 최종 연출에 별 파일 사용
+  ==================================================== */
+
+  function updateStarImages(){
+    document.querySelectorAll(".vn-travel-star").forEach(element=>{
+      if(element.dataset.starReady==="true") return;
+
+      element.dataset.starReady="true";
+      element.textContent="";
+
+      const img=document.createElement("img");
+      img.src=STAR_FILES.awake;
+      img.alt="해치와 함께 이동하는 별";
+
+      img.onerror=()=>{
+        element.textContent="⭐";
+      };
+
+      element.append(img);
+    });
+
+    document.querySelectorAll(".final-star>span").forEach(element=>{
+      if(element.dataset.starReady==="true") return;
+
+      element.dataset.starReady="true";
+      element.textContent="";
+
+      const img=document.createElement("img");
+      img.className="star-image-final";
+      img.src=STAR_FILES.light;
+      img.alt="밝게 빛나는 별";
+
+      img.onerror=()=>{
+        element.textContent="🌟";
+      };
+
+      element.append(img);
+    });
+  }
+
+  const starObserver=new MutationObserver(updateStarImages);
+  starObserver.observe($("screen"),{
+    childList:true,
+    subtree:true
+  });
+
+  updateStarImages();
+
+})();
+</script>
 </body>
 </html>
