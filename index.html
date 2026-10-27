@@ -2,195 +2,118 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#fff1f5">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>해치 크리스마스 — 오래된 별의 자리</title>
 
-<style>
-@import url("https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap");
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
 
+<style>
 :root{
-  --pink:#f472b6;
-  --deep:#bd386f;
-  --paper:#fffdf2;
-  --ink:#63364c;
-  --green:#268652;
-  --dark-green:#17643d;
+  --pink:#fff0f4;
+  --paper:#fffdf6;
+  --ink:#663c49;
+  --muted:#857581;
+  --rose:#d85c82;
+  --line:#e5a9bc;
+  --green:#65876d;
+  --gold:#eeb75d;
+  --shadow:0 5px 15px #75414a18;
 }
 *{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden}
 body{
-  margin:0;
   display:flex;
   justify-content:center;
-  background:#fff1f5;
+  background:#f2dfe7;
   color:var(--ink);
-  font-family:"Courier New",monospace,sans-serif;
+  font-family:"Gaegu",system-ui,sans-serif;
 }
 button,input,select{font:inherit}
-button{cursor:pointer;touch-action:manipulation}
-button:disabled{opacity:.5;cursor:default}
-button:focus-visible,input:focus-visible,select:focus-visible{
-  outline:3px solid #0284c7;
+button{cursor:pointer;-webkit-tap-highlight-color:transparent}
+button:disabled{cursor:default;opacity:.5}
+button:focus-visible,select:focus-visible{
+  outline:3px solid #779ab7;
   outline-offset:3px;
 }
 [hidden]{display:none!important}
-
 #app{
+  position:relative;
   width:min(100%,460px);
   height:100vh;
-  height:min(100dvh,820px);
-  position:relative;
+  height:100dvh;
+  max-height:840px;
   display:flex;
   flex-direction:column;
   overflow:hidden;
-  background:#fff1f5;
-  box-shadow:0 0 30px #9d174d18;
+  background:var(--pink);
+  box-shadow:0 0 35px #704c5420;
 }
-.topbar{
-  flex:none;
-  min-height:42px;
+#topbar{
+  position:relative;
+  z-index:20;
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:5px;
-  padding:6px 8px;
-  background:#fff8f0;
-  border-bottom:2px solid white;
-  z-index:5;
+  min-height:46px;
+  padding:7px 9px;
+  padding-top:max(7px,env(safe-area-inset-top));
+  background:#fffaf2;
+  border-bottom:1px solid #e2cabb;
 }
-.progress{
-  padding:5px 9px;
-  border:2px solid var(--dark-green);
-  border-radius:14px;
-  box-shadow:0 2px var(--dark-green);
-  background:var(--green);
-  color:white;
-  font-size:11px;
-  font-weight:bold;
+#progress{
+  font-size:14px;
+  font-weight:700;
   white-space:nowrap;
 }
-.tools{display:flex;gap:4px}
-.tool{
-  padding:5px 6px;
-  border:2px solid #f9a8d4;
-  border-radius:12px;
-  background:white;
-  color:var(--deep);
-  font-size:10px;
-  font-weight:bold;
+.tools{display:flex;gap:4px;align-items:center}
+.small-btn{
+  border:1px solid #d6b8bd;
+  border-radius:9px;
+  padding:5px 7px;
+  background:#fffdf8;
+  color:var(--ink);
+  font-size:12px;
+  white-space:nowrap;
 }
+.small-btn.on{background:#f9dce6;color:#a94165}
 #screen{
+  position:relative;
   flex:1;
   min-height:0;
+  overflow:hidden;
+}
+#debug{
   position:relative;
-  overflow:hidden;
-}
-.debug{
-  flex:none;
+  z-index:20;
   display:flex;
-  gap:5px;
+  justify-content:center;
   align-items:center;
-  padding:5px 8px;
-  border-top:1px dashed #ca8a04;
-  background:#fef9c3;
+  gap:6px;
+  padding:5px 8px max(5px,env(safe-area-inset-bottom));
+  background:#f9e2e9;
+  border-top:1px dashed #dba8b8;
+  font-size:12px;
 }
-.debug label,.debug select,.debug button{font-size:10px}
-.debug select{flex:1;min-width:0;padding:4px}
-.debug button{
-  padding:5px;
-  border:1px solid #ca8a04;
-  border-radius:4px;
+#debug select{
+  min-width:0;
+  max-width:135px;
+  border:1px solid #d6b8bd;
+  border-radius:6px;
   background:white;
+  color:var(--ink);
+  padding:3px;
 }
-
-/* 인트로 */
-.intro{
-  position:absolute;
-  inset:0;
-  background:#ffe7ec;
-  overflow:hidden;
+#debug button{
+  border:1px solid #d6b8bd;
+  background:#fffaf4;
+  border-radius:6px;
+  padding:3px 7px;
+  color:var(--ink);
 }
-.intro-plane{
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-}
-.intro-image{
-  position:absolute;
-  inset:0;
-  display:block;
-  width:100%;
-  height:100%;
-}
-.intro-title{
-  position:absolute;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  margin:0;
-  color:white;
-  text-align:center;
-  line-height:1.23;
-  font-family:"Gaegu",sans-serif;
-  font-weight:bold;
-  text-shadow:
-    2px 2px #b91c66,
-    -1px -1px #b91c66,
-    0 3px #85184d;
-  pointer-events:none;
-}
-.intro-title small{
-  display:block;
-  margin-top:.15em;
-  font-size:.52em;
-}
-.intro-start{
-  position:absolute;
-  padding:0;
-  border:0;
-  background:transparent;
-  color:transparent;
-  appearance:none;
-}
-.intro-fallback{
-  position:absolute;
-  inset:0;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  gap:20px;
-  background:linear-gradient(#ffe4e6,#fff7ed);
-}
-.intro-fallback span{font-size:95px}
-.intro-fallback small{font-size:13px}
-.intro-fallback-button{
-  position:absolute;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border:3px solid white;
-  border-radius:18px;
-  background:#ef526f;
-  color:white;
-  font-weight:bold;
-  pointer-events:none;
-}
-
-/* 전체 배경 */
-.scene{
-  position:absolute;
-  inset:0;
-  overflow:hidden;
-  background:linear-gradient(#ffe4e9,#fff1da);
-}
+.scene{position:absolute;inset:0;overflow:hidden;background:#f9e9e9}
 .background{
-  position:absolute;
-  inset:0;
-}
-.background img{
   position:absolute;
   inset:0;
   width:100%;
@@ -201,2715 +124,2996 @@ button:focus-visible,input:focus-visible,select:focus-visible{
   position:absolute;
   inset:0;
   display:flex;
-  flex-direction:column;
-  align-items:center;
   justify-content:center;
-  gap:15px;
-  padding:60px 20px 150px;
-  background:
-    radial-gradient(circle at 20% 20%,#fff9,transparent 50%),
-    linear-gradient(#ffe4e9,#fff0d7);
+  align-items:center;
+  padding:30px;
   text-align:center;
+  color:#a48085;
+  background:
+    radial-gradient(ellipse at 20% 20%,#fff8e4,transparent 60%),
+    linear-gradient(#f9e7e9,#f4d7e2);
+  font-size:18px;
 }
-.background-fallback span{font-size:90px}
-.background-fallback small{
-  padding:8px 12px;
-  border:2px solid white;
-  border-radius:14px;
-  background:#fff9;
-  font-size:12px;
+.scene-shade{
+  position:absolute;
+  inset:45% 0 0;
+  pointer-events:none;
+  background:linear-gradient(transparent,#92515d14);
 }
 .chapter{
   position:absolute;
-  z-index:4;
+  z-index:3;
   top:15px;
-  left:14px;
-  max-width:calc(100% - 28px);
-  margin:0;
-  padding:7px 12px;
-  border:3px solid white;
-  outline:1.5px solid #d875a0;
-  border-radius:5px 15px 6px 14px;
-  box-shadow:2px 4px #8f456526;
-  background:#fffaf0ed;
-  color:#a23d69;
-  font-family:"Gaegu",sans-serif;
-  font-size:21px;
-  line-height:1.3;
-  transform:rotate(-2deg);
+  left:13px;
+  max-width:calc(100% - 26px);
+  padding:8px 15px;
+  border:2px solid #fffaf0;
+  border-radius:12px 9px 13px 8px;
+  box-shadow:2px 3px 0 #795d481b;
+  background:#fffaf0ee;
+  transform:rotate(-1deg);
+  font-size:18px;
+  font-weight:700;
 }
-.chapter::before{
-  content:"✦";
-  margin-right:7px;
-  color:#e6ab36;
+.chapter small{
+  display:block;
+  color:var(--rose);
+  font-size:11px;
+  letter-spacing:1px;
+}
+.primary,.secondary{
+  border:2px solid #c97280;
+  border-radius:15px;
+  padding:10px 18px;
+  background:linear-gradient(#ffc7b6,#f49c99);
+  box-shadow:0 4px 0 #bc727d;
+  color:#703d49;
+  font-weight:700;
+  font-size:18px;
+}
+.primary:active,.secondary:active{
+  transform:translateY(3px);
+  box-shadow:0 1px 0 #bc727d;
+}
+.secondary{
+  background:#fffaf0;
+  border-color:#cbb7a3;
+  box-shadow:0 4px 0 #cbb7a3;
+}
+.arrow{
+  display:inline-block;
+  margin-left:5px;
+  font-family:system-ui,sans-serif;
+  font-weight:700;
+  animation:arrowMove 1s ease-in-out infinite;
+}
+@keyframes arrowMove{
+  50%{transform:translateX(4px)}
 }
 
-/* 分離した別画像 */
-.scene-star{
+/* 인트로: 이미지 원본 좌표를 기준으로 배치 */
+.intro-scene{background:#f8e7e9}
+.intro-plane{position:absolute}
+.intro-plane>.intro-image{
   position:absolute;
-  z-index:2;
-  width:23%;
-  height:26%;
-  object-fit:contain;
+  inset:0;
+  width:100%;
+  height:100%;
+}
+.intro-title{
+  position:absolute;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:#fff9e9;
+  text-shadow:2px 3px 0 #a84f70,0 2px 8px #8b4558;
+  line-height:1.12;
   pointer-events:none;
-  filter:drop-shadow(0 3px 2px #9d174d22);
 }
-.scene-star.sleeping{
-  left:59%;
-  top:49%;
-  transform:rotate(8deg);
+.intro-title strong{font-size:clamp(24px,7vw,34px)}
+.intro-title span{font-size:clamp(12px,3.5vw,17px)}
+.intro-start{
+  position:absolute;
+  background:transparent;
+  border:0;
+  border-radius:18px;
 }
-.scene-star.hanging{
-  left:55%;
-  top:29%;
-}
-.scene-star.rising{
-  left:62%;
-  top:23%;
-  animation:star-drift 3s ease-in-out infinite;
-}
-.scene-star.epilogue{
-  left:61%;
-  top:14%;
-  width:24%;
-  animation:star-drift 3s ease-in-out infinite;
+.intro-start:focus-visible{outline:3px dashed white}
+.intro-start.fallback{
+  background:#fff5dbe8;
+  border:2px solid #c37a7b;
+  color:#914d64;
+  font-size:23px;
+  font-weight:700;
 }
 
-/* 紙の会話窓 */
+/* 메모 */
+.memo-wrap{
+  position:absolute;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:25px;
+  background:linear-gradient(#ffffff20,#dca6b02b);
+}
+.memo{
+  position:relative;
+  width:100%;
+  max-height:95%;
+  overflow:auto;
+  padding:30px 23px 25px;
+  border:1px solid #eadbc6;
+  border-radius:4px 7px 10px 5px;
+  background-color:#fffdf2;
+  background-image:
+    linear-gradient(#d8c9ad25 1px,transparent 1px),
+    linear-gradient(90deg,#d8c9ad25 1px,transparent 1px);
+  background-size:22px 22px;
+  box-shadow:6px 9px 0 #a5767a22,0 12px 35px #663c4920;
+  transform:rotate(-1deg);
+}
+.memo:before{
+  content:"";
+  position:absolute;
+  width:96px;
+  height:24px;
+  top:0;
+  left:calc(50% - 48px);
+  transform:rotate(4deg);
+  background:#e9bfcebb;
+}
+.memo h1{
+  text-align:center;
+  margin:0 0 15px;
+  color:#c45f7f;
+  font-size:30px;
+}
+.memo p{font-size:19px;line-height:1.55;margin:12px 0}
+.memo small{display:block;color:var(--muted);font-size:14px;line-height:1.5}
+.difficulty-options{display:grid;gap:12px;margin-top:23px}
+.difficulty-options button{width:100%}
+.difficulty-options span{display:block;font-size:13px;margin-top:3px}
+
+/* 대화창: 캐릭터와 본문 사이 여백 확보 */
 .dialogue{
   position:absolute;
   z-index:8;
   left:12px;
   right:12px;
   bottom:16px;
-  height:122px;
-  border:3px solid white;
-  outline:1.5px solid #d7c8b8;
-  border-radius:7px 12px 7px 12px;
-  background-color:var(--paper);
-  background-image:
-    linear-gradient(#d9cfb633 1px,transparent 1px),
-    linear-gradient(90deg,#d9cfb633 1px,transparent 1px);
-  background-size:18px 18px;
-  box-shadow:0 7px 15px #62344622;
-  animation:dialog-in .25s ease-out both;
+  height:124px;
+  border:2px solid #dfc7b5;
+  border-radius:17px 12px 18px 13px;
+  background:#fffdf5f5;
+  box-shadow:var(--shadow);
 }
-.dialogue::before{
+.dialogue:before{
   content:"";
   position:absolute;
-  top:-8px;
-  left:92px;
-  right:15px;
-  height:14px;
-  background:
-    radial-gradient(circle at 8px 7px,#d3bd8d 0 4px,transparent 4.6px)
-    0 0/27px 14px repeat-x;
+  inset:7px;
   pointer-events:none;
+  border:1px dashed #e9d7c8;
+  border-radius:11px;
 }
 .portrait{
   position:absolute;
-  left:-8px;
-  bottom:21px;
-  width:100px;
-  height:132px;
+  left:7px;
+  bottom:14px;
+  width:86px;
+  height:125px;
   display:flex;
   align-items:flex-end;
   justify-content:center;
   pointer-events:none;
-}
-.portrait::before{
-  content:"";
-  position:absolute;
-  left:9px;
-  bottom:7px;
-  width:77px;
-  height:81px;
-  border:4px solid white;
-  border-radius:16px 9px 18px 8px;
-  background:#f8d8e7;
-  transform:rotate(-9deg);
-  box-shadow:2px 4px #88536a22;
-}
-.portrait span{
-  position:relative;
-  font-size:55px;
-  padding-bottom:15px;
+  isolation:isolate;
 }
 .portrait img{
-  position:absolute;
-  inset:0;
+  position:relative;
   width:100%;
   height:100%;
   object-fit:contain;
-  object-position:center bottom;
-  filter:drop-shadow(0 3px 1px #693c4c22);
+  filter:drop-shadow(0 3px 0 #936d6915);
 }
-.copy{
+/* 별 뒤에 배지·이모지·장식 레이어를 생성하지 않습니다. */
+.portrait::before,.portrait::after{content:none!important}
+.dialogue-copy{
   position:absolute;
-  inset:0;
+  top:10px;
+  bottom:30px;
+  left:112px;
+  right:13px;
   display:flex;
   flex-direction:column;
-  gap:3px;
-  padding:9px 11px 6px 92px;
+  min-width:0;
 }
-.sender{
-  flex:none;
-  align-self:flex-start;
-  padding:1px 7px;
-  border-radius:8px;
-  background:#fce7f3;
-  color:#b03569;
-  font-size:12px;
-  font-weight:bold;
+.speaker{
+  flex-shrink:0;
+  margin-bottom:3px;
+  color:#bf5978;
+  font-size:13px;
+  font-weight:700;
 }
 .message{
-  flex:1;
-  min-height:0;
   overflow:auto;
-  white-space:pre-wrap;
-  word-break:keep-all;
-  font-size:15px;
-  line-height:1.55;
-  color:var(--ink);
+  overscroll-behavior:contain;
+  font-size:17px;
+  line-height:1.4;
+  overflow-wrap:anywhere;
+  scrollbar-width:thin;
 }
-.next{
-  flex:none;
-  align-self:flex-end;
-  min-height:24px;
-  padding:0 4px;
+.dialogue-next{
+  position:absolute;
+  right:13px;
+  bottom:7px;
   border:0;
   background:transparent;
-  color:#a83d6b;
-  font-size:12px;
-  font-weight:bold;
-}
-.next::after{
-  content:"›";
-  display:inline-block;
-  margin-left:7px;
-  font-size:25px;
-  line-height:1;
-  vertical-align:middle;
-  animation:arrow-right .85s ease-in-out infinite;
-}
-.dialogue.narration{height:100px}
-.dialogue.narration .portrait,
-.dialogue.narration .sender{display:none}
-.dialogue.narration .copy{padding:12px 15px 7px}
-.dialogue.narration .message{color:#7b8290;font-style:italic}
-.dialogue.narration::before{left:16px}
-
-/* 案内 */
-.route-note{
-  position:absolute;
-  z-index:3;
-  top:76px;
-  left:16px;
-  right:16px;
-  padding:11px 13px;
-  border:3px solid white;
-  border-radius:5px 13px 7px 12px;
-  background:#fffdf2ed;
-  box-shadow:2px 4px #7443541a;
-  color:#785865;
-  font-size:12px;
-  line-height:1.7;
-  transform:rotate(1deg);
-}
-.route-note strong{color:#bb4679}
-
-/* ボタン */
-.primary{
-  width:100%;
-  min-height:43px;
-  padding:9px 12px;
-  border:3px solid white;
-  outline:2px solid #b91c4d;
-  border-radius:17px;
-  box-shadow:0 4px #9f164a;
-  background:linear-gradient(#ff7d87,#ed4059);
-  color:white;
+  color:#a5516c;
+  padding:2px 5px;
   font-size:14px;
-  font-weight:bold;
-  transition:transform .12s,filter .12s;
+  font-weight:700;
 }
-.primary:active:not(:disabled){
-  transform:translateY(3px);
-  box-shadow:0 1px #9f164a;
-}
-.primary.green{
-  background:linear-gradient(#56bb7f,#268652);
-  outline-color:#17643d;
-  box-shadow:0 4px #17643d;
-}
-.round{
-  padding:7px 10px;
-  min-height:34px;
-  border:2px solid #f9a8d4;
-  border-radius:13px;
-  background:white;
-  color:var(--deep);
-  font-size:11px;
-  font-weight:bold;
-}
+.dialogue.narration{height:101px;background:#fffaf3f0}
+.dialogue.narration .portrait{display:none}
+.dialogue.narration .dialogue-copy{left:17px;top:13px}
+.dialogue.narration .speaker{display:none}
+.dialogue.narration .message{color:#7d7680;font-style:italic}
 
-/* 準備メモ */
-.memo-screen{
+/* 장면에 배치하는 별: PNG 한 장만 사용 */
+.scene-star{
   position:absolute;
-  inset:0;
-  overflow:hidden;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:27px;
-  background:
-    linear-gradient(#d4c7a52b 1px,transparent 1px),
-    linear-gradient(90deg,#d4c7a52b 1px,transparent 1px),
-    #fff7e7;
-  background-size:25px 25px;
-}
-.memo-screen::before{
-  content:"☆";
-  position:absolute;
-  left:4%;
-  top:7%;
-  color:#edc272;
-  font-size:70px;
-  transform:rotate(-15deg);
-}
-.memo{
-  position:relative;
-  width:100%;
-  padding:28px 20px 22px;
-  border:3px solid white;
-  border-radius:3px 12px 4px 9px;
-  background:
-    repeating-linear-gradient(transparent 0 31px,#d3c5aa44 32px,transparent 33px),
-    var(--paper);
-  box-shadow:5px 10px #dca4b326,0 15px 30px #79525c18;
-  transform:rotate(-3deg);
-  animation:memo-in .5s ease-out both;
-}
-.memo::before,.memo::after{
-  content:"";
-  position:absolute;
-  top:-13px;
-  width:72px;
-  height:25px;
-  background:#f4d5b4bb;
-  border:1px solid #ffffff77;
-}
-.memo::before{left:13px;transform:rotate(-12deg)}
-.memo::after{right:10px;transform:rotate(14deg)}
-.memo h1{
-  margin:0 0 17px;
-  color:#b74676;
-  font-family:"Gaegu",sans-serif;
-  font-size:28px;
-}
-.memo ul{
-  margin:0;
-  padding:0;
-  list-style:none;
-  color:#795264;
-  font-family:"Gaegu",sans-serif;
-  font-size:23px;
-  line-height:1.8;
-}
-.memo .scribble{
-  margin:17px 0;
-  color:#df7d9c;
-  font-family:"Gaegu",sans-serif;
-  font-size:22px;
-}
-.difficulty-title{
-  margin:13px 0;
-  color:#a54a72;
-  text-align:center;
-  font-family:"Gaegu",sans-serif;
-  font-size:23px;
-}
-.difficulty-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.difficulty{
-  min-height:84px;
-  padding:12px 7px;
-  border:3px solid white;
-  outline:2px solid #ce769d;
-  border-radius:18px 8px 17px 9px;
-  box-shadow:0 5px #c569963d;
-  background:linear-gradient(#ffd6e6,#f7adcb);
-  color:#9b355f;
-  transform:rotate(-2deg);
-}
-.difficulty.adult{
-  outline-color:#7cae94;
-  background:linear-gradient(#def4df,#b8dfc4);
-  box-shadow:0 5px #538a6840;
-  color:#396f50;
-  transform:rotate(2deg);
-}
-.difficulty strong{
-  display:block;
-  font-family:"Gaegu",sans-serif;
-  font-size:26px;
-}
-.difficulty span{font-size:10px}
-
-/* 移動演出 */
-.transition{
-  position:absolute;
-  inset:0;
-  z-index:30;
-  overflow:hidden;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:20px;
-  background:#e6f5fa;
-}
-.transition::before,.transition::after{
-  content:"";
-  position:absolute;
-  left:-30%;
-  width:160%;
-  height:50%;
-  border-radius:50%;
-  background:white;
-  transform:rotate(-23deg);
-}
-.transition::before{top:-18%;animation:cloud-a 2s ease-in-out both}
-.transition::after{bottom:-18%;background:#fff9;animation:cloud-b 2s ease-in-out both}
-.transition-label{
-  position:relative;
-  z-index:2;
-  color:#8cab75;
-  font-size:12px;
-}
-.transition h1{
-  position:relative;
-  z-index:2;
-  margin:0 22px;
-  padding:13px 22px;
-  border:3px solid white;
-  outline:2px solid #b8c892;
-  border-radius:28% 18% 24% 14%;
-  background:#e7edc9;
-  color:#775367;
-  font-family:"Gaegu",sans-serif;
-  font-size:29px;
-  text-align:center;
-  line-height:1.4;
-}
-.travel{
-  position:relative;
-  z-index:2;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  width:100%;
-  gap:15px;
-  animation:travel 1.8s ease-in-out both;
-}
-.travel-character{
-  position:relative;
-  width:116px;
-  height:145px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  animation:step .42s ease-in-out infinite;
-}
-.travel-character span{font-size:65px}
-.travel-character img{
-  position:absolute;
-  width:100%;
-  height:100%;
-  object-fit:contain;
-}
-.travel-star{
-  width:68px;
-  height:90px;
-  object-fit:contain;
-  animation:star-drift .8s ease-in-out infinite;
-}
-.skip{
-  position:absolute;
-  z-index:3;
-  bottom:20px;
-  right:15px;
-  padding:7px 12px;
-  border:2px solid white;
-  border-radius:18px;
-  background:#fff9;
-  color:#8c7583;
-  font-size:11px;
-}
-
-/* パズル */
-.play-area{
-  position:absolute;
-  z-index:3;
-  inset:76px 13px 146px;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  gap:11px;
-}
-.play-dock{
-  position:absolute;
-  z-index:10;
-  left:11px;
-  right:11px;
-  bottom:11px;
-  display:flex;
-  flex-direction:column;
-  gap:7px;
-}
-.status{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  min-height:34px;
-  margin:0;
-  padding:7px 10px;
-  border:2px solid white;
-  border-radius:14px;
-  background:#fffdf2f0;
-  color:#a54974;
-  text-align:center;
-  font-size:12px;
-  line-height:1.5;
-}
-.action-row{display:flex;gap:8px}
-.utility-row{display:flex;gap:6px}
-.hint-text{
-  margin:0;
-  padding:8px;
-  border:2px solid #fcd34d;
-  border-radius:12px;
-  background:#fffef4;
-  font-size:11px;
-  line-height:1.6;
-}
-.clue{
-  flex:none;
-  width:96%;
-  padding:8px 11px;
-  border:3px solid white;
-  outline:1px solid #e8bd86;
-  border-radius:5px 12px 5px 11px;
-  background:#fffdf1;
-  color:#925366;
-  text-align:center;
-  font-size:12px;
-  line-height:1.6;
-  transform:rotate(-2deg);
-}
-.small-guide{
-  margin:0;
-  padding:4px 8px;
-  border-radius:8px;
-  background:#fff9;
-  text-align:center;
-  font-size:10px;
-}
-
-/* 入体錠 */
-.storage-lock{
-  position:relative;
-  isolation:isolate;
-  flex:none;
-  width:min(100%,350px);
-  padding-top:85px;
-  filter:drop-shadow(0 9px #85436622);
-}
-.shackle{
-  position:absolute;
-  z-index:-1;
-  top:0;
-  left:24%;
-  width:52%;
-  height:130px;
-  border:18px solid #f5df9c;
-  border-bottom-width:12px;
-  outline:3px solid #aa753c;
-  border-radius:90px 90px 14px 14px;
-  box-shadow:inset 0 0 0 3px #fff9d7,0 0 0 3px white;
-  transform-origin:18% 85%;
-  transition:transform .65s,top .65s;
-}
-.storage-body{
-  position:relative;
-  z-index:2;
-  padding:13px 10px 12px;
-  border:4px solid white;
-  outline:3px solid #b25a83;
-  border-radius:25px 25px 19px 19px;
-  background:linear-gradient(135deg,#ffd8e6,#ed9abe);
-  box-shadow:inset 0 4px #fff5,inset 0 -9px #b6608c22,0 7px #b56c8a55;
-}
-.storage-label{
-  width:max-content;
-  margin:0 auto 10px;
-  padding:3px 11px;
-  border:2px solid white;
-  outline:1px solid #d2a56c;
-  border-radius:12px;
-  background:#fff4d8;
-  color:#976039;
-  text-align:center;
-  font-size:11px;
-}
-.dials{display:flex;justify-content:center;gap:5px;width:100%}
-.dial{flex:1;max-width:65px;min-width:0;text-align:center}
-.storage-lock .dial{max-width:49px}
-.dial button{
-  width:100%;
-  min-height:23px;
-  padding:1px;
-  border:1px solid white;
-  border-radius:6px;
-  background:#fff8;
-  color:#a04671;
-  font-size:11px;
-}
-.drum{
-  height:75px;
-  margin:4px 0;
-  overflow:hidden;
-  border:2px solid #a96385;
-  border-radius:8px;
-  background:linear-gradient(#d5bdc9,#faf5f7 24%,white 42%,white 59%,#faf5f7 76%,#d5bdc9);
-  box-shadow:inset 0 3px 5px #75435a33,0 2px #fff7;
-  color:#9d3766;
-  touch-action:none;
-  user-select:none;
-}
-.drum .adjacent{height:18px;line-height:18px;font-size:11px;opacity:.45}
-.drum .value{height:35px;line-height:35px;font-size:23px;font-weight:bold}
-.drum.moving{filter:brightness(1.1)}
-.keyhole{
-  position:relative;
-  width:14px;
-  height:14px;
-  margin:12px auto 5px;
-  border-radius:50%;
-  background:#b7678d;
-}
-.keyhole::after{
-  content:"";
-  position:absolute;
-  top:8px;
-  left:4px;
-  width:6px;
-  height:11px;
-  border-radius:0 0 3px 3px;
-  background:#b7678d;
-}
-.storage-lock.open .shackle{top:-15px;transform:rotate(-23deg)}
-.storage-lock.open .storage-body{background:linear-gradient(#fff2bd,#f4cb73)}
-
-/* 糸通し */
-.thread-board{
-  position:relative;
-  width:min(100%,300px);
-  aspect-ratio:1;
-  touch-action:none;
-  filter:drop-shadow(0 5px 3px #7b3b5c22);
-}
-.thread-board>img,
-.thread-board>svg{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
+  z-index:4;
+  width:24%;
+  height:auto;
   object-fit:contain;
   pointer-events:none;
 }
-.hole{
+.scene-star.glow{filter:drop-shadow(0 0 14px #ffe3a3)}
+.scene-star.rising{animation:starRise 3s ease-in-out forwards}
+@keyframes starRise{
+  to{transform:translateY(-160px) scale(.63);opacity:.25}
+}
+.route-note{
   position:absolute;
-  width:46px;
-  height:46px;
-  transform:translate(-50%,-50%);
-  border:3px solid #b77b35;
-  outline:3px solid white;
-  border-radius:50%;
-  box-shadow:0 3px #b77b3533;
-  background:#fff9e3;
-  color:#a16a22;
-  font-size:21px;
+  z-index:4;
+  left:20px;
+  right:20px;
+  top:88px;
+  padding:14px 17px;
+  background:#fffaf0ed;
+  border:1px solid #e4c6b1;
+  border-radius:5px 13px 7px 12px;
+  box-shadow:var(--shadow);
+}
+.route-note strong{display:block;font-size:22px;color:#af5873}
+.route-note p{margin:7px 0 0;font-size:16px;line-height:1.45}
+.route-note small{display:block;margin-top:8px;color:#96838a;font-size:12px}
+
+/* 전환: 이모지 없이 구름과 이미지로만 표현 */
+.travel{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+  background:linear-gradient(#f7e9ed,#fff5df);
+}
+.travel:before,.travel:after{
+  content:"";
+  position:absolute;
+  width:150%;
+  height:50%;
+  left:-25%;
+  background:#fffaf4;
+  border-radius:45%;
+  opacity:.9;
+}
+.travel:before{top:-20%;animation:cloudTop 1.6s ease-in-out both}
+.travel:after{bottom:-20%;animation:cloudBottom 1.6s ease-in-out both}
+@keyframes cloudTop{
+  0%{transform:translateY(65%)}
+  100%{transform:translateY(-70%)}
+}
+@keyframes cloudBottom{
+  0%{transform:translateY(-65%)}
+  100%{transform:translateY(70%)}
+}
+.travel-caption{
+  position:absolute;
+  top:25%;
+  width:100%;
+  padding:0 25px;
+  text-align:center;
+  font-size:24px;
+  color:#a6617b;
+}
+.travel-character{
+  position:absolute;
+  width:130px;
+  height:160px;
+  object-fit:contain;
+  left:calc(50% - 65px);
+  top:43%;
+  animation:travelBob .45s ease-in-out infinite alternate;
+}
+@keyframes travelBob{
+  to{transform:translateY(-7px) rotate(2deg)}
+}
+.travel-line{
+  position:absolute;
+  width:180px;
+  height:2px;
+  left:calc(50% - 90px);
+  top:calc(43% + 155px);
+  background:#ca9dae;
+}
+.travel-skip{
+  position:absolute;
+  bottom:35px;
+  left:50%;
+  transform:translateX(-50%);
+  background:transparent;
+  border:0;
+  color:#936674;
+  font-size:15px;
+}
+
+/* 문제 공통 */
+.puzzle-scene{background:#f8e7ec}
+.puzzle-scene .background{opacity:.32;filter:blur(1px)}
+.puzzle-card{
+  position:absolute;
+  z-index:4;
+  top:79px;
+  bottom:145px;
+  left:13px;
+  right:13px;
+  padding:17px 13px;
+  overflow:auto;
+  overscroll-behavior:contain;
+  border:2px solid #dfc5b3;
+  border-radius:18px 12px 17px 13px;
+  background:#fffdf5f5;
+  box-shadow:var(--shadow);
+}
+.puzzle-instruction{
+  text-align:center;
+  font-size:19px;
+  line-height:1.4;
+  margin:0 0 12px;
+}
+.puzzle-sub{
+  text-align:center;
+  color:#8c7580;
+  font-size:14px;
+  line-height:1.4;
+}
+.puzzle-dock{
+  position:absolute;
+  z-index:6;
+  left:15px;
+  right:15px;
+  bottom:13px;
+  display:grid;
+  gap:8px;
+}
+.status{
+  padding:8px 12px;
+  min-height:35px;
+  background:#fffaf0ed;
+  border:1px solid #e0c2b5;
+  border-radius:10px;
+  text-align:center;
+  font-size:15px;
+  line-height:1.35;
+}
+.dock-buttons{display:flex;justify-content:center;gap:9px}
+.dock-buttons button{
+  flex:1;
+  min-width:0;
+  padding:8px 9px;
+  border:1px solid #d2a8ae;
+  border-radius:11px;
+  color:#855567;
+  background:#fff8ef;
+  font-size:15px;
+}
+.paper-clue{
+  padding:10px 13px;
+  margin:10px 0;
+  border:1px dashed #d9bba1;
+  border-radius:5px;
+  background:#fff3d9;
+  text-align:center;
+  font-size:18px;
+  line-height:1.45;
+}
+.puzzle-action{
+  display:block;
+  width:100%;
+  margin-top:15px;
+}
+.shake{animation:shake .35s ease-in-out}
+@keyframes shake{
+  25%{transform:translateX(-5px)}
+  75%{transform:translateX(5px)}
+}
+
+/* 자물쇠 */
+.lock-wrap{padding-top:37px;margin:12px auto 0;max-width:350px;position:relative}
+.lock-shackle{
+  position:absolute;
+  top:0;
+  width:47%;
+  height:88px;
+  left:26.5%;
+  border:14px solid #9a9eaa;
+  border-bottom:0;
+  border-radius:65px 65px 0 0;
+  box-shadow:inset 3px 2px 0 #e8e9ed,3px 0 0 #727682;
+  transition:transform .65s ease;
+  transform-origin:15% 100%;
+}
+.lock-wrap.unlocked .lock-shackle{transform:translateY(-13px) rotate(-22deg)}
+.lock-body{
+  position:relative;
+  padding:16px 10px 12px;
+  border:3px solid #b68a48;
+  border-radius:15px;
+  background:linear-gradient(115deg,#f5dc98,#d9b66d 50%,#f7dfa3);
+  box-shadow:inset 0 3px 0 #fff2bc,0 6px 0 #b38c51;
+}
+.lock-label{
+  text-align:center;
+  margin:0 0 11px;
+  font-size:12px;
+  letter-spacing:2px;
+  color:#85663d;
+}
+.dials{display:flex;justify-content:center;gap:5px}
+.dial{
+  min-width:0;
+  flex:1;
+  max-width:48px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:3px;
+}
+.dial button{
+  width:100%;
+  min-height:26px;
+  border:0;
+  border-radius:5px;
+  background:#fff9e299;
+  color:#805939;
+  font-family:system-ui,sans-serif;
+  font-size:13px;
+}
+.dial-face{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  height:63px;
+  color:#644636;
+  background:linear-gradient(#d7d1bd,#fffdf2 35%,#fffdf2 65%,#c9c2ad);
+  border:1px solid #958b72;
+  border-radius:5px;
+  font-family:system-ui,sans-serif;
+  font-size:23px;
+  font-weight:700;
+  touch-action:none;
+  cursor:ns-resize;
+}
+.book-dials .dial-face{
+  height:54px;
+  color:#a35873;
+  border-color:#cda6ac;
+  background:linear-gradient(#ead7da,#fffaf5 35%,#fffaf5 65%,#ead7da);
+}
+
+/* 실 끼우기 */
+.thread-board{
+  position:relative;
+  width:100%;
+  height:260px;
+  border:1px dashed #d1b1bc;
+  border-radius:15px;
+  background:#fff3e8;
   touch-action:none;
 }
-.hole.done{background:#fff0a7;box-shadow:0 0 20px #fde047}
+.thread-board .thread-star{
+  position:absolute;
+  width:62%;
+  left:19%;
+  top:12%;
+  height:78%;
+  object-fit:contain;
+}
+.thread-board svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.thread-node{
+  position:absolute;
+  width:40px;
+  height:40px;
+  border:3px solid #d59aad;
+  border-radius:50%;
+  transform:translate(-50%,-50%);
+  background:#fffdf5;
+  color:#9d5470;
+  font-size:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  pointer-events:none;
+}
+.thread-node.done{background:#f6cbd8;border-color:#b56885}
+.thread-board.tap-mode .thread-node{pointer-events:auto;cursor:pointer}
 
-/* 記憶レンズ */
+/* 기억 렌즈 */
 .city-board{
   position:relative;
-  flex:1;
   width:100%;
-  min-height:180px;
-  max-height:300px;
+  height:265px;
+  background:#e7efdc;
   overflow:hidden;
-  border:5px solid white;
-  outline:2px solid #6aaed6;
-  border-radius:24px 9px 24px 9px;
-  background:#dbeafe;
-}
-.city-svg{position:absolute;inset:0;width:100%;height:100%}
-.lens{
-  position:absolute;
-  width:112px;
-  height:112px;
-  border:7px solid #f277a1;
-  outline:3px solid white;
-  border-radius:50%;
-  box-shadow:4px 6px #9d174d33;
-  background:#fff8;
+  border:2px solid #c3ceaf;
+  border-radius:15px;
   touch-action:none;
 }
-.lens::after{
+.city-board svg{width:100%;height:100%;display:block}
+.memory-lens{
+  position:absolute;
+  width:106px;
+  height:106px;
+  left:10px;
+  top:130px;
+  border:7px solid #e3bc80;
+  border-radius:50%;
+  box-shadow:0 2px 0 #ac825d,0 0 0 3px #fff6dc;
+  background:#fff9ec42;
+  touch-action:none;
+}
+.memory-lens:after{
   content:"";
   position:absolute;
-  right:-22px;
-  bottom:-37px;
-  width:17px;
-  height:53px;
-  border:3px solid white;
+  width:15px;
+  height:47px;
+  left:80px;
+  top:81px;
   border-radius:9px;
-  background:#f277a1;
-  transform:rotate(-36deg);
+  background:#c98a80;
+  transform:rotate(-40deg);
+  border:2px solid #a56c68;
 }
-.lens svg{width:100%;height:100%;border-radius:50%;overflow:hidden}
-.lens.matched{border-color:#eab308;box-shadow:0 0 25px #fde047}
-.range-row{
-  display:flex;
-  align-items:center;
-  gap:7px;
-  width:100%;
-  padding:8px;
-  border:2px solid white;
-  border-radius:13px;
-  background:#fff9;
-  font-size:11px;
-}
-.range-row input{flex:1;min-width:0;accent-color:#e879a6}
-
-/* 本 */
-.book{
-  position:relative;
-  flex:none;
-  width:95%;
-  height:115px;
-  overflow:hidden;
-  border:4px solid white;
-  outline:3px solid #b86c78;
-  border-radius:15px 6px 6px 15px;
-  box-shadow:0 7px #e4b5ab;
-  background:#fff8dc;
-  transform:rotate(-2deg);
-}
-.book-inside{
-  position:absolute;
-  inset:0;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:10px;
-  text-align:center;
-  font-size:13px;
-  line-height:1.8;
-}
-.scratch{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  touch-action:none;
-}
-.book-lock{
-  width:100%;
-  padding:12px;
-  border:4px solid white;
-  outline:2px solid #b75d84;
-  border-radius:20px;
-  box-shadow:0 8px #b75d8444;
-  background:#f7b4d0;
-}
-
-/* 楽器 */
-.layers{display:flex;justify-content:center;gap:12px;font-size:25px}
-.layers span{
-  padding:5px;
-  border:2px solid white;
-  border-radius:50%;
-  background:white;
-  opacity:.25;
-}
-.layers span.on{opacity:1;box-shadow:0 0 15px #fde68a}
-.instrument{
-  width:100%;
-  padding:20px 10px;
-  border:5px solid white;
-  outline:3px solid #ba4a76;
-  border-radius:30px 30px 20px 20px;
-  box-shadow:0 10px #b96c8b66;
-  background:#f89ebc;
-  transform:rotate(-2deg);
-}
-.keys{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
-.key{
-  position:relative;
-  height:130px;
-  padding-top:50px;
-  border:3px solid #b46184;
-  border-radius:10px;
-  box-shadow:0 5px #c77699;
-  background:linear-gradient(white,#fff0df);
-  color:#8f345d;
-  font-size:20px;
-  font-weight:bold;
-}
-.key:nth-child(2){height:119px;background:linear-gradient(#fff9c6,#ffed99)}
-.key:nth-child(3){height:108px;background:linear-gradient(#d8f6e8,#a9e0ca)}
-.key:nth-child(4){height:97px;background:linear-gradient(#ddecff,#b3d1f9)}
-.key::before{
-  content:"";
+.lens-memory{
   position:absolute;
   left:50%;
-  top:16px;
-  width:9px;
-  height:9px;
-  border-radius:50%;
-  background:#b46184;
-  transform:translateX(-50%);
+  top:50%;
+  width:27px;
+  height:65px;
+  transform:translate(-50%,-50%);
+  opacity:.55;
+  border-bottom:3px solid #b66b87;
+  background:linear-gradient(90deg,transparent 43%,#b66b87 43%,#b66b87 57%,transparent 57%);
+  pointer-events:none;
 }
-.key.active{transform:translateY(5px);box-shadow:none;filter:brightness(1.13)}
-.key.active::after{
-  content:"♪";
+.lens-memory:before{
+  content:"";
   position:absolute;
-  top:-35px;
-  left:30%;
-  color:#e54a88;
-  animation:float-note .5s both;
+  width:26px;
+  height:15px;
+  left:0;
+  top:18px;
+  border:3px solid #b66b87;
+  border-radius:5px;
 }
+.zoom-control{display:flex;align-items:center;gap:10px;margin:18px 5px 0;font-size:15px}
+.zoom-control input{flex:1;min-width:0;accent-color:#bd7992}
 
-/* 願い */
-.memory{
+/* 스크래치 */
+.scratch-area{
   position:relative;
-  flex:1;
   width:100%;
-  min-height:210px;
-  max-height:330px;
+  height:220px;
   overflow:hidden;
-  border:5px solid white;
-  outline:2px solid #79b399;
-  border-radius:25px 9px 25px 9px;
-  background:linear-gradient(#bce6d3,#fff6da);
+  border:2px solid #d6b9bb;
+  border-radius:13px;
+  background:#fff4d9;
 }
-.memory-content{
+.scratch-under{
   position:absolute;
   inset:0;
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  gap:15px;
-  padding:14px;
-}
-.wish{
-  padding:9px 12px;
-  max-width:96%;
-  border:2px solid white;
-  outline:1px solid #efacb9;
-  border-radius:3px;
-  box-shadow:2px 4px #17643d22;
-  background:#fff9ed;
-  font-size:12px;
-  line-height:1.6;
-  transform:rotate(-5deg);
-}
-.wish:nth-child(2){transform:rotate(5deg);background:#ffe7ef}
-.wish:nth-child(3){transform:rotate(-2deg);background:#fff3b6}
-.memory-caption{
-  position:absolute;
-  left:5px;
-  right:5px;
-  bottom:5px;
-  padding:9px;
-  border:2px solid white;
-  border-radius:10px;
-  background:#fffde9;
   text-align:center;
-  font-size:12px;
-  line-height:1.6;
+  padding:18px;
+  font-size:23px;
+  color:#956378;
+  line-height:1.7;
+}
+.scratch-under small{font-size:15px;color:#9c858c}
+.scratch-area canvas{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  touch-action:none;
+}
+.assist{
+  display:block;
+  margin:10px auto;
+  padding:5px 10px;
+  background:transparent;
+  color:#956c7d;
+  border:0;
+  text-decoration:underline;
+  font-size:14px;
+}
+.book-panel{margin-top:12px}
+
+/* 피아노 */
+.music-progress{
+  display:flex;
+  justify-content:center;
+  gap:5px;
+  padding:8px 0 15px;
+}
+.music-dot{
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  border:1px solid #d7b5bb;
+  background:#f2e6e4;
+}
+.music-dot.done{background:#d88ea9;border-color:#b96d89}
+.piano-case{
+  position:relative;
+  margin:10px auto 15px;
+  padding:17px 10px 12px;
+  background:linear-gradient(#58424a,#352b34);
+  border:3px solid #382b32;
+  border-radius:13px 13px 9px 9px;
+  box-shadow:0 7px 0 #c1a2a6;
+}
+.piano-name{
+  text-align:center;
+  color:#f2d7b2;
+  letter-spacing:3px;
+  font-family:system-ui,sans-serif;
+  font-size:9px;
+  margin-bottom:12px;
+}
+.piano-keyboard{position:relative;height:167px;touch-action:manipulation}
+.white-keys{display:flex;height:100%;gap:2px}
+.white-key{
+  position:relative;
+  flex:1;
+  min-width:0;
+  padding:0;
+  background:linear-gradient(90deg,#e9e4df,#fffdf8 25%,#fffdf8 80%,#e9e4df);
+  border:1px solid #b5aaa5;
+  border-bottom:6px solid #c8bdb5;
+  border-radius:0 0 5px 5px;
+  color:#8a7177;
+}
+.white-key span{
+  position:absolute;
+  bottom:12px;
+  left:0;
+  width:100%;
+  font-size:16px;
+}
+.white-key.active{
+  background:linear-gradient(#f7dce5,#f5c8d8);
+  border-bottom-width:2px;
+  transform:translateY(3px);
+}
+.black-key{
+  position:absolute;
+  z-index:2;
+  top:0;
+  width:8.3%;
+  height:99px;
+  transform:translateX(-50%);
+  padding:0;
+  border:1px solid #19161b;
+  border-bottom:6px solid #151218;
+  border-radius:0 0 4px 4px;
+  background:linear-gradient(90deg,#211c23,#49404a 35%,#262029);
+  box-shadow:2px 3px 2px #0003;
+}
+.black-key.active{
+  background:linear-gradient(#825367,#ad7189);
+  border-bottom-width:2px;
+  height:102px;
+}
+.test-score{
+  margin-top:18px;
+  padding:12px;
+  background:#fff7e8;
+  border:1px dashed #d6b8a8;
+  border-radius:8px;
+  text-align:center;
+}
+.test-score small{display:block;color:#9f818b;font-size:12px;margin-bottom:5px}
+.test-score p{margin:0;color:#a15975;font-size:20px;line-height:1.65}
+.music-entered{
+  min-height:30px;
+  text-align:center;
+  color:#a96b80;
+  font-size:17px;
+  padding-top:9px;
+}
+
+/* 願いのメモ */
+.wish-note{
+  width:90%;
+  padding:20px 12px;
+  background:#fffbea;
+  border:1px solid #deccb1;
+  box-shadow:3px 4px 0 #c6a8a021;
+  transform:rotate(-2deg);
+  font-size:24px;
+}
+.wish-caption{
+  min-height:45px;
+  margin-top:15px;
+  color:#9d7285;
+  text-align:center;
+  font-size:17px;
+  line-height:1.45;
 }
 
 /* 回路 */
-.circuit-wrap{
-  width:min(95%,290px);
-  padding:12px;
-  border:5px solid white;
-  outline:2px solid #b7648a;
-  border-radius:24px;
-  box-shadow:0 8px #b7648a44;
-  background:#f8d1df;
+.circuit-board{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  width:min(100%,285px);
+  margin:16px auto;
 }
-.circuit{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
-.pipe{
+.circuit-cell{
+  position:relative;
   aspect-ratio:1;
-  min-width:0;
-  padding:5px;
-  border:2px solid #c597b0;
+  padding:0;
+  border:2px solid #cdbca4;
   border-radius:12px;
-  box-shadow:0 3px #c597b0;
-  background:linear-gradient(white,#f6e9f0);
+  background:#f0e7d8;
+  overflow:hidden;
 }
-.pipe svg{width:100%;height:100%;display:block}
-.pipe.lit{background:#fff5b8;border-color:#d6ac33;box-shadow:0 0 14px #facc1588}
-.circuit-label{
-  padding:5px 10px;
-  border:2px solid white;
-  border-radius:12px;
-  background:#fff9;
-  color:#a8631b;
-  font-size:11px;
-}
-.final-light{
+.circuit-center{
   position:absolute;
-  inset:0;
-  z-index:25;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:#fff6dcb0;
-  pointer-events:none;
+  width:20%;
+  height:20%;
+  border-radius:50%;
+  background:#b9a48e;
+  left:40%;
+  top:40%;
 }
-.final-light img{
-  width:180px;
-  height:220px;
+.circuit-line{position:absolute;background:#b9a48e}
+.circuit-line.up{width:16%;height:50%;left:42%;top:0}
+.circuit-line.right{width:50%;height:16%;left:50%;top:42%}
+.circuit-line.down{width:16%;height:50%;left:42%;top:50%}
+.circuit-line.left{width:50%;height:16%;left:0;top:42%}
+.circuit-cell.lit{background:#fff1bf;border-color:#d6ad5d}
+.circuit-cell.lit .circuit-line,
+.circuit-cell.lit .circuit-center{
+  background:#e3a841;
+  box-shadow:0 0 9px #ffd46d;
+}
+.circuit-labels{
+  display:flex;
+  justify-content:space-between;
+  padding:0 10px;
+  color:#a37f55;
+  font-size:15px;
+}
+.final-star{
+  display:block;
+  height:80px;
+  width:100px;
+  margin:0 auto;
   object-fit:contain;
-  animation:ascend 1.8s ease-in forwards;
+}
+.final-star.fly{animation:finalFly 1.7s ease-in forwards}
+@keyframes finalFly{
+  to{transform:translateY(-220px) scale(.45);opacity:0}
 }
 
-/* ノート・モーダル */
+/* アウトロ */
+.outro-card{
+  position:absolute;
+  left:20px;
+  right:20px;
+  bottom:25px;
+  padding:20px;
+  border:2px solid #e1c7b5;
+  border-radius:17px;
+  background:#fffaf0ed;
+  text-align:center;
+  box-shadow:var(--shadow);
+}
+.outro-card h2{font-size:27px;color:#b75e7c;margin:0 0 10px}
+.outro-card p{font-size:19px;line-height:1.5;margin:9px 0 17px}
+
+/* オーバーレイ */
 .overlay{
   position:absolute;
+  z-index:100;
   inset:0;
-  z-index:80;
+  padding:22px;
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:22px;
-  background:#67445a88;
-  backdrop-filter:blur(3px);
+  background:#4d374d80;
 }
-.paper-panel{
+.overlay-card{
   width:100%;
   max-height:90%;
   overflow:auto;
-  padding:20px 16px;
-  border:4px solid white;
-  outline:2px solid #d875a0;
-  border-radius:6px 17px 6px 15px;
-  box-shadow:0 9px #b65e8533;
-  background:
-    linear-gradient(#d9cfb633 1px,transparent 1px),
-    linear-gradient(90deg,#d9cfb633 1px,transparent 1px),
-    var(--paper);
-  background-size:20px 20px;
-}
-.paper-panel h1,.paper-panel h2{
-  margin:0 0 12px;
-  color:#b24576;
-  font-family:"Gaegu",sans-serif;
-  font-size:28px;
-}
-.paper-panel>p{
-  font-size:13px;
-  line-height:1.8;
-  white-space:pre-wrap;
-}
-.memory-item{
-  margin-bottom:12px;
-  padding:11px 12px;
-  border:2px solid white;
-  outline:1px solid #e7bfce;
-  border-radius:4px 11px 5px 9px;
-  background:#fff5f8;
-  transform:rotate(-1deg);
-}
-.memory-item:nth-child(even){background:#f2f7e7;transform:rotate(1deg)}
-.memory-item strong{
-  display:block;
-  margin-bottom:5px;
-  color:#a24771;
-  font-family:"Gaegu",sans-serif;
-  font-size:20px;
-}
-.memory-item p{margin:0;font-size:12px;line-height:1.7}
-.memory-item.locked{opacity:.45;background:#eeeae4}
-.toast{
-  position:absolute;
-  z-index:15;
-  top:16px;
-  left:50%;
-  width:max-content;
-  max-width:90%;
-  transform:translateX(-50%);
-  padding:9px 13px;
-  border:3px solid white;
+  padding:24px 21px;
+  border:2px solid #e3c9b3;
   border-radius:18px;
-  background:#fffde8;
-  color:#aa7b32;
-  text-align:center;
-  font-size:11px;
+  background:var(--paper);
+  box-shadow:0 12px 40px #34253235;
 }
-.outro-panel{
+.overlay-card h2{color:#b85d7a;font-size:25px;margin:0 0 12px}
+.overlay-card p{font-size:18px;line-height:1.55;white-space:pre-line;margin:0 0 20px}
+.modal-buttons{display:flex;gap:10px}
+.modal-buttons button{flex:1}
+.memory-entry{padding:12px 0;border-bottom:1px dashed #dfc9bf}
+.memory-entry strong{font-size:19px;color:#ad6280}
+.memory-entry p{margin:5px 0 0;font-size:16px;color:#927b84}
+#toast{
   position:absolute;
-  z-index:4;
-  left:12px;
-  right:12px;
-  bottom:17px;
-  padding:18px;
-  border:4px solid white;
-  outline:2px solid #e879a6;
-  border-radius:22px;
-  background:#fff1f5ed;
+  z-index:40;
+  top:65px;
+  left:50%;
+  max-width:85%;
+  transform:translateX(-50%);
+  padding:10px 18px;
+  background:#fff7e7f5;
+  border:1px solid #d6b49d;
+  border-radius:15px;
+  color:#9b6277;
   text-align:center;
-}
-.outro-panel h1{color:var(--deep);font-family:"Gaegu",sans-serif;font-size:28px}
-.outro-panel p{font-size:13px;line-height:1.8}
-.outro-panel small{display:block;font-size:10px;margin-bottom:15px}
-.particle{
-  position:absolute;
-  z-index:60;
-  color:#f59e0b;
-  font-size:22px;
+  font-size:17px;
+  box-shadow:var(--shadow);
   pointer-events:none;
-  animation:particle .9s ease-out forwards;
 }
-@keyframes dialog-in{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:none}}
-@keyframes arrow-right{50%{transform:translateX(4px)}}
-@keyframes memo-in{from{opacity:0;transform:translateY(40px) rotate(-7deg)}to{opacity:1;transform:rotate(-3deg)}}
-@keyframes cloud-a{from{transform:translateX(-15%) rotate(-23deg)}to{transform:translateX(15%) rotate(-23deg)}}
-@keyframes cloud-b{from{transform:translateX(15%) rotate(-23deg)}to{transform:translateX(-15%) rotate(-23deg)}}
-@keyframes travel{from{transform:translateX(-30px)}to{transform:translateX(30px)}}
-@keyframes step{50%{transform:translateY(-5px) rotate(2deg)}}
-@keyframes star-drift{50%{transform:translateY(-9px) rotate(3deg)}}
-@keyframes float-note{to{transform:translateY(-25px);opacity:0}}
-@keyframes ascend{20%{transform:scale(1.2)}to{transform:translateY(-260px) scale(.3);opacity:0}}
-@keyframes particle{to{transform:translate(var(--dx),var(--dy)) rotate(110deg);opacity:0}}
-@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
-.shake{animation:shake .23s}
-@media(max-height:650px){
-  .dialogue{height:112px;bottom:11px}
-  .dialogue.narration{height:92px}
-  .portrait{width:91px;height:118px;bottom:23px}
-  .copy{padding-left:83px}
-  .play-area{inset:66px 10px 135px;gap:8px}
-  .chapter{top:10px;font-size:18px}
-  .storage-lock{padding-top:62px;width:min(100%,315px)}
-  .shackle{height:105px;border-width:15px}
-  .storage-body{padding:9px 8px}
-  .drum{height:64px}
-  .drum .adjacent{height:15px;line-height:15px}
-  .drum .value{height:30px;line-height:30px;font-size:21px}
-  .thread-board{width:min(78%,230px)}
-  .book{height:84px}
-  .book-inside{font-size:11px}
-  .book-lock{padding:8px}
-  .key{height:100px}
-  .key:nth-child(2){height:92px}
-  .key:nth-child(3){height:84px}
-  .key:nth-child(4){height:76px}
-  .circuit-wrap{width:min(78%,230px);padding:8px}
-  .memo{padding:22px 16px 17px}
-  .memo h1{font-size:25px}
-  .memo ul{font-size:21px}
-  .memo .scribble{font-size:20px;margin:12px 0}
-}
-@media(max-width:360px){
-  .message{font-size:14px}
-  .tool{font-size:9px;padding:5px}
-  .storage-lock .dials{gap:3px}
-  .storage-lock .value{font-size:21px}
+@media(max-height:700px){
+  .dialogue{height:114px;bottom:10px}
+  .portrait{height:112px;width:80px;left:6px}
+  .dialogue-copy{left:103px;top:8px}
+  .message{font-size:16px}
+  .dialogue.narration{height:94px}
+  .puzzle-card{top:70px;bottom:132px;padding:12px}
+  .chapter{top:10px;font-size:16px;padding:6px 12px}
+  .thread-board,.city-board{height:215px}
+  .scratch-area{height:177px}
+  .piano-keyboard{height:139px}
+  .black-key{height:85px}
+  .black-key.active{height:88px}
 }
 @media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation:none!important}
+  *,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}
 }
 </style>
 </head>
 
 <body>
 <div id="app">
-  <header id="topbar" class="topbar" hidden>
-    <span id="progress" class="progress">해치 크리스마스</span>
+  <header id="topbar" hidden>
+    <div id="progress"></div>
     <div class="tools">
-      <button id="music-toggle" class="tool" aria-pressed="false">♫ OFF</button>
-      <button id="sound-toggle" class="tool" aria-pressed="false">효과음 OFF</button>
-      <button id="notebook-button" class="tool">▤ 0/7</button>
-      <button id="home" class="tool">처음</button>
+      <button id="bgm-button" class="small-btn">음악 OFF</button>
+      <button id="sfx-button" class="small-btn">효과음 OFF</button>
+      <button id="notebook-button" class="small-btn">기억</button>
+      <button id="home-button" class="small-btn">처음</button>
     </div>
   </header>
 
   <main id="screen"></main>
 
-  <div id="debug" class="debug" hidden>
-    <label for="jump">테스트</label>
-    <select id="jump" aria-label="미션 선택"></select>
-    <button id="jump-go">이동</button>
-    <button id="pass">패스</button>
+  <div id="debug" hidden>
+    <span>테스트</span>
+    <select id="stage-select" aria-label="테스트할 미션"></select>
+    <button id="jump-button">이동</button>
+    <button id="pass-button">문제 패스</button>
   </div>
 
-  <section id="modal" class="overlay" role="dialog"
-           aria-modal="true" aria-labelledby="modal-title" hidden>
-    <div class="paper-panel" style="text-align:center">
-      <div id="modal-icon" style="font-size:39px">⭐</div>
-      <h2 id="modal-title"></h2>
-      <p id="modal-text"></p>
-      <button id="modal-ok" class="primary">확인</button>
-      <button id="modal-cancel" class="round"
-              style="width:100%;margin-top:12px" hidden>취소</button>
-    </div>
-  </section>
+  <div id="toast" hidden></div>
 
-  <section id="notebook" class="overlay" role="dialog"
-           aria-modal="true" aria-labelledby="notebook-title" hidden>
-    <div class="paper-panel">
-      <h1 id="notebook-title">별의 기억 노트</h1>
-      <p id="notebook-count"></p>
-      <div id="notebook-items"></div>
-      <button id="notebook-close" class="primary">탐험으로 돌아가기</button>
+  <div id="modal" class="overlay" role="dialog" aria-modal="true"
+       aria-labelledby="modal-title" hidden>
+    <div class="overlay-card">
+      <h2 id="modal-title"></h2>
+      <p id="modal-description"></p>
+      <div class="modal-buttons">
+        <button id="modal-cancel" class="secondary" hidden>취소</button>
+        <button id="modal-confirm" class="primary">확인</button>
+      </div>
     </div>
-  </section>
+  </div>
+
+  <div id="notebook" class="overlay" role="dialog" aria-modal="true"
+       aria-labelledby="notebook-title" hidden>
+    <div class="overlay-card">
+      <h2 id="notebook-title">함께 찾은 기억</h2>
+      <div id="notebook-content"></div>
+      <button id="notebook-close" class="primary puzzle-action">닫기</button>
+    </div>
+  </div>
 </div>
+
+<audio id="bgm" src="bgm.mp3" preload="metadata" loop playsinline></audio>
 
 <script>
 "use strict";
 
-/*
-========================================================
-전체 통합본
+/* =========================
+   기본 설정
+========================= */
+const TEST_MODE = true;
+const SAVE_KEY = "seoul-star-mp3-v8";
 
-파일은 index.html과 같은 폴더에 넣으세요.
+const $ = id => document.getElementById(id);
+const clamp = (value,min,max) => Math.max(min,Math.min(max,value));
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-intro.gif
-outro.gif
-
-image_01.png : 장식 창고
-image_02.png : 별 없는 트리
-image_03.png : 서울 전경 모형
-image_04.png : 책방
-image_05.png : 공연장
-image_06.png : 소망나무
-image_07.png : 돌아온 트리
-image_08.png : 에필로그
-
-route_01.png ~ route_07.png : 현장 이동 안내 사진
-아직 없으면 해당 이야기 배경으로 대신 표시됩니다.
-
-haechi.gif
-ju.gif
-baekho.png
-cheongryong.png
-hyeonmu.png
-
-star_01.png : 깨어난 별
-star_02.png : 잠든 별
-star_03.png : 밝게 빛나는 별
-
-TEST_MODE=false : 테스트 메뉴 숨김
-
-성인용은 선택값만 저장하며,
-현재는 두 난이도 모두 같은 7문제로 진행합니다.
-========================================================
-*/
-
-const TEST_MODE=true;
-const SAVE_KEY="seoul-star-integrated-v7";
-
-const INTRO={
-  file:"intro.gif",
-  fallbackWidth:900,
-  fallbackHeight:1600,
-  title:{x:220,y:255,w:500,h:140},
-  start:{x:280,y:1390,w:370,h:110}
-};
-
-const STAR={
+const STAR = {
   awake:"star_01.png",
   sleep:"star_02.png",
   light:"star_03.png"
 };
 
-const CHAR={
-  "해치":{file:"haechi.gif",emoji:"🩷"},
-  "주작":{file:"ju.gif",emoji:"🔴"},
-  "백호":{file:"baekho.png",emoji:"🐯"},
-  "청룡":{file:"cheongryong.png",emoji:"🔵"},
-  "현무":{file:"hyeonmu.png",emoji:"🟢"},
-  "별":{file:STAR.awake,emoji:"⭐"}
+const CHAR = {
+  "해치":"haechi.gif",
+  "주작":"ju.gif",
+  "청룡":"cheongryong.png",
+  "백호":"baekho.png",
+  "현무":"hyeonmu.png",
+  "별":STAR.awake
 };
 
-const $=id=>document.getElementById(id);
-const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
-const reduced=()=>matchMedia("(prefers-reduced-motion: reduce)").matches;
-const say=(name,text)=>({name,text});
-const note=text=>({name:"",text,note:true});
-const esc=value=>String(value).replace(/[&<>"']/g,c=>({
-  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-}[c]));
-
-const TITLES=[
-  "장식 창고를 열어라!",
-  "별아, 일어날 시간이야!",
-  "이 풍경, 본 적 있어!",
-  "책 사이에 숨은 기억",
-  "어디서 들어본 노래인데?",
-  "아직 읽을 게 많아!",
-  "별이 가고 싶은 곳"
+const TITLES = [
+  "장식 상자를 찾아서",
+  "잠든 별을 깨우자",
+  "강 건너 반짝이던 곳",
+  "책 사이에 남은 기억",
+  "어디선가 들었던 노래",
+  "가지마다 달린 이야기",
+  "별에게 어울리는 자리"
 ];
 
-const ROUTES=[
-  {
-    place:"장식 창고 체험 지점",
-    info:"운영자가 지정한 장식 창고 또는 캐비넷 체험 지점으로 이동해 주세요.",
-    lines:[
-      say("해치","안녕! 잘 왔어. 나랑 크리스마스 트리 좀 꾸며줄래?"),
-      say("해치","장식 상자부터 가지러 가자. 창고에 넣어뒀거든!")
-    ],
-    transition:"장식 상자를 찾아서!"
-  },
-  {
-    place:"대형 트리",
-    info:"크리스마스 대형 트리가 있는 공간으로 이동해 주세요.",
-    transition:"이번엔 트리를 꾸며볼까?"
-  },
-  {
-    place:"내친구서울 1관",
-    info:"내친구서울 1관의 서울 전경 관람 지점으로 이동해 주세요.",
-    transition:"서울을 한눈에!"
-  },
-  {
-    place:"서울책방",
-    info:"서울책방의 지정 체험 지점으로 이동해 주세요.",
-    transition:"책 사이를 뒤적뒤적"
-  },
-  {
-    place:"공연장",
-    info:"공연장 관람 구역의 지정 체험 지점으로 이동해 주세요. 공연 중에는 현장 안내를 따라 주세요.",
-    transition:"기억 속 멜로디를 찾아서"
-  },
-  {
-    place:"소망나무",
-    info:"소망나무 앞으로 이동해 주세요. 걸린 소망 종이는 떼지 않고 살펴봐 주세요.",
-    transition:"소원이 주렁주렁!"
-  },
-  {
-    place:"대형 트리 옆 크리스마스 공간",
-    info:"대형 트리 옆 크리스마스 체험 지점으로 돌아와 주세요.",
-    transition:"다시 트리로 출발!"
-  }
+const PLACES = [
+  "장식 상자가 있는 곳",
+  "대형 트리",
+  "내친구서울 1관",
+  "서울책방",
+  "공연장",
+  "소망나무",
+  "대형 트리 옆 크리스마스 공간"
 ];
 
-const ARRIVAL=[
+const GUIDE_LINES = [
+  "장식 상자가 있는 곳으로 가보자!",
+  "상자를 챙겼으니 대형 트리로 가보자!",
+  "서울 전경을 볼 수 있는 내친구서울 1관으로 가보자!",
+  "이번에는 서울책방으로 가보자!",
+  "별이 기억하는 노래를 찾아 공연장으로 가보자!",
+  "사람들의 소원이 모이는 소망나무로 가보자!",
+  "마지막으로 대형 트리 옆 크리스마스 공간으로 돌아가자!"
+];
+
+const MEMORY_NAMES = [
+  "창고에서 발견한 별",
+  "오랜 잠에서 깨어나다",
+  "강과 불빛",
+  "침대맡의 작은 자리",
+  "잠들기 전의 노래",
+  "가지마다 달린 소원",
+  "새로운 별의 자리"
+];
+
+const MEMORY_TEXTS = [
+  "장식 상자 안에 오래된 별 하나가 잠들어 있었다.",
+  "새 끈을 끼워 트리에 걸자 별이 눈을 떴다.",
+  "별은 강과 도시의 불빛을 떠올렸다.",
+  "크리스마스가 지나도 별은 아이의 침대맡에 있었다.",
+  "아이는 별에게 노래와 작은 소원을 들려주곤 했다.",
+  "소망나무에도 별이 좋아하던 이야기들이 가득했다.",
+  "별은 더 많은 소원을 읽으러 높은 곳으로 올라갔다."
+];
+
+const say = (name,text) => ({name,text});
+const note = text => ({name:null,text});
+
+/* =========================
+   대화
+========================= */
+const ARRIVAL = [
   [
-    say("해치","여기야! 문만 열면…… 어라? 비밀번호가 바뀌었잖아!"),
-    say("해치","원래는 내 이름, HAECHI였거든. 누가 메모를 붙여놨네."),
-    say("해치","“오늘은 이름 대신 행복한 마음과 하트!” 음…… 같이 풀어볼래?")
+    say("해치","여기야! 이 안에 트리 장식이 들어 있어."),
+    say("해치","어라? 자물쇠가 잠겨 있네. 지금은 HAECHI라고 되어 있어."),
+    say("해치","문에 붙은 메모를 보자. 글자를 바꾸면 열릴 것 같아!")
   ],
   [
-    say("해치","좋아, 이 가지에 걸면 잘 보이겠다!"),
-    say("주작","잠깐! 그 끈으로 걸면 떨어져!"),
-    say("해치","깜짝이야! 주작도 꾸미러 왔어?"),
-    say("주작","응. 그런데 꾸미자마자 떨어뜨릴 셈이야?"),
-    say("해치","아직 안 걸었거든! 새 끈부터 달아줄 거야."),
-    say("주작","그럼 난 별 잡고 있을게. 끈은 부탁해. 이번엔 튼튼하게!")
+    say("주작","상자 가져왔네! 이쪽 가지부터 꾸미면 되겠다."),
+    say("해치","주작도 와 있었구나. 그런데 이것 좀 봐. 상자 안에서 찾았어."),
+    note("해치가 꺼낸 낡은 별. 달려 있던 끈은 거의 끊어져 있었다."),
+    say("주작","그 끈으로 걸면 떨어지겠어. 새 걸로 갈아주자."),
+    say("해치","좋아! 끈부터 튼튼하게 끼워줄래?")
   ],
   [
-    say("해치","우와, 이렇게 보니까 서울이 정말 넓네!"),
-    say("청룡","서울 구경하러 왔어? 그럼 내가 빠질 수 없지!"),
-    say("해치","별이 예전에 보던 풍경을 찾고 있어. 물 위로 불빛이 길게 비쳤대."),
-    say("청룡","좋아! 한꺼번에 찾으려면 눈이 빙빙 돌 테니까, 기억 렌즈로 살펴보자."),
-    say("별","아! 높은 탑도 있었어. 가운데가 동그랬는데!")
+    say("청룡","서울에서 살던 별이라고? 그럼 여기부터 봐야지."),
+    say("해치","별이 강이랑 반짝이는 불빛을 기억한대."),
+    say("별","저기… 높이 솟은 것도 있었어. 끝이 가늘고, 가운데가 동그란…"),
+    say("해치","기억 속 모양을 겹쳐보자. 닮은 곳을 찾을 수 있을 거야.")
   ],
   [
-    say("백호","해치! 무슨 책 찾고 있어?"),
-    say("해치","책보다는 기억! 별이 책 많은 창가에 있었대."),
-    say("별","누가 읽다가 꼭 펼쳐놓곤 했어. 이렇게……."),
-    say("백호","그럼 이 책도 펼쳐보자. 어? 옆에 그림 상자도 있네?"),
-    say("해치","잠겨 있어. 책 속 표시가 열쇠인가 봐."),
-    say("백호","좋아. 숨은 표시 찾기는 내가 자신 있지. 먼지부터 슥슥 닦아봐!")
+    say("백호","책을 찾으러 왔어? 어떤 책인데?"),
+    say("해치","책 제목은 모르겠고… 별이 작은 손이랑 책장을 기억한대."),
+    say("백호","그럼 오래된 그림책부터 볼까? 여기 한 권이 꼭 닫혀 있네."),
+    say("해치","표지에 먼지가 잔뜩이야. 살살 닦아보자!")
   ],
   [
-    say("해치","도착! 이번에는 우리도 연주자가 되는 거야."),
-    say("별","잘 칠 수 있어?"),
-    say("해치","짧게 치면! 아주 짧게!"),
-    say("해치","한 구절씩 들어보고 따라 쳐보자. 별아, 아는 노래면 알려줘."),
-    say("별","좋아! 나도 귀 기울이고 있을게. 귀는 없지만!")
+    say("해치","도착! 여기가 공연장이야."),
+    say("별","여기 오니까 그 노래가 조금 더 생각나."),
+    say("주작","마침 악보도 있네. 같이 맞춰보면 되겠다."),
+    say("해치","공연장에 있는 악보를 보고 연주해 줘. 별도 듣고 있을게!")
   ],
   [
-    say("별","우와! 잎사귀가 전부 종이야?"),
-    say("현무","사람들이 적어놓은 소원이야. 하나씩 읽어봐."),
-    say("해치","별이 예전에 듣던 이야기와 닮았을 것 같아서 데려왔어."),
-    say("별","저기부터! 아니, 이쪽도!"),
-    say("현무","나무는 도망가지 않아. 천천히."),
-    say("해치","화면도 한번 닦아볼까? 뿌연 곳 뒤로 글씨가 보여!")
+    say("해치","봐! 나뭇잎처럼 달린 게 전부 소원이야."),
+    say("현무","하나씩 읽어봐. 재밌는 이야기가 많아."),
+    say("별","정말 많다. 저쪽 것도 보고 싶어."),
+    say("해치","화면에 김이 서렸네. 손으로 닦아서 읽어볼까?")
   ],
   [
-    say("주작","이제 와? 별 하나 걸러 갔다가 한 바퀴를 다 돌았네!"),
-    say("해치","별이 앉을 자리를 찾고 있었지. 이번에는 높은 가지로!"),
-    say("별","조금만 더 높으면 소망나무도 보이겠다."),
-    say("주작","욕심도 많네. 그러다 진짜 하늘까지 가겠어."),
-    say("해치","우선 위쪽 조명부터 이어보자. 별이 어디 있는지 잘 보이게!")
+    say("주작","왔네! 별 자리 하나 남겨뒀어."),
+    say("해치","소망나무가 잘 보이는 자리로 부탁해."),
+    say("별","조금 높은 곳이면 좋겠어. 아까 못 읽은 소원도 보고 싶거든."),
+    say("주작","그럼 위쪽 가지! 마지막 조명만 연결하면 돼."),
+    say("해치","길이 끊긴 조명 조각을 돌려서 이어줘!")
   ]
 ];
 
-const AFTER=[
+const AFTER = [
   [
-    note("달칵! 창고 문이 열렸다. 안쪽에는 오래된 장식 상자가 놓여 있었다."),
-    say("해치","열렸다! 자, 장식 상자를 꺼내볼까?"),
-    note("뚜껑을 열자 낡은 별 장식 하나가 데굴, 굴러 나왔다."),
-    say("해치","앗, 별이다! 어디 가!"),
-    say("해치","잡았다. 상자 속에 오래 있었나 봐. 먼지 털고 트리에 걸어주자!")
+    note("찰칵! 문이 열렸다. 장식 상자를 꺼내자 작은 별 하나가 굴러 나왔다."),
+    say("해치","앗, 잡았다! 꽤 오래된 장식인가 봐."),
+    say("해치","먼지만 털면 아직 예쁘겠는데? 같이 가져가자."),
+    note("해치는 별을 상자 위에 조심스럽게 올려두었다."),
+    say("해치","이제 대형 트리로 가자. 주작이 먼저 꾸미고 있을 거야!")
   ],
   [
-    note("별을 트리에 걸자 작은 빛이 깜빡였다."),
-    say("별","으아…… 아침이야?"),
-    say("해치","아침은 아닌데, 크리스마스 준비 중이야!"),
-    say("별","그럼 조금만 더 잘래."),
-    say("주작","방금 끈까지 새로 달아줬는데?!"),
-    say("별","새 끈? 정말이네! 고마워. 그런데 여기는…… 내가 있던 곳이 아닌 것 같아."),
-    say("해치","원래 어디에 있었는데?"),
-    say("별","음…… 창문? 물? 밤에 길쭉하게 반짝이는 불빛도 있었어."),
-    say("해치","물에 비친 불빛이면 서울 풍경일지도 몰라. 서울이 한눈에 보이는 곳으로 가보자!")
+    note("새 끈을 끼워 가지에 걸자, 별이 천천히 눈을 떴다."),
+    say("별","…어? 벌써 크리스마스야?"),
+    say("해치","안녕! 깜짝 놀랐네. 너, 말을 할 줄 아는구나!"),
+    say("별","응. 그런데 여긴 처음 보는 곳이야. 내가 있던 자리는…"),
+    say("주작","어디였는데?"),
+    say("별","잘 모르겠어. 창밖에 강이 보였고, 밤에는 불빛이 반짝였어."),
+    say("해치","그럼 서울을 한눈에 볼 수 있는 곳부터 가보자. 내친구서울 1관이야!")
   ],
   [
-    say("별","아, 맞아! 물 위에 불빛이 이렇게 길게 늘어졌어!"),
-    say("청룡","봤지? 서울 풍경 찾는 건 자신 있다니까!"),
-    say("해치","그 창문에서 누가 널 보고 있었던 거야?"),
-    say("별","작은 손이 나를 번쩍 들었어. 그리고…… 책! 창가 옆에 책이 많았어."),
-    say("해치","책이라면 서울책방이지. 다른 기억도 떠오를지 몰라. 가보자!")
+    say("별","맞아! 저런 모습이었어. 창밖을 보면서 노래를 들었는데…"),
+    note("별의 표면에서 작은 빛이 반짝였다."),
+    say("별","내 옆에 책도 있었어. 작은 손이 책장을 넘겨줬어."),
+    say("청룡","이제 좀 좁혀졌네. 책이 있는 자리라…"),
+    say("해치","서울책방에 가보자! 책을 보면 더 생각날지도 몰라.")
   ],
   [
-    note("상자 안에서 작은 방의 그림이 나왔다. 창가 옆 침대맡에 별이 놓여 있었다."),
-    say("별","기억났다! 크리스마스가 끝나도 나를 침대맡에 두던 아이가 있었어."),
-    say("해치","트리 장식 끝나고도? 특별 대우였네!"),
-    say("별","응. 책을 읽고 나면 꼭 나한테 말을 걸었어. 어떤 날은 노래도 불렀고."),
-    say("백호","노래? 불러봐!"),
-    say("별","그게…… 첫 소리만 생각나. 미……?"),
-    say("해치","그럼 공연장에 가서 조금씩 연주해보자. 듣다 보면 기억날지도 몰라!")
+    note("책장을 넘기자, 침대와 창문이 그려진 그림이 나타났다."),
+    say("별","아… 내 자리가 저기였어. 아이의 침대맡!"),
+    say("별","크리스마스가 지나도 나를 치우지 않았어. 잘 때도 옆에 두고."),
+    say("해치","그 별이 마음에 쏙 들었나 보다."),
+    say("별","잠들기 전에는 노래도 불러줬는데. 처음이… 미, 미, 미…"),
+    say("해치","그 노래, 공연장에서 한번 연주해 보자. 다음 부분도 떠오를지 몰라!")
   ],
   [
-    say("별","맞아, 이 노래야! 마지막 음을 꼭 길게 불렀어. 미이이이—."),
-    say("해치","잠깐, 숨 안 쉬어도 돼?"),
-    say("별","난 별이잖아! 그 뒤에는 하루 이야기가 시작됐지."),
-    say("별","강아지를 키우고 싶다, 눈이 오면 좋겠다…… 할 말이 엄청 많았어."),
-    say("해치","매일 들으려면 바빴겠다."),
-    say("별","응. 자다가 못 들은 날도 조금 있어."),
-    note("아이는 자라며 점점 바빠졌다. 별은 짐을 정리하던 날 다른 장식들과 상자에 담겼고, 여러 사람의 손을 거쳐 서울갤러리에 왔다."),
-    say("별","그 뒤로는 아주 오래 잤나 봐. 그래서 지금은 하나도 안 졸려!"),
-    say("해치","그럼 더 구경할 수 있겠네! 하고 싶은 일을 적어두는 나무가 있어. 거기도 가볼래?"),
-    say("별","나무에 이야기를 적어둔다고? 보고 싶어!")
+    say("별","이 노래야! 끝나면 늘 이야기를 하나 더 해줬어."),
+    say("별","강아지가 생기면 좋겠다, 눈사람을 만들고 싶다… 그런 이야기."),
+    say("해치","별에게 매일 소원을 들려줬구나."),
+    note("아이는 자랐고, 별은 다른 장식들과 함께 상자에 담겼다. 여러 사람의 손을 거쳐 이곳에 온 뒤로는 오래 잠들어 있었다."),
+    say("별","오늘은 이야기를 잔뜩 했네. 오랜만이야."),
+    say("해치","아직 더 들을 수 있어. 소망나무에는 사람들이 남긴 소원이 가득하거든!"),
+    say("주작","그럼 거기로 가자. 나도 뭐라고 적혀 있는지 궁금해.")
   ],
   [
-    say("별","이 아이도 강아지를 키우고 싶대! 그 애도 맨날 그랬는데."),
-    say("해치","이쪽에는 눈사람 만들고 싶다는 소원도 있어."),
-    say("별","잠깐, 아직 다 못 읽었어! 저 아래 것도!"),
-    say("현무","이번에는 잠들 틈이 없겠네."),
-    say("별","그러게! 여기 있으면 들을 이야기가 정말 많겠다."),
-    say("해치","그럼 트리에 돌아가서 잘 보이는 자리를 찾아줄까?"),
-    say("별","좋아! 조금 높은 가지로 부탁해. 여기 소원들이 보이게!")
+    say("별","강아지랑 살고 싶다… 눈사람을 만들고 싶다…"),
+    say("별","처음 듣는 이야기인데, 어쩐지 반가워."),
+    say("현무","저쪽 가지에도 있어. 뒤쪽에도 있고."),
+    say("별","아직 못 읽은 게 이렇게 많아? 조금 더 보고 싶어."),
+    say("해치","그럼 트리의 높은 자리는 어때? 여기까지 잘 보일 거야."),
+    say("별","좋아! 이번에는 이야기가 잘 보이는 자리로 가고 싶어.")
   ],
   [
-    note("트리에 불이 들어왔다. 그 사이에서 오래된 별이 유난히 밝게 반짝였다."),
-    say("해치","어라? 별아, 네 빛이 더 밝은데?"),
-    note("별이 가지에서 둥실 떠올랐다."),
-    say("해치","어어? 끈! 끈 놓쳤어!"),
-    say("주작","아니, 봐봐. 혼자 떠 있잖아!"),
-    say("별","여기 좋다! 아까 못 읽은 소원도 보여!"),
-    note("별은 조금 더 높이 떠올랐다. 반짝이는 빛 속에서, 오래된 장식은 진짜 별이 되었다."),
-    say("별","잠깐! 저쪽 것도 읽고 올게!")
+    note("조명이 이어지자, 별이 유난히 환하게 빛났다."),
+    say("해치","어? 별이 가지에서 떨어졌… 아니, 올라가고 있어!"),
+    say("주작","끈도 풀렸는데?"),
+    say("별","위로 올라오니까 소원이 더 잘 보여!"),
+    note("낡은 장식이 있던 자리에, 작은 별 하나가 떠올랐다."),
+    say("별","잠깐만. 저쪽 것도 읽고 올게!")
   ]
 ];
 
-const EPILOGUE=[
-  say("해치","별아! 거기서는 글씨가 보여?"),
-  note("작은 빛이 두 번 깜빡였다."),
-  say("주작","보이나 본데?"),
-  say("해치","그럼 내 것도 읽겠네. 어디 보자, 내 소원이……."),
-  say("주작","트리부터 마저 꾸며!"),
-  say("해치","맞다! 너도 도와줘서 고마워. 덕분에 별 하나 제대로 찾았네!"),
-  note("별은 그 뒤로도 한참 반짝였다. 소망나무에는 아직 읽지 못한 이야기가 많이 남아 있었다.")
+const EPILOGUE = [
+  note("별은 천천히 높아졌다. 소망나무의 종잇장들이 가볍게 흔들렸다."),
+  say("해치","거기서도 잘 보여?"),
+  note("별이 두 번 반짝였다."),
+  say("해치","좋아. 그럼 내 소원도 나중에 읽어줘!"),
+  say("주작","해치, 이쪽도 봐. 아직 장식 남았어."),
+  say("해치","맞다! 오늘 같이 다녀줘서 고마워."),
+  note("트리 아래에서는 장식하는 소리가, 나무 위에서는 종이 흔들리는 소리가 났다.")
 ];
 
-const MEMORY_NAMES=[
-  "상자에서 찾은 별","잠에서 깨어난 별","창밖의 서울",
-  "침대맡의 자리","매일 들려오던 노래","소망나무의 이야기","별의 새로운 자리"
-];
-const MEMORY_TEXTS=[
-  "장식 창고에서 끈이 끊어진 별 하나를 찾았다.",
-  "새 끈을 달아 트리에 걸었더니 별이 깨어났다.",
-  "별은 물 위로 길게 비치던 서울의 불빛을 기억했다.",
-  "크리스마스가 지나도 별을 침대맡에 두던 아이가 있었다.",
-  "아이는 잠들기 전에 노래와 하루 이야기를 들려주었다.",
-  "소망나무에는 별이 오래전 듣던 이야기와 닮은 소원이 가득했다.",
-  "읽고 싶은 이야기가 많아진 별은 조금 더 높은 곳으로 떠올랐다."
-];
+/* =========================
+   상태와 정리
+========================= */
+let state = {
+  phase:"intro",
+  stage:0,
+  difficulty:"child",
+  earned:[]
+};
 
-const HINTS=[
-  ["해치의 이름 HAECHI가 처음 비밀번호예요. 새 메모를 읽어보세요.","행복한 마음은 영어로 HAPPY. 마지막에 하트를 붙여요.","H · A · P · P · Y · ♥"],
-  ["해에서 끈을 잡고 시작하세요.","해 → 하트 → 달 → 별 순서입니다.","끌기가 어렵다면 ‘누르기로 꿰기’를 사용하세요."],
-  ["물가의 높은 탑을 찾아보세요.","확대율은 약 125%예요.","렌즈 가운데를 탑의 전망대 부분에 맞춰보세요."],
-  ["먼저 책 위 먼지를 닦아보세요.","그림 이름의 첫 글자를 모으세요.","별사탕·나무·라디오·무지개 → 별·나·라·무."],
-  ["다시 들으면 건반도 함께 빛나요.","한 구절씩 따라 쳐보세요.","미·미·솔 / 도·레·미 / 솔·미·레·도"],
-  ["뿌연 부분을 넓게 문질러보세요.","소원 종이가 있는 가운데를 닦아보세요.","어려우면 ‘소원 전체 보기’를 눌러주세요."],
-  ["첫 칸 왼쪽에서 마지막 칸 오른쪽까지 이어요.","윗줄은 오른쪽, 가운데 줄은 왼쪽, 아랫줄은 오른쪽이에요.","→ → ↓ / ↓ ← ← / → → →"]
-];
+let version = 0;
+let timers = new Set();
+let cleanups = [];
+let typingTimer = null;
+let finishTyping = null;
+let locked = false;
+let transitioning = false;
+let hintIndex = 0;
+let resetPuzzle = () => {};
+let lastFocus = null;
 
-let state={phase:"intro",stage:0,difficulty:"child",earned:[]};
-let resumePoint=null;
-let version=0;
-let timers=[];
-let cleanups=[];
-let typingTimer=null;
-let finishTyping=null;
-let locked=false;
-let transitioning=false;
-let modalCallback=null;
-let modalCancelCallback=null;
-let overlayFocus=null;
-let saveAllowed=true;
+function escapeHTML(text){
+  return String(text).replace(/[&<>"']/g,c=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[c]));
+}
 
-function later(fn,ms){
-  const current=version;
-  const id=setTimeout(()=>{if(current===version) fn()},ms);
-  timers.push(id);
+function later(fn,delay){
+  const current = version;
+  const id = setTimeout(()=>{
+    timers.delete(id);
+    if(current===version) fn();
+  },delay);
+  timers.add(id);
   return id;
 }
+
 function cleanup(){
-  clearInterval(typingTimer);
-  typingTimer=null;
-  finishTyping=null;
-  timers.forEach(clearTimeout);
-  timers=[];
-  cleanups.forEach(fn=>fn());
-  cleanups=[];
   version++;
-  stopGroup("game");
-  $("screen").replaceChildren();
+  timers.forEach(clearTimeout);
+  timers.clear();
+  cleanups.splice(0).forEach(fn=>fn());
+  if(typingTimer) clearInterval(typingTimer);
+  typingTimer = null;
+  finishTyping = null;
+  stopNotes();
+  $("screen").innerHTML = "";
 }
+
 function save(){
-  if(!saveAllowed) return;
-  try{localStorage.setItem(SAVE_KEY,JSON.stringify(state))}
-  catch(e){saveAllowed=false}
+  try{localStorage.setItem(SAVE_KEY,JSON.stringify(state))}catch(e){}
 }
+
 function readSave(){
   try{
-    const data=JSON.parse(localStorage.getItem(SAVE_KEY));
+    const value=JSON.parse(localStorage.getItem(SAVE_KEY));
     const phases=["guide","arrival","puzzle","after","epilogue","outro"];
-    if(data&&phases.includes(data.phase)&&
-      Number.isInteger(data.stage)&&data.stage>=0&&data.stage<7){
-      return {
-        phase:data.phase,
-        stage:data.stage,
-        difficulty:data.difficulty==="adult"?"adult":"child",
-        earned:Array.isArray(data.earned)?
-          data.earned.filter(n=>Number.isInteger(n)&&n>=0&&n<7):[]
-      };
+    if(!value || !phases.includes(value.phase)) return null;
+    if(!Number.isInteger(value.stage)||value.stage<0||value.stage>6) return null;
+    return {
+      phase:value.phase,
+      stage:value.stage,
+      difficulty:value.difficulty==="adult"?"adult":"child",
+      earned:Array.isArray(value.earned)
+        ? [...new Set(value.earned.filter(n=>Number.isInteger(n)&&n>=0&&n<7))]
+        : []
+    };
+  }catch(e){return null}
+}
+
+function imageFile(stage){
+  return `image_${String(stage+1).padStart(2,"0")}.png`;
+}
+
+function background(file,fallbackFile){
+  const box=document.createElement("div");
+  box.className="scene";
+
+  const fallback=document.createElement("div");
+  fallback.className="background-fallback";
+  fallback.textContent="배경 이미지를 준비하고 있어요.";
+  box.append(fallback);
+
+  const img=document.createElement("img");
+  img.className="background";
+  img.alt="";
+  let triedFallback=false;
+  img.onerror=()=>{
+    if(fallbackFile&&!triedFallback){
+      triedFallback=true;
+      img.src=fallbackFile;
+    }else{
+      img.hidden=true;
     }
-  }catch(e){}
-  return null;
+  };
+  img.src=file;
+  box.append(img);
+  return box;
 }
+
+function chapter(scene,stage,title=TITLES[stage]){
+  const el=document.createElement("div");
+  el.className="chapter";
+  el.innerHTML=`<small>CHAPTER ${stage+1}</small>${escapeHTML(title)}`;
+  scene.append(el);
+}
+
+function setStatus(text){
+  const el=$("puzzle-status");
+  if(el) el.textContent=text;
+}
+
 function updateChrome(){
-  const cover=["intro","memo"].includes(state.phase);
-  $("topbar").hidden=cover;
-  $("debug").hidden=cover||!TEST_MODE;
-  $("debug").inert=transitioning;
+  const hidden=["intro","memo"].includes(state.phase);
+  $("topbar").hidden=hidden;
+  $("debug").hidden=hidden||!TEST_MODE;
   $("progress").textContent=
-    state.phase==="epilogue"?"에필로그":
-    state.phase==="outro"?"탐험 완료!":`미션 ${state.stage+1}/7`;
-  $("notebook-button").textContent=`▤ ${state.earned.length}/7`;
-  $("jump").value=state.stage;
-  $("pass").disabled=transitioning||
-    !["guide","arrival","puzzle"].includes(state.phase);
-  $("app").dataset.difficulty=state.difficulty;
+    state.phase==="epilogue"||state.phase==="outro"
+      ? "마지막 이야기"
+      : `${state.stage+1} / 7 · 기억 ${state.earned.length}`;
+  $("stage-select").value=String(state.stage);
+  $("jump-button").disabled=transitioning;
+  $("pass-button").disabled=transitioning;
 }
+
 function go(phase,stage=state.stage){
   cleanup();
-  transitioning=false;
   locked=false;
+  transitioning=false;
   state.phase=phase;
   state.stage=stage;
+  hintIndex=0;
 
   if(phase==="after"&&!state.earned.includes(stage)){
     state.earned.push(stage);
-    state.earned.sort((a,b)=>a-b);
   }
+
   if(!["intro","memo"].includes(phase)) save();
+
   updateChrome();
 
   if(phase==="intro") renderIntro();
-  if(phase==="memo") renderMemo();
-  if(phase==="guide") renderGuide();
-  if(phase==="arrival"){
-    renderDialogue(ARRIVAL[stage],TITLES[stage],()=>go("puzzle"));
+  else if(phase==="memo") renderMemo();
+  else if(phase==="guide") renderGuide();
+  else if(phase==="arrival"){
+    renderDialogue(ARRIVAL[stage],()=>go("puzzle"),"문제 시작");
   }
-  if(phase==="puzzle") renderPuzzle();
-  if(phase==="after"){
-    renderDialogue(AFTER[stage],"무슨 일이 생겼지?",()=>{
-      stage===6?go("epilogue"):go("guide",stage+1);
-    });
-    toast(`✦ 기억 노트 · ${MEMORY_NAMES[stage]}`);
+  else if(phase==="puzzle") renderPuzzle();
+  else if(phase==="after"){
+    renderDialogue(
+      AFTER[stage],
+      ()=>stage<6?go("guide",stage+1):go("epilogue"),
+      stage<6?"다음 장소로":"계속하기"
+    );
+    toast("기억 한 조각을 찾았어!");
   }
-  if(phase==="epilogue"){
-    renderDialogue(EPILOGUE,"아직 읽을 이야기가 많아!",()=>go("outro"),"image_08.png");
+  else if(phase==="epilogue"){
+    renderDialogue(EPILOGUE,()=>go("outro"),"마무리");
   }
-  if(phase==="outro") renderOutro();
+  else if(phase==="outro") renderOutro();
 
-  stopGroup("bgm");
+  syncBGM();
 }
+
 function newGame(){
-  resumePoint=null;
+  state={phase:"memo",stage:0,difficulty:"child",earned:[]};
+  try{localStorage.removeItem(SAVE_KEY)}catch(e){}
+  go("memo",0);
+}
+
+function resetToIntro(){
   state={phase:"intro",stage:0,difficulty:"child",earned:[]};
   try{localStorage.removeItem(SAVE_KEY)}catch(e){}
-  go("memo");
-}
-function imageFile(stage=state.stage){
-  return `image_${String(stage+1).padStart(2,"0")}.png`;
-}
-function background(file,label,fallbackFile=""){
-  return `<div class="background">
-    <div class="background-fallback">
-      <span>${["📦","🎄","🌆","📚","🎵","🌳","🌟"][state.stage]}</span>
-      <small>${esc(label)}</small>
-    </div>
-    <img src="${esc(file)}" alt="${esc(label)}"
-      ${fallbackFile
-        ? `onerror="this.onerror=function(){this.hidden=true};this.src='${esc(fallbackFile)}'"`
-        : `onerror="this.hidden=true"`}>
-  </div>`;
-}
-function starMarkup(file,className){
-  return `<img class="scene-star ${className}" src="${file}"
-    alt="별 장식" onerror="this.hidden=true">`;
-}
-function storyStar(){
-  if(state.phase==="epilogue") return starMarkup(STAR.light,"epilogue");
-  if(state.stage===0&&state.phase==="after") return starMarkup(STAR.sleep,"sleeping");
-  if(state.stage===1){
-    return starMarkup(state.phase==="after"?STAR.awake:STAR.sleep,"hanging");
-  }
-  if(state.stage===6){
-    return starMarkup(state.phase==="after"?STAR.light:STAR.awake,
-      state.phase==="after"?"rising":"hanging");
-  }
-  return "";
+  go("intro",0);
 }
 
-/* 인트로: 원본 좌표와 같은 비율로 위치 계산 */
-function renderIntro(){
-  $("screen").innerHTML=`
-    <section class="intro" id="intro-root">
-      <div class="intro-plane" id="intro-plane">
-        <div class="intro-fallback" id="intro-fallback" hidden>
-          <span>🎄⭐</span><small>intro.gif를 같은 폴더에 넣어주세요.</small>
-        </div>
-        <img id="intro-image" class="intro-image"
-             src="${INTRO.file}" alt="해치 크리스마스 인트로">
-        <h1 id="intro-title" class="intro-title">
-          해치 크리스마스<small>오래된 별의 자리</small>
-        </h1>
-        <div id="intro-fallback-button" class="intro-fallback-button" hidden>시작하기</div>
-        <button id="intro-start" class="intro-start" aria-label="탐험 시작하기"></button>
-      </div>
-    </section>`;
+/* =========================
+   MP3 배경음악
+========================= */
+const bgm=$("bgm");
+bgm.volume=.3;
 
-  let width=INTRO.fallbackWidth;
-  let height=INTRO.fallbackHeight;
-  let missing=false;
+let musicOn=false;
+let soundOn=false;
+let bgmRequest=0;
+let bgmErrorShown=false;
 
-  function place(element,rect,scale){
-    Object.assign(element.style,{
-      left:rect.x*scale+"px",top:rect.y*scale+"px",
-      width:rect.w*scale+"px",height:rect.h*scale+"px"
-    });
+function shouldPlayBGM(){
+  return musicOn &&
+    !document.hidden &&
+    !["intro","memo"].includes(state.phase) &&
+    !(state.phase==="puzzle"&&state.stage===4);
+}
+
+async function syncBGM(){
+  const request=++bgmRequest;
+
+  $("bgm-button").textContent=musicOn?"음악 ON":"음악 OFF";
+  $("bgm-button").classList.toggle("on",musicOn);
+
+  if(!shouldPlayBGM()){
+    bgm.pause();
+    return;
   }
-  function layout(){
-    const scale=Math.min(
-      $("intro-root").clientWidth/width,
-      $("intro-root").clientHeight/height
+
+  try{
+    await bgm.play();
+    if(request!==bgmRequest&&!shouldPlayBGM()) bgm.pause();
+  }catch(e){
+    if(request!==bgmRequest||!shouldPlayBGM()) return;
+    musicOn=false;
+    $("bgm-button").textContent="음악 OFF";
+    $("bgm-button").classList.remove("on");
+
+    if(!bgmErrorShown){
+      bgmErrorShown=true;
+      openModal(
+        "배경음악 안내",
+        "음악을 재생하지 못했어요.\nindex.html과 같은 폴더에 bgm.mp3가 있는지 확인해 주세요."
+      );
+    }
+  }
+}
+
+$("bgm-button").onclick=()=>{
+  musicOn=!musicOn;
+  syncBGM();
+};
+
+$("sfx-button").onclick=()=>{
+  soundOn=!soundOn;
+  $("sfx-button").textContent=soundOn?"효과음 ON":"효과음 OFF";
+  $("sfx-button").classList.toggle("on",soundOn);
+  if(soundOn){
+    initAudio();
+    tone(660,.1);
+  }
+};
+
+document.addEventListener("visibilitychange",()=>{
+  syncBGM();
+  if(document.hidden) stopNotes();
+});
+
+/* =========================
+   건반·효과음
+========================= */
+let audioCtx=null;
+let audioMaster=null;
+const activeNotes=new Set();
+
+function initAudio(){
+  try{
+    if(!audioCtx){
+      const AudioAPI=window.AudioContext||window.webkitAudioContext;
+      if(!AudioAPI) return null;
+      audioCtx=new AudioAPI();
+      audioMaster=audioCtx.createGain();
+      audioMaster.gain.value=.65;
+      audioMaster.connect(audioCtx.destination);
+    }
+    if(audioCtx.state==="suspended") audioCtx.resume().catch(()=>{});
+    return audioCtx;
+  }catch(e){return null}
+}
+
+function stopNotes(){
+  activeNotes.forEach(osc=>{
+    try{osc.stop()}catch(e){}
+    try{osc.disconnect()}catch(e){}
+  });
+  activeNotes.clear();
+}
+
+function tone(freq,duration=.18,force=false,piano=false){
+  if(!force&&!soundOn) return;
+  const ctx=initAudio();
+  if(!ctx) return;
+
+  const now=ctx.currentTime;
+  const partials=piano
+    ? [[1,.2],[2,.065],[3,.025],[4,.012]]
+    : [[1,.075]];
+
+  partials.forEach(([multiple,volume])=>{
+    const osc=ctx.createOscillator();
+    const gain=ctx.createGain();
+
+    osc.type=piano?"sine":"triangle";
+    osc.frequency.setValueAtTime(freq*multiple,now);
+
+    gain.gain.setValueAtTime(.0001,now);
+    gain.gain.exponentialRampToValueAtTime(volume,now+.008);
+    gain.gain.exponentialRampToValueAtTime(
+      .0001,now+(piano?duration:duration*.95)
     );
-    $("intro-plane").style.width=width*scale+"px";
-    $("intro-plane").style.height=height*scale+"px";
-    place($("intro-title"),INTRO.title,scale);
-    place($("intro-start"),INTRO.start,scale);
-    place($("intro-fallback-button"),INTRO.start,scale);
-    $("intro-title").style.fontSize=52*scale+"px";
-    $("intro-fallback-button").style.fontSize=31*scale+"px";
-    $("intro-fallback-button").hidden=!missing;
+
+    osc.connect(gain);
+    gain.connect(audioMaster);
+    activeNotes.add(osc);
+
+    osc.onended=()=>{
+      activeNotes.delete(osc);
+      osc.disconnect();
+      gain.disconnect();
+    };
+
+    osc.start(now);
+    osc.stop(now+duration+.04);
+  });
+}
+
+function successSound(){
+  if(!soundOn) return;
+  tone(523,.25);
+  later(()=>tone(659,.3),100);
+  later(()=>tone(784,.4),210);
+}
+
+function win(text,delay=850){
+  if(locked) return;
+  locked=true;
+  stopNotes();
+  successSound();
+  setStatus(text);
+  later(()=>go("after"),reduceMotion?250:delay);
+}
+
+function fail(text){
+  const card=$("puzzle-card");
+  if(card){
+    card.classList.remove("shake");
+    void card.offsetWidth;
+    card.classList.add("shake");
+  }
+  openModal("もう一度".replace("もう一度","もう一度"),text);
+  $("modal-title").textContent="다시 한번 해볼까?";
+}
+
+/* =========================
+   인트로·메모
+========================= */
+function renderIntro(){
+  const scene=document.createElement("div");
+  scene.className="scene intro-scene";
+
+  const plane=document.createElement("div");
+  plane.className="intro-plane";
+
+  const image=document.createElement("img");
+  image.className="intro-image";
+  image.alt="해치 크리스마스";
+  image.src="intro.gif";
+
+  const title=document.createElement("div");
+  title.className="intro-title";
+  title.innerHTML="<strong>해치 크리스마스</strong><span>오래된 별의 자리</span>";
+
+  const start=document.createElement("button");
+  start.className="intro-start";
+  start.setAttribute("aria-label","게임 시작");
+
+  plane.append(image,title,start);
+  scene.append(plane);
+  $("screen").append(scene);
+
+  let naturalW=900,naturalH=1600;
+
+  function layout(){
+    const w=scene.clientWidth,h=scene.clientHeight;
+    const scale=Math.min(w/naturalW,h/naturalH);
+    const pw=naturalW*scale,ph=naturalH*scale;
+
+    Object.assign(plane.style,{
+      width:pw+"px",height:ph+"px",
+      left:(w-pw)/2+"px",top:(h-ph)/2+"px"
+    });
+
+    function rect(el,x,y,width,height){
+      Object.assign(el.style,{
+        left:x*scale+"px",
+        top:y*scale+"px",
+        width:width*scale+"px",
+        height:height*scale+"px"
+      });
+    }
+
+    rect(title,220,255,500,140);
+    rect(start,280,1390,370,110);
   }
 
-  const image=$("intro-image");
   image.onload=()=>{
-    width=image.naturalWidth;height=image.naturalHeight;
-    missing=false;layout();
+    naturalW=image.naturalWidth;
+    naturalH=image.naturalHeight;
+    layout();
   };
-  image.onerror=()=>{
-    missing=true;image.hidden=true;
-    $("intro-fallback").hidden=false;layout();
-  };
-  const observer=new ResizeObserver(layout);
-  observer.observe($("intro-root"));
-  cleanups.push(()=>observer.disconnect());
-  if(image.complete&&image.naturalWidth){
-    width=image.naturalWidth;height=image.naturalHeight;
-  }
-  layout();
 
-  $("intro-start").onclick=()=>{
-    unlockAudio();
-    if(resumePoint){
-      openModal("이어서 탐험할까요?","이전에 진행한 미션이 남아 있어요.",()=>{
-        state={...resumePoint,earned:[...resumePoint.earned]};
-        resumePoint=null;go(state.phase,state.stage);
-      },"이어서 하기","⭐",newGame,"처음부터 시작");
+  image.onerror=()=>{
+    image.hidden=true;
+    start.classList.add("fallback");
+    start.textContent="시작하기";
+  };
+
+  start.onclick=()=>{
+    initAudio();
+    const saved=readSave();
+    if(saved){
+      openModal(
+        "이어서 탐험할까?",
+        "지난번에 진행하던 이야기가 남아 있어.",
+        ()=>{
+          state=saved;
+          go(state.phase,state.stage);
+        },
+        "이어서 하기",
+        ()=>newGame(),
+        "새로 시작"
+      );
     }else newGame();
   };
+
+  const observer=new ResizeObserver(layout);
+  observer.observe(scene);
+  cleanups.push(()=>observer.disconnect());
+  layout();
 }
 
 function renderMemo(){
-  $("screen").innerHTML=`
-    <section class="memo-screen">
-      <div class="memo">
-        <h1>해치의 크리스마스 준비!</h1>
-        <ul>
-          <li>□ 장식 상자 찾기</li>
-          <li>□ 트리 예쁘게 꾸미기</li>
-          <li>□ 다 같이 간식 먹기!</li>
-        </ul>
-        <p class="scribble">별 장식은 어디 뒀더라……?<br>분명 여기 있었는데!</p>
-        <p class="difficulty-title">어떤 탐험으로 떠날까?</p>
-        <div class="difficulty-row">
-          <button id="child" class="difficulty">
-            <strong>어린이용</strong><span>해치와 함께 출발!</span>
+  const scene=background("image_01.png");
+  scene.innerHTML+=`
+    <div class="memo-wrap">
+      <section class="memo">
+        <h1>트리를 꾸밀 친구 모집!</h1>
+        <p>서울갤러리의 크리스마스 준비가 한창이야.</p>
+        <p>해치와 함께 장식 상자를 찾으러 갔다가,<br>
+        조금 특별한 친구를 만나게 될지도?</p>
+        <small>화면 속 안내를 따라 공간을 둘러보고 문제를 풀어줘.<br>
+        이야기는 대화창을 눌러 끝까지 볼 수 있어.</small>
+        <div class="difficulty-options">
+          <button class="primary" id="child-start">
+            어린이용으로 시작
+            <span>7개 미션 · 약 15분</span>
           </button>
-          <button id="adult" class="difficulty adult">
-            <strong>성인용</strong><span>별의 기억을 찾아서!</span>
+          <button class="secondary" id="adult-start">
+            성인용으로 시작
+            <span>현재는 같은 7개 미션으로 테스트</span>
           </button>
         </div>
-      </div>
-    </section>`;
-  function choose(value){
-    if(locked) return;
-    locked=true;state.difficulty=value;go("guide",0);
-  }
-  $("child").onclick=()=>choose("child");
-  $("adult").onclick=()=>choose("adult");
-}
+      </section>
+    </div>`;
+  $("screen").append(scene);
 
-/* 공통 대화 */
-function dialogueHTML(){
-  return `<div class="dialogue" id="dialogue">
-    <div class="portrait">
-      <span id="avatar-fallback"></span>
-      <img id="avatar" alt="" onerror="this.hidden=true">
-    </div>
-    <div class="copy">
-      <div id="sender" class="sender"></div>
-      <div id="message" class="message"></div>
-      <button id="next" class="next" hidden>다음</button>
-    </div>
-  </div>`;
-}
-function typeText(element,text,button){
-  clearInterval(typingTimer);
-  element.textContent="";
-  element.scrollTop=0;
-  button.hidden=true;
-
-  const chars=Array.from(text);
-  let i=0;
-  finishTyping=()=>{
-    clearInterval(typingTimer);typingTimer=null;
-    element.textContent=text;
-    button.hidden=false;finishTyping=null;
+  const start=difficulty=>{
+    initAudio();
+    state.difficulty=difficulty;
+    go("guide",0);
   };
-  if(reduced()){finishTyping();return}
-  typingTimer=setInterval(()=>{
-    element.textContent+=chars[i++];
-    if(i%4===0) sfx(850,.015,.005);
-    if(i>=chars.length) finishTyping?.();
-  },25);
+  $("child-start").onclick=()=>start("child");
+  $("adult-start").onclick=()=>start("adult");
 }
-function playDialogue(lines,done,lastLabel){
+
+/* =========================
+   대화 화면
+========================= */
+function addSceneStar(scene){
+  let file=null,x=55,y=30;
+  let extra="";
+
+  if(state.phase==="epilogue"){
+    file=STAR.light;x=65;y=15;extra="glow";
+  }else if(state.stage===0&&state.phase==="after"){
+    file=STAR.sleep;x=55;y=48;
+  }else if(state.stage===1){
+    file=state.phase==="after"?STAR.awake:STAR.sleep;
+    x=57;y=30;
+  }else if(state.stage===6){
+    file=state.phase==="after"?STAR.light:STAR.awake;
+    x=55;y=22;
+    if(state.phase==="after") extra="glow rising";
+  }
+
+  if(!file) return;
+
+  const img=document.createElement("img");
+  img.className="scene-star "+extra;
+  img.src=file;
+  img.alt="";
+  img.style.left=x+"%";
+  img.style.top=y+"%";
+  img.onerror=()=>img.hidden=true;
+  scene.append(img);
+}
+
+function renderDialogue(lines,onDone,lastLabel="계속하기"){
+  const scene=background(
+    state.phase==="epilogue"?"image_08.png":imageFile(state.stage)
+  );
+
+  chapter(
+    scene,
+    state.stage,
+    state.phase==="epilogue"?"별이 올라간 자리":TITLES[state.stage]
+  );
+
+  addSceneStar(scene);
+  $("screen").append(scene);
+  playDialogue(scene,lines,onDone,lastLabel);
+}
+
+function playDialogue(scene,lines,onDone,lastLabel){
+  const box=document.createElement("section");
+  box.className="dialogue";
+  box.innerHTML=`
+    <div class="portrait"><img alt=""></div>
+    <div class="dialogue-copy">
+      <div class="speaker"></div>
+      <div class="message"></div>
+    </div>
+    <button class="dialogue-next" hidden></button>`;
+  scene.append(box);
+
+  const portrait=box.querySelector(".portrait");
+  const image=portrait.querySelector("img");
+  const speaker=box.querySelector(".speaker");
+  const message=box.querySelector(".message");
+  const next=box.querySelector(".dialogue-next");
+
   let index=0;
-  function line(){
-    const entry=lines[index];
-    const character=CHAR[entry.name];
-    $("dialogue").classList.toggle("narration",!!entry.note);
-    $("sender").textContent=entry.note?"":entry.name;
-    $("avatar").hidden=true;
-    $("avatar-fallback").textContent=character?.emoji||"";
+  let complete=false;
 
-    if(character){
-      $("avatar").src=entry.name==="별"&&state.stage===6&&state.phase==="after"?
-        STAR.light:character.file;
-      $("avatar").alt=entry.name;
-      $("avatar").hidden=false;
+  function show(){
+    if(typingTimer) clearInterval(typingTimer);
+    typingTimer=null;
+
+    const data=lines[index];
+    complete=false;
+    next.hidden=true;
+    message.textContent="";
+    message.scrollTop=0;
+
+    const narration=!data.name;
+    box.classList.toggle("narration",narration);
+    portrait.hidden=narration;
+    speaker.hidden=narration;
+    speaker.textContent=data.name||"";
+
+    image.onload=()=>image.hidden=false;
+    image.onerror=()=>image.hidden=true;
+    image.hidden=false;
+
+    if(data.name){
+      image.src=data.name==="별"
+        ? ((state.stage===6&&state.phase==="after")||state.phase==="epilogue"
+            ? STAR.light:STAR.awake)
+        : CHAR[data.name];
+      image.alt=data.name;
+    }else{
+      image.removeAttribute("src");
+      image.alt="";
     }
-    $("next").textContent=index===lines.length-1?lastLabel:"다음";
-    typeText($("message"),entry.note?`(${entry.text})`:entry.text,$("next"));
+
+    const text=narration?`(${data.text})`:data.text;
+    const chars=Array.from(text);
+    let cursor=0;
+
+    function finish(){
+      if(typingTimer) clearInterval(typingTimer);
+      typingTimer=null;
+      message.textContent=text;
+      complete=true;
+      next.innerHTML=
+        `${index===lines.length-1?escapeHTML(lastLabel):"다음"}<span class="arrow">›</span>`;
+      next.hidden=false;
+      finishTyping=null;
+    }
+
+    finishTyping=finish;
+
+    if(reduceMotion){
+      finish();
+      return;
+    }
+
+    typingTimer=setInterval(()=>{
+      if(cursor<chars.length){
+        message.textContent+=chars[cursor++];
+      }else finish();
+    },25);
   }
-  $("message").onclick=()=>finishTyping?.();
-  $("next").onclick=()=>{
-    if(finishTyping){finishTyping();return}
-    if(index<lines.length-1){index++;line()}else done();
+
+  function advance(){
+    if(!complete){
+      if(finishTyping) finishTyping();
+      return;
+    }
+    if(index<lines.length-1){
+      index++;
+      show();
+    }else onDone();
+  }
+
+  message.onclick=()=>{
+    if(!complete&&finishTyping) finishTyping();
   };
-  line();
-}
-function renderDialogue(lines,title,done,file=imageFile()){
-  $("screen").innerHTML=`
-    <section class="scene">
-      ${background(file,title)}
-      ${storyStar()}
-      <h1 class="chapter">${esc(title)}</h1>
-      ${dialogueHTML()}
-    </section>`;
-  playDialogue(lines,done,
-    state.phase==="arrival"?"같이 해보자!":
-    state.phase==="epilogue"?"탐험 마무리":"계속하기");
+  next.onclick=advance;
+
+  box.addEventListener("click",event=>{
+    if(event.target===box||event.target===speaker) advance();
+  });
+
+  show();
 }
 
-/* 실제 이동 안내 → 도착 버튼 → 짧은 전환 → 도착 대화 */
+/* =========================
+   장소 안내·전환
+========================= */
 function renderGuide(){
-  const route=ROUTES[state.stage];
-  const lines=route.lines||[
-    say("해치",`${route.place}${state.stage===6?"으로 돌아가자!":"으로 가보자!"}`)
-  ];
+  const stage=state.stage;
+  const scene=background(
+    `route_${String(stage+1).padStart(2,"0")}.png`,
+    imageFile(stage)
+  );
 
-  $("screen").innerHTML=`
-    <section class="scene">
-      ${background(`route_${String(state.stage+1).padStart(2,"0")}.png`,route.place,imageFile())}
-      <h1 class="chapter">📍 ${esc(route.place)}</h1>
-      <div class="route-note">
-        <strong>이동 안내</strong><br>${esc(route.info)}
-      </div>
-      ${dialogueHTML()}
-    </section>`;
+  chapter(scene,stage,"다음 장소 안내");
 
-  playDialogue(lines,transitionToArrival,"도착했어!");
+  const route=document.createElement("div");
+  route.className="route-note";
+  route.innerHTML=`
+    <strong>${escapeHTML(PLACES[stage])}</strong>
+    <p>현장 안내를 따라 이동한 뒤<br>‘도착했어’를 눌러줘.</p>
+    <small>이동 안내 사진은 route_${String(stage+1).padStart(2,"0")}.png로 교체할 수 있어요.</small>`;
+  scene.append(route);
+  $("screen").append(scene);
+
+  const lines=stage===0
+    ? [
+        say("해치","안녕! 잘 왔어. 지금 트리를 꾸미는 중이야."),
+        say("해치","장식 상자부터 가지러 가자. 나랑 같이 가줄래?")
+      ]
+    : [say("해치",GUIDE_LINES[stage])];
+
+  playDialogue(scene,lines,transitionToArrival,"도착했어");
 }
+
 function transitionToArrival(){
   if(transitioning) return;
   cleanup();
   transitioning=true;
   updateChrome();
 
-  const sleeping=state.stage<=1;
-  $("screen").innerHTML=`
-    <section class="transition">
-      <div class="transition-label">도착!</div>
-      <h1>${esc(ROUTES[state.stage].transition)}</h1>
-      <div class="travel">
-        <div class="travel-character">
-          <span>🩷</span>
-          <img src="haechi.gif" alt="해치" onerror="this.hidden=true">
-        </div>
-        ${state.stage>0?
-          `<img class="travel-star" src="${sleeping?STAR.sleep:STAR.awake}"
-             alt="함께 이동하는 별" onerror="this.hidden=true">`:""}
-      </div>
-      <button id="transition-skip" class="skip">건너뛰기 ›</button>
-    </section>`;
+  const el=document.createElement("div");
+  el.className="travel";
+  el.innerHTML=`
+    <div class="travel-caption">${escapeHTML(PLACES[state.stage])}에 도착!</div>
+    <div class="travel-line"></div>
+    <img class="travel-character" src="haechi.gif" alt="">
+    <button class="travel-skip">계속하기 <span class="arrow">›</span></button>`;
 
-  let done=false;
+  const image=el.querySelector("img");
+  image.onerror=()=>image.hidden=true;
+  $("screen").append(el);
+
+  let finished=false;
   function finish(){
-    if(done) return;
-    done=true;go("arrival");
+    if(finished) return;
+    finished=true;
+    go("arrival");
   }
-  $("transition-skip").onclick=finish;
-  later(finish,reduced()?250:1600);
+
+  el.querySelector("button").onclick=finish;
+  later(finish,reduceMotion?100:1600);
 }
 
-/* 퍼즐 공통 */
+/* =========================
+   문제 공통 화면
+========================= */
+const HINTS=[
+  [
+    "지금 자물쇠에는 HAECHI라고 적혀 있어.",
+    "행복을 뜻하는 영어 단어와 하트를 만들어봐.",
+    "H · A · P · P · Y · ♥"
+  ],
+  [
+    "작은 표시의 순서대로 끈을 이어줘.",
+    "1 → 4 → 2 → 3 순서야.",
+    "드래그가 어렵다면 ‘눌러서 연결하기’를 사용해봐."
+  ],
+  [
+    "끝이 가늘고 가운데가 둥근 탑을 찾아봐.",
+    "오른쪽에 있는 탑 위로 렌즈를 옮겨봐.",
+    "렌즈 크기를 125% 정도로 맞춘 뒤 기억 확인을 눌러줘."
+  ],
+  [
+    "표지를 문질러 숨은 글자를 드러내줘.",
+    "각 단어의 첫 글자를 차례대로 읽어봐.",
+    "별사탕 · 나무 · 라디오 · 무지개 → 별 · 나 · 라 · 무"
+  ],
+  [
+    "공연장 악보를 보고 왼쪽부터 연주해줘.",
+    "테스트 계이름은 피아노 아래에 적혀 있어.",
+    "미 미 미 / 미 미 미 / 미 솔 도 레 미"
+  ],
+  [
+    "화면의 뿌연 부분을 손가락으로 문질러봐.",
+    "한 장씩 읽고 ‘다음 소원’을 눌러줘.",
+    "문지르기 어렵다면 ‘소원 펼쳐보기’를 눌러도 돼."
+  ],
+  [
+    "조각을 누를 때마다 시계 방향으로 돌아가.",
+    "왼쪽 위에서 시작해 첫 줄은 오른쪽, 둘째 줄은 왼쪽으로 이어봐.",
+    "왼쪽 위 → 위 가운데 → 오른쪽 위 → 오른쪽 가운데 → 가운데 → 왼쪽 가운데 → 왼쪽 아래 → 아래 가운데 → 오른쪽 아래"
+  ]
+];
+
 function renderPuzzle(){
-  $("screen").innerHTML=`
-    <section class="scene">
-      ${background(imageFile(),TITLES[state.stage])}
-      <h1 class="chapter">${esc(TITLES[state.stage])}</h1>
-      <div id="play-area" class="play-area"></div>
-      <div class="play-dock">
-        <p id="status" class="status"></p>
-        <div id="action-row" class="action-row"></div>
-        <div class="utility-row">
-          <button id="hint" class="round">💡 힌트</button>
-          <button id="assist" class="round" hidden></button>
-          <button id="reset" class="round" hidden>다시 하기</button>
-        </div>
-        <p id="hint-text" class="hint-text" hidden></p>
-      </div>
-    </section>`;
+  const scene=background(imageFile(state.stage));
+  scene.classList.add("puzzle-scene");
+  chapter(scene,state.stage);
 
-  let hint=0;
-  $("hint").onclick=()=>{
-    $("hint-text").hidden=false;
-    $("hint-text").textContent=HINTS[state.stage][Math.min(hint++,2)];
-    $("hint").textContent=`💡 ${Math.min(hint,3)}/3`;
+  const card=document.createElement("section");
+  card.className="puzzle-card";
+  card.id="puzzle-card";
+
+  const dock=document.createElement("div");
+  dock.className="puzzle-dock";
+  dock.innerHTML=`
+    <div class="status" id="puzzle-status">천천히 살펴보고 시작해 봐.</div>
+    <div class="dock-buttons">
+      <button id="hint-button">힌트 보기</button>
+      <button id="reset-puzzle">다시 하기</button>
+    </div>`;
+
+  scene.append(card,dock);
+  $("screen").append(scene);
+
+  $("hint-button").onclick=()=>{
+    const hints=HINTS[state.stage];
+    openModal(
+      `힌트 ${Math.min(hintIndex+1,hints.length)}`,
+      hints[Math.min(hintIndex++,hints.length-1)]
+    );
   };
-  [lockPuzzle,threadPuzzle,lensPuzzle,bookPuzzle,
-   musicPuzzle,scratchPuzzle,circuitPuzzle][state.stage]();
-}
-function status(text){if($("status")) $("status").textContent=text}
-function action(text,fn,green=false){
-  const b=document.createElement("button");
-  b.className="primary"+(green?" green":"");
-  b.textContent=text;b.onclick=fn;
-  $("action-row").append(b);
-  return b;
-}
-function fail(text){
-  if(locked) return;
-  $("app").classList.remove("shake");void $("app").offsetWidth;
-  $("app").classList.add("shake");
-  sfx(170,.1,.02);
-  openModal("앗, 잠깐!",text,()=>{},"다시 해볼래","💭");
-}
-function win(text,delay=650){
-  if(locked) return;
-  locked=true;
-  stopGroup("game");
-  successSound();
-  celebrate();
-  status(text);
-  later(()=>go("after"),reduced()?180:delay);
-}
-function celebrate(){
-  if(reduced()) return;
-  for(let i=0;i<12;i++){
-    const p=document.createElement("span");
-    p.className="particle";p.textContent=i%2?"✦":"★";
-    p.style.left="50%";p.style.top="45%";
-    p.style.setProperty("--dx",(Math.random()-.5)*300+"px");
-    p.style.setProperty("--dy",(Math.random()-.5)*300+"px");
-    $("app").append(p);setTimeout(()=>p.remove(),950);
-  }
+
+  $("reset-puzzle").onclick=()=>{if(!locked)resetPuzzle()};
+
+  [
+    lockPuzzle,
+    threadPuzzle,
+    lensPuzzle,
+    bookPuzzle,
+    pianoPuzzle,
+    wishPuzzle,
+    circuitPuzzle
+  ][state.stage](card);
 }
 
-/* 관성 다이얼: 1번과 4번에서 공유 */
-function mountDials(container,letters,initial){
-  const values=[...initial];
-  const controls=[];
+/* =========================
+   다이얼 공통
+========================= */
+function mountDials(container,chars,initial,onChange){
+  let values=initial.slice();
+  const tokens=values.map(()=>0);
+  const elements=[];
 
-  values.forEach((_,index)=>{
-    const col=document.createElement("div");
-    col.className="dial";
-    col.innerHTML=`
-      <button aria-label="${index+1}번째 다이얼 이전">▲</button>
-      <div class="drum" tabindex="0" role="spinbutton"
-           aria-label="${index+1}번째 글자"
-           aria-valuemin="0" aria-valuemax="${letters.length-1}">
-        <div class="adjacent"></div>
-        <div class="value"></div>
-        <div class="adjacent"></div>
-      </div>
-      <button aria-label="${index+1}번째 다이얼 다음">▼</button>`;
-    container.append(col);
-    const drum=col.querySelector(".drum");
-    let token=0,dragging=false,lastY=0,lastTime=0,velocity=0,carry=0;
+  container.classList.add("dials");
 
-    function render(){
-      const v=values[index],n=letters.length;
-      drum.children[0].textContent=letters[(v-1+n)%n];
-      drum.children[1].textContent=letters[v];
-      drum.children[2].textContent=letters[(v+1)%n];
-      drum.setAttribute("aria-valuenow",v);
-      drum.setAttribute("aria-valuetext",letters[v]);
-    }
-    function stop(){
-      token++;dragging=false;drum.classList.remove("moving");
-    }
-    function step(delta){
+  values.forEach((value,column)=>{
+    const el=document.createElement("div");
+    el.className="dial";
+    el.innerHTML=`
+      <button aria-label="${column+1}번째 글자 이전">▲</button>
+      <div class="dial-face" tabindex="0" role="spinbutton"
+           aria-label="${column+1}번째 글자"></div>
+      <button aria-label="${column+1}번째 글자 다음">▼</button>`;
+
+    const buttons=el.querySelectorAll("button");
+    const face=el.querySelector(".dial-face");
+    elements.push(face);
+
+    function spin(delta){
       if(locked) return;
-      values[index]=(values[index]+delta+letters.length)%letters.length;
-      render();sfx(310,.025,.01);
-    }
-    function coast(speed,t){
-      if(Math.abs(speed)<.14||t!==token||locked){
-        drum.classList.remove("moving");return;
-      }
-      step(speed>0?1:-1);
-      later(()=>coast(speed*.62,t),75);
+      values[column]=(values[column]+delta+chars.length)%chars.length;
+      render();
+      if(soundOn) tone(290+column*30,.025);
+      if(onChange)onChange(values);
     }
 
-    col.children[0].onclick=()=>{stop();step(-1)};
-    col.children[2].onclick=()=>{stop();step(1)};
-    drum.onpointerdown=e=>{
-      if(locked) return;
-      token++;dragging=true;lastY=e.clientY;lastTime=performance.now();
-      velocity=0;carry=0;drum.setPointerCapture(e.pointerId);
-      drum.classList.add("moving");
-    };
-    drum.onpointermove=e=>{
-      if(!dragging||locked) return;
-      const now=performance.now(),dy=lastY-e.clientY;
-      velocity=dy/Math.max(now-lastTime,1);carry+=dy;
-      while(Math.abs(carry)>=22){
-        const d=carry>0?1:-1;step(d);carry-=d*22;
+    buttons[0].onclick=()=>{tokens[column]++;spin(-1)};
+    buttons[1].onclick=()=>{tokens[column]++;spin(1)};
+
+    face.onkeydown=event=>{
+      if(event.key==="ArrowUp"||event.key==="ArrowDown"){
+        event.preventDefault();
+        tokens[column]++;
+        spin(event.key==="ArrowUp"?-1:1);
       }
-      lastY=e.clientY;lastTime=now;
     };
-    drum.onpointerup=()=>{
-      if(!dragging) return;
-      dragging=false;
-      if(performance.now()-lastTime>100) velocity=0;
-      coast(clamp(velocity,-2.3,2.3),token);
-    };
-    drum.onpointercancel=stop;
-    drum.onkeydown=e=>{
-      if(!["ArrowUp","ArrowDown"].includes(e.key)) return;
-      e.preventDefault();stop();step(e.key==="ArrowUp"?1:-1);
-    };
-    drum.addEventListener("wheel",e=>{
-      e.preventDefault();stop();step(e.deltaY>0?1:-1);
+
+    face.addEventListener("wheel",event=>{
+      event.preventDefault();
+      tokens[column]++;
+      spin(event.deltaY>0?1:-1);
     },{passive:false});
 
-    controls.push({stop,render});
-    cleanups.push(stop);render();
-  });
+    let startY=0,lastY=0,carry=0,lastDelta=0,dragging=false;
 
-  return {
-    word:()=>values.map(v=>letters[v]).join(""),
-    stop:()=>controls.forEach(c=>c.stop()),
-    reset:()=>{
-      controls.forEach(c=>c.stop());
-      initial.forEach((v,i)=>values[i]=v);
-      controls.forEach(c=>c.render());
-    }
-  };
-}
+    face.onpointerdown=event=>{
+      if(locked) return;
+      tokens[column]++;
+      dragging=true;
+      startY=lastY=event.clientY;
+      carry=0;
+      lastDelta=0;
+      face.setPointerCapture(event.pointerId);
+    };
 
-/* 1. HAECHI → HAPPY♥ */
-function lockPuzzle(){
-  $("play-area").innerHTML=`
-    <div class="clue">
-      <strong>창고 문에 붙은 메모</strong><br>
-      “오늘은 해치 이름 대신,<br>행복한 마음에 하트를 붙여줘!”
-    </div>
-    <div id="storage-lock" class="storage-lock">
-      <div class="shackle"></div>
-      <div class="storage-body">
-        <div class="storage-label">장식 창고</div>
-        <div id="lock-dials" class="dials"></div>
-        <div class="keyhole"></div>
-      </div>
-    </div>`;
+    face.onpointermove=event=>{
+      if(!dragging) return;
+      const delta=event.clientY-lastY;
+      lastY=event.clientY;
+      carry+=delta;
+      lastDelta=delta;
 
-  const letters="ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").concat("♥");
-  const dials=mountDials($("lock-dials"),letters,[7,0,4,2,7,8]);
-
-  action("자물쇠 열기",()=>{
-    if(locked) return;
-    dials.stop();
-    if(dials.word()==="HAPPY♥"){
-      $("storage-lock").classList.add("open");
-      win("달칵! 장식 창고가 열렸어!",1100);
-    }else fail("메모 속 ‘행복한 마음’과 마지막 하트를 생각해 보자!");
-  });
-  $("reset").hidden=false;
-  $("reset").textContent="HAECHI로 초기화";
-  $("reset").onclick=()=>{if(!locked) dials.reset()};
-  status("HAECHI를 새 비밀번호로 바꿔주세요.");
-}
-
-/* 2. 끈 꿰기 */
-function threadPuzzle(){
-  const points=[
-    {x:22,y:24,icon:"☀"},
-    {x:78,y:24,icon:"☾"},
-    {x:22,y:77,icon:"★"},
-    {x:78,y:77,icon:"♥"}
-  ];
-  const target=[0,3,1,2];
-  let input=[],dragging=false,cursor=null,tap=false;
-
-  $("play-area").innerHTML=`
-    <div class="clue">☀ → ♥ → ☾ → ★</div>
-    <div id="thread-board" class="thread-board">
-      <img src="${STAR.sleep}" alt="끈을 달아줄 잠든 별" onerror="this.hidden=true">
-      <svg viewBox="0 0 100 100">
-        <polyline id="fixed-thread" fill="none" stroke="#ed4d78"
-          stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <line id="live-thread" stroke="#f472b6"
-          stroke-width="1.8" stroke-dasharray="3 2"/>
-      </svg>
-    </div>`;
-  const board=$("thread-board");
-
-  function draw(){
-    $("fixed-thread").setAttribute("points",
-      input.map(i=>`${points[i].x},${points[i].y}`).join(" "));
-    const p=points[input.at(-1)];
-    const l=$("live-thread");
-    l.setAttribute("x1",p?.x??0);l.setAttribute("y1",p?.y??0);
-    l.setAttribute("x2",cursor?.x??p?.x??0);l.setAttribute("y2",cursor?.y??p?.y??0);
-    board.querySelectorAll(".hole").forEach((b,i)=>b.classList.toggle("done",input.includes(i)));
-  }
-  function reset(text="해에서 끈을 잡고 출발해 주세요."){
-    input=[];dragging=false;cursor=null;draw();status(text);
-  }
-  function take(index){
-    if(input.includes(index)) return;
-    if(target[input.length]!==index){
-      reset("끈이 꼬였어! 해에서 다시 출발!");return;
-    }
-    input.push(index);draw();
-    sfx(450+input.length*100,.08,.02);
-    status(`끈 꿰기 ${input.length}/4`);
-    if(tap&&input.length===4) win("새 끈 완성! 별을 트리에 걸어보자.");
-  }
-  points.forEach((p,i)=>{
-    const b=document.createElement("button");
-    b.className="hole";b.style.left=p.x+"%";b.style.top=p.y+"%";
-    b.textContent=p.icon;b.setAttribute("aria-label",p.icon+" 구멍");
-    b.onclick=()=>{if(tap&&!locked) take(i)};
-    board.append(b);
-  });
-  function pos(e){
-    const r=board.getBoundingClientRect();
-    return {x:(e.clientX-r.left)/r.width*100,y:(e.clientY-r.top)/r.height*100};
-  }
-  board.onpointerdown=e=>{
-    if(tap||locked) return;
-    const p=pos(e);
-    if(Math.hypot(p.x-22,p.y-24)>14){
-      status("해 그림에서 시작해 주세요.");return;
-    }
-    input=[];dragging=true;cursor=p;
-    board.setPointerCapture(e.pointerId);take(0);
-  };
-  board.onpointermove=e=>{
-    if(!dragging||locked) return;
-    cursor=pos(e);
-    const i=points.findIndex(p=>Math.hypot(cursor.x-p.x,cursor.y-p.y)<11);
-    if(i>=0) take(i);
-    if(dragging) draw();
-  };
-  board.onpointerup=()=>{
-    if(!dragging) return;
-    dragging=false;cursor=null;draw();
-    input.length===4?win("새 끈 완성! 별을 트리에 걸어보자."):
-      reset("중간에 손을 놓았네. 다시 해에서 출발해 보자!");
-  };
-  board.onpointercancel=()=>reset();
-  $("assist").hidden=false;
-  $("assist").textContent="누르기로 꿰기";
-  $("assist").onclick=()=>{
-    tap=!tap;
-    $("assist").textContent=tap?"끌어서 꿰기":"누르기로 꿰기";
-    reset(tap?"그림을 순서대로 눌러주세요.":undefined);
-  };
-  status("해를 잡고 손을 떼지 않은 채 끈을 이어보세요.");
-}
-
-/* 3. 테스트용 서울 풍경 렌즈 */
-function cityDrawing(){
-  return `<svg class="city-svg" viewBox="0 0 330 275" preserveAspectRatio="none" aria-hidden="true">
-    <rect width="330" height="275" fill="#dceeff"/>
-    <circle cx="43" cy="40" r="20" fill="#fff3b0"/>
-    <path d="M0 145Q60 80 120 133Q190 60 250 132Q290 95 330 128V220H0Z"
-      fill="#a4d5be" stroke="white" stroke-width="3"/>
-    <g fill="#cfb7ed" stroke="white" stroke-width="3">
-      <rect x="12" y="125" width="35" height="80" rx="4"/>
-      <rect x="57" y="145" width="30" height="60" rx="4"/>
-      <rect x="99" y="113" width="36" height="92" rx="4"/>
-      <rect x="148" y="134" width="30" height="71" rx="4"/>
-      <rect x="270" y="138" width="39" height="67" rx="4"/>
-    </g>
-    <g fill="#fff4bc">
-      <path d="M21 140h6v9h-6zm13 0h6v9h-6zm-13 20h6v9h-6zm13 0h6v9h-6z"/>
-      <path d="M108 128h7v10h-7zm13 0h7v10h-7zm-13 20h7v10h-7z"/>
-    </g>
-    <g transform="translate(224 123)" fill="#f7b0cc" stroke="#bd7395" stroke-width="3">
-      <path d="M-10 77L-5-5H5L10 77Z"/>
-      <rect x="-21" y="-17" width="42" height="20" rx="5" fill="#fff2b2"/>
-      <path d="M0-17V-48" fill="none"/>
-    </g>
-    <path d="M0 215Q80 192 160 216T330 211V275H0Z"
-      fill="#7dc8eb" stroke="white" stroke-width="3"/>
-    <path d="M0 239Q100 220 210 239T330 234"
-      fill="none" stroke="#e0f2fe" stroke-width="6"/>
-  </svg>`;
-}
-function lensPuzzle(){
-  let x=74,y=83,zoom=1,drag=null;
-  $("play-area").innerHTML=`
-    <div class="clue">“물가의 높은 탑! 둥근 전망대가 있었어.”</div>
-    <div id="city-board" class="city-board">
-      ${cityDrawing()}
-      <div id="lens" class="lens" tabindex="0" role="slider"
-        aria-label="기억 렌즈. 방향키로 이동"
-        aria-valuemin="0" aria-valuemax="100" aria-valuenow="20">
-        <svg viewBox="-50 -50 100 100">
-          <g id="memory-tower" fill="#fff6" stroke="#db2777"
-            stroke-width="2.5" stroke-dasharray="3 2">
-            <path d="M-8 58L-4-4H4L8 58Z"/>
-            <rect x="-17" y="-14" width="34" height="16" rx="4"/>
-            <path d="M0-14V-39" fill="none"/>
-          </g>
-        </svg>
-      </div>
-    </div>
-    <div class="range-row">
-      <span>기억 크기</span>
-      <input id="zoom" type="range" min="80" max="160" value="100" aria-label="기억 확대율">
-      <span id="zoom-value">100%</span>
-    </div>`;
-  const board=$("city-board"),lens=$("lens");
-  const target=()=>({x:board.clientWidth*224/330,y:board.clientHeight*123/275});
-  function draw(){
-    lens.style.left=x-56+"px";lens.style.top=y-56+"px";
-    $("memory-tower").setAttribute("transform",`scale(${zoom})`);
-    lens.setAttribute("aria-valuenow",Math.round(x/board.clientWidth*100));
-    const t=target(),distance=Math.hypot(x-t.x,y-t.y);
-    const match=distance<18&&Math.abs(zoom-1.25)<.09;
-    lens.classList.toggle("matched",match);
-    status(match?"반짝! 기억 속 풍경과 겹쳐졌어!":
-      distance<35?"이 근처야! 크기도 맞춰보자.":"렌즈를 끌어 높은 탑을 찾아보세요.");
-  }
-  lens.onpointerdown=e=>{
-    if(locked) return;
-    const r=board.getBoundingClientRect();
-    drag={dx:e.clientX-r.left-x,dy:e.clientY-r.top-y};
-    lens.setPointerCapture(e.pointerId);
-  };
-  lens.onpointermove=e=>{
-    if(!drag) return;
-    const r=board.getBoundingClientRect();
-    x=clamp(e.clientX-r.left-drag.dx,56,board.clientWidth-56);
-    y=clamp(e.clientY-r.top-drag.dy,56,board.clientHeight-56);draw();
-  };
-  lens.onpointerup=()=>{drag=null};
-  lens.onpointercancel=()=>{drag=null};
-  lens.onkeydown=e=>{
-    const moves={ArrowLeft:[-5,0],ArrowRight:[5,0],ArrowUp:[0,-5],ArrowDown:[0,5]};
-    if(!moves[e.key]||locked) return;
-    e.preventDefault();
-    x=clamp(x+moves[e.key][0],56,board.clientWidth-56);
-    y=clamp(y+moves[e.key][1],56,board.clientHeight-56);draw();
-  };
-  $("zoom").oninput=e=>{
-    zoom=Number(e.target.value)/100;
-    $("zoom-value").textContent=e.target.value+"%";draw();
-  };
-  action("이 풍경이야!",()=>{
-    const t=target();
-    if(Math.hypot(x-t.x,y-t.y)<18&&Math.abs(zoom-1.25)<.09){
-      win("풍경이 겹쳐지자 별의 기억이 반짝였어요!");
-    }else fail("렌즈의 위치와 크기를 함께 맞춰주세요. 노란 테두리가 나타나면 준비 완료!");
-  });
-  draw();
-}
-
-/* 공용 스크래치 */
-function scratch(canvas,{fog=false,threshold=.45,onDone,onProgress}){
-  const rect=canvas.getBoundingClientRect();
-  canvas.width=Math.max(1,Math.round(rect.width));
-  canvas.height=Math.max(1,Math.round(rect.height));
-  const ctx=canvas.getContext("2d",{willReadFrequently:true});
-  const gradient=ctx.createLinearGradient(0,0,canvas.width,canvas.height);
-  gradient.addColorStop(0,fog?"#d8e7ee":"#d5bdb5");
-  gradient.addColorStop(1,fog?"#a9c4d1":"#b99792");
-  ctx.fillStyle=gradient;ctx.fillRect(0,0,canvas.width,canvas.height);
-  for(let i=0;i<90;i++){
-    ctx.fillStyle=i%2?"#ffffff25":"#ffffff55";
-    ctx.beginPath();ctx.arc(Math.random()*canvas.width,Math.random()*canvas.height,
-      Math.random()*7+1,0,Math.PI*2);ctx.fill();
-  }
-  ctx.fillStyle="white";ctx.textAlign="center";ctx.font="bold 13px sans-serif";
-  ctx.fillText(fog?"슥슥 닦아보세요":"먼지를 슥슥 닦아보세요",canvas.width/2,canvas.height/2);
-
-  let drawing=false,last=null,moves=0,finished=false;
-  function reveal(){
-    if(finished) return;
-    finished=true;canvas.hidden=true;onDone();
-  }
-  function estimate(){
-    if(finished) return;
-    const data=ctx.getImageData(0,0,canvas.width,canvas.height).data;
-    let clear=0,total=0;
-    for(let i=3;i<data.length;i+=80){total++;if(data[i]<60) clear++}
-    const ratio=clear/total;onProgress?.(Math.round(ratio*100));
-    if(ratio>=threshold) reveal();
-  }
-  function erase(e){
-    if(!drawing||finished) return;
-    const r=canvas.getBoundingClientRect();
-    const p={x:(e.clientX-r.left)*canvas.width/r.width,
-      y:(e.clientY-r.top)*canvas.height/r.height};
-    ctx.globalCompositeOperation="destination-out";
-    ctx.lineWidth=fog?43:30;ctx.lineCap="round";
-    ctx.beginPath();ctx.moveTo(last?.x??p.x,last?.y??p.y);
-    ctx.lineTo(p.x+.01,p.y+.01);ctx.stroke();last=p;
-    if(++moves%5===0) estimate();
-  }
-  canvas.onpointerdown=e=>{
-    drawing=true;last=null;canvas.setPointerCapture(e.pointerId);erase(e);
-  };
-  canvas.onpointermove=erase;
-  canvas.onpointerup=()=>{drawing=false;last=null;estimate()};
-  canvas.onpointercancel=()=>{drawing=false;last=null};
-  return reveal;
-}
-
-/* 4. 책 표식과 다이얼 */
-function bookPuzzle(){
-  let revealed=false;
-  $("play-area").innerHTML=`
-    <div class="book">
-      <div class="book-inside">
-        별사탕 · 나무 · 라디오 · 무지개<br>이름의 첫 글자를 모아봐!
-      </div>
-      <canvas id="book-canvas" class="scratch" aria-label="책 먼지 닦기"></canvas>
-    </div>
-    <div class="book-lock"><div id="book-dials" class="dials"></div></div>
-    <p class="small-guide">위아래로 밀면 다이얼이 휙 돌아가요.</p>`;
-  const dials=mountDials($("book-dials"),["별","나","라","무","달","빛","꿈","집"],[4,5,6,7]);
-  const reveal=scratch($("book-canvas"),{
-    threshold:.4,onDone:()=>{
-      revealed=true;$("assist").hidden=true;
-      status("그림 이름의 첫 글자! 다이얼을 맞춰보자.");sfx(880,.12,.02);
-    }
-  });
-  $("assist").hidden=false;$("assist").textContent="책 펼쳐보기";
-  $("assist").onclick=reveal;
-  action("상자 열기",()=>{
-    if(locked) return;
-    dials.stop();
-    if(!revealed){status("책 속 숨은 표시부터 찾아보자!");return}
-    dials.word()==="별나라무"?
-      win("달칵! 작은 방의 그림이 나왔어요."):
-      fail("그림 이름의 첫 글자를 왼쪽부터 맞춰주세요.");
-  });
-  $("reset").hidden=false;
-  $("reset").onclick=()=>{if(!locked) dials.reset()};
-  status("책 표면을 닦아 숨은 단서를 찾아보세요.");
-}
-
-/* 5. 악기 */
-function musicPuzzle(){
-  const names=["도","레","미","솔"],notes=[60,62,64,67];
-  const phrases=[[2,2,3],[0,1,2],[3,2,1,0]];
-  let round=0,input=[],listening=false,heard=false,token=0;
-
-  $("play-area").innerHTML=`
-    <div class="layers">
-      <span id="layer-0">♩</span><span id="layer-1">♫</span><span id="layer-2">✦</span>
-    </div>
-    <div class="instrument"><div id="keys" class="keys"></div></div>
-    <div class="clue">맞힐 때마다 반주가 하나씩 늘어나요!</div>`;
-  const listen=action("♫ 첫 구절 듣기",playPhrase,true);
-
-  function flash(i,duration=230){
-    const b=$(`key-${i}`);if(!b) return;
-    b.classList.add("active");later(()=>b.classList.remove("active"),duration);
-  }
-  function accompaniment(level,i,beat){
-    const chord=i%4<2?[60,64,67]:[55,59,62];
-    if(level>=1) synth(chord[0]-24,beat*.8,.045,"triangle");
-    if(level>=2) chord.forEach((n,j)=>synth(n,beat*.7,.022,"sine",j*.025));
-    if(level>=3&&i%2===0) bell(chord[2]+12,.3,.022,"game");
-  }
-  function playPhrase(){
-    if(listening||locked) return;
-    unlockAudio();stopGroup("game");
-    input=[];heard=false;listening=true;listen.disabled=true;
-    const t=++token,phrase=phrases[round],beat=.48;
-    phrase.forEach((n,i)=>later(()=>{
-      if(t!==token) return;
-      flash(n);bell(notes[n],.42,.12,"game");
-      accompaniment(round,i,beat);
-      status(`${round+1}번째 구절 듣는 중 · ${names[n]}`);
-    },i*beat*1000));
-    later(()=>{
-      if(t!==token) return;
-      listening=false;heard=true;listen.disabled=false;
-      listen.textContent="♫ 이번 구절 다시 듣기";
-      status(`이제 따라 쳐보세요! ${round+1}/3 구절`);
-    },phrase.length*beat*1000+130);
-  }
-  names.forEach((name,i)=>{
-    const b=document.createElement("button");
-    b.className="key";b.id=`key-${i}`;b.textContent=name;
-    b.onclick=()=>{
-      if(listening||locked) return;
-      if(!heard){status("먼저 듣기 버튼을 눌러보자!");return}
-      unlockAudio();flash(i);bell(notes[i],.38,.12,"game");
-      if(i!==phrases[round][input.length]){
-        input=[];status("앗, 한 번만 다시! 다시 들을 수도 있어요.");return;
-      }
-      input.push(i);
-      status(`${round+1}/3 구절 · ${input.map(n=>names[n]).join(" → ")}`);
-      if(input.length===phrases[round].length){
-        $(`layer-${round}`).classList.add("on");
-        input=[];heard=false;round++;
-        if(round===3){performance();return}
-        listening=true;listen.disabled=true;successSound();
-        status("좋아! 반주가 하나 늘었어!");
-        later(()=>{
-          listening=false;listen.disabled=false;
-          listen.textContent=`♫ ${round+1}번째 구절 듣기`;
-        },650);
+      while(Math.abs(carry)>=22){
+        const direction=carry>0?-1:1;
+        spin(direction);
+        carry+=carry>0?-22:22;
       }
     };
-    $("keys").append(b);
-  });
-  function performance(){
-    listening=true;listen.disabled=true;
-    status("완성! 이번에는 반주와 함께 들어봐!");
-    const full=phrases.flat(),beat=.34;
-    full.forEach((n,i)=>later(()=>{
-      flash(n,190);bell(notes[n],.42,.12,"game");
-      accompaniment(3,i,beat);
-    },i*beat*1000));
-    later(()=>win("별이 노래를 따라 부르기 시작했어요!"),
-      full.length*beat*1000+350);
-  }
-  $("reset").hidden=false;$("reset").textContent="입력 지우기";
-  $("reset").onclick=()=>{
-    if(listening||locked) return;
-    input=[];status("이번 구절을 처음 음부터 다시 쳐보세요.");
-  };
-  cleanups.push(()=>token++);
-  status("멜로디를 들으면 건반도 함께 빛나요.");
-}
 
-/* 6. 소원 스크래치 */
-function scratchPuzzle(){
-  $("play-area").innerHTML=`
-    <div class="memory">
-      <div class="memory-content">
-        <div class="wish">“강아지랑 같이 살고 싶어요!”</div>
-        <div class="wish">“눈사람을 아주 크게 만들고 싶어요.”</div>
-        <div class="wish">“새로운 걸 해보고 싶어요!”</div>
-      </div>
-      <canvas id="memory-canvas" class="scratch" aria-label="소원 드러내기"></canvas>
-      <div id="memory-caption" class="memory-caption" hidden>
-        🛏️ ⭐<br>“나도 강아지 키우고 싶어!”<br>
-        <small>오래전 목소리가 문득 겹쳐 들렸다.</small>
-      </div>
-    </div>`;
-  const next=action("별의 이야기 듣기",()=>win("어디서 들어본 이야기인데?"));
-  next.hidden=true;
+    function end(){
+      if(!dragging)return;
+      dragging=false;
 
-  const reveal=scratch($("memory-canvas"),{
-    fog:true,threshold:.47,
-    onProgress:n=>status(`슥슥! 소원이 보이는 중 ${n}%`),
-    onDone:()=>{
-      $("assist").hidden=true;status("어라? 어디서 들어본 이야기인데?");
-      bell(84,.8,.05,"game");
-      later(()=>{$("memory-caption").hidden=false},400);
-      later(()=>{next.hidden=false},1100);
+      let speed=Math.abs(lastDelta)>5?Math.min(3,Math.abs(lastDelta)/8):0;
+      const direction=lastDelta>0?-1:1;
+      const token=++tokens[column];
+
+      function momentum(){
+        if(locked||tokens[column]!==token||speed<.55)return;
+        spin(direction);
+        speed*=.62;
+        later(momentum,75);
+      }
+      if(Math.abs(lastY-startY)>25)momentum();
     }
-  });
-  $("assist").hidden=false;$("assist").textContent="소원 전체 보기";
-  $("assist").onclick=reveal;
-  status("손가락으로 화면을 닦아 소원을 읽어보세요.");
-}
 
-/* 7. 전선 */
-function rotateMask(m){return ((m<<1)&15)|((m>>3)&1)}
-function connections(masks){
-  const seen=new Set();
-  if(!(masks[0]&8)) return seen;
-  const queue=[0];
-  while(queue.length){
-    const i=queue.shift();if(seen.has(i)) continue;
-    seen.add(i);
-    const r=Math.floor(i/3),c=i%3;
-    [[1,-3,4,r>0],[2,1,8,c<2],[4,3,1,r<2],[8,-1,2,c>0]]
-      .forEach(([bit,d,other,valid])=>{
-        if(valid&&(masks[i]&bit)&&(masks[i+d]&other)&&!seen.has(i+d)) queue.push(i+d);
-      });
-  }
-  return seen;
-}
-function completeCircuit(masks){
-  if(connections(masks).size!==9||!(masks[8]&2)) return false;
-  for(let i=0;i<9;i++){
-    const r=Math.floor(i/3),c=i%3;
-    for(const [bit,d,other,valid] of [
-      [1,-3,4,r>0],[2,1,8,c<2],[4,3,1,r<2],[8,-1,2,c>0]
-    ]){
-      if(!(masks[i]&bit)) continue;
-      if(!valid){
-        if(!((i===0&&bit===8)||(i===8&&bit===2))) return false;
-      }else if(!(masks[i+d]&other)) return false;
-    }
-  }
-  return true;
-}
-function circuitPuzzle(){
-  const solution=[10,10,12,6,10,9,3,10,10];
-  const turns=[1,1,2,1,1,2,3,1,1];
-  const make=()=>solution.map((m,i)=>{
-    for(let j=0;j<turns[i];j++) m=rotateMask(m);
-    return m;
-  });
-  let masks=make(),waveToken=0,testing=false;
-
-  $("play-area").innerHTML=`
-    <div class="circuit-label">입구 ➜ 첫 번째 줄 왼쪽</div>
-    <div class="circuit-wrap"><div id="circuit" class="circuit"></div></div>
-    <div class="circuit-label">마지막 줄 오른쪽 ➜ ⭐</div>`;
-
-  const send=action("빛 보내기!",()=>{
-    if(locked||testing) return;
-    testing=true;send.disabled=true;draw();
-    const duration=wave(true);
-    if(completeCircuit(masks)){
-      locked=true;
-      later(()=>{
-        const fx=document.createElement("div");
-        fx.className="final-light";
-        fx.innerHTML=`<img src="${STAR.light}" alt="빛나는 별" onerror="this.hidden=true">`;
-        $("screen").append(fx);celebrate();successSound();
-        later(()=>go("after"),reduced()?300:1800);
-      },duration+150);
-    }else{
-      later(()=>{
-        testing=false;send.disabled=false;
-        fail("빛이 멈춘 곳을 살펴보세요. 아홉 칸을 모두 지나 출구까지 이어져야 해요!");
-      },duration+150);
-    }
+    face.onpointerup=end;
+    face.onpointercancel=()=>{dragging=false;tokens[column]++};
+    container.append(el);
   });
 
-  function draw(){
-    $("circuit").innerHTML="";
-    masks.forEach((mask,i)=>{
-      const b=document.createElement("button");
-      b.className="pipe";b.id=`pipe-${i}`;
-      let paths="",labels=[];
-      [[1,50,0,"위"],[2,100,50,"오른쪽"],[4,50,100,"아래"],[8,0,50,"왼쪽"]]
-        .forEach(([bit,x,y,label])=>{
-          if(mask&bit){paths+=`<path d="M50 50L${x} ${y}"/>`;labels.push(label)}
-        });
-      b.innerHTML=`<svg viewBox="0 0 100 100" aria-hidden="true">
-        <g fill="none" stroke="#bc91aa" stroke-width="16" stroke-linecap="round">${paths}</g>
-        <g fill="none" stroke="white" stroke-width="4" stroke-linecap="round" opacity=".7">${paths}</g>
-        <circle cx="50" cy="50" r="10" fill="#bc91aa"/>
-      </svg>`;
-      b.setAttribute("aria-label",`${i+1}번 전선 ${labels.join(", ")}. 누르면 회전`);
-      b.onclick=()=>{
-        if(locked||testing) return;
-        masks[i]=rotateMask(masks[i]);sfx(370,.03,.01);draw();wave(false);
-      };
-      $("circuit").append(b);
+  function render(){
+    elements.forEach((el,i)=>{
+      el.textContent=chars[values[i]];
+      el.setAttribute("aria-valuetext",chars[values[i]]);
     });
   }
-  function wave(sound){
-    const token=++waveToken;
-    const cells=Array.from(connections(masks));
-    cells.forEach((i,n)=>later(()=>{
-      if(token!==waveToken) return;
-      const b=$(`pipe-${i}`);if(!b) return;
-      b.classList.add("lit");
-      b.querySelector("g").setAttribute("stroke","#e2a72a");
-      b.querySelector("circle").setAttribute("fill","#facc15");
-      if(sound) bell(60+n*2,.2,.03,"game");
-    },n*115));
-    status(`빛이 닿는 칸 ${cells.length}/9`);
-    return cells.length*115;
-  }
-  $("reset").hidden=false;
-  $("reset").onclick=()=>{
-    if(locked||testing) return;
-    masks=make();draw();wave(false);
+
+  render();
+
+  return {
+    word:()=>values.map(i=>chars[i]).join(""),
+    stop:()=>tokens.forEach((_,i)=>tokens[i]++),
+    reset:()=>{
+      tokens.forEach((_,i)=>tokens[i]++);
+      values=initial.slice();
+      render();
+    }
   };
-  cleanups.push(()=>waveToken++);
-  draw();wave(false);
 }
 
-/* 노트 / 종료 */
-function toast(text){
-  const b=document.createElement("button");
-  b.className="toast";b.textContent=text;b.onclick=openNotebook;
-  $("screen").append(b);
-  later(()=>b.remove(),2100);
+/* =========================
+   미션 1 · 자물쇠
+========================= */
+function lockPuzzle(card){
+  card.innerHTML=`
+    <p class="puzzle-instruction">창고 자물쇠의 글자를 바꿔<br>장식 상자를 꺼내자!</p>
+    <div class="paper-clue">문에 붙은 메모<br>“행복한 마음 뒤에 하트 하나!”</div>
+    <div class="lock-wrap" id="lock-wrap">
+      <div class="lock-shackle"></div>
+      <div class="lock-body">
+        <div class="lock-label">DECORATION STORAGE</div>
+        <div id="lock-dials"></div>
+      </div>
+    </div>
+    <p class="puzzle-sub">화살표를 누르거나 다이얼을 위아래로 밀어줘.</p>
+    <button class="primary puzzle-action" id="unlock-button">자물쇠 열기</button>`;
+
+  const chars="ABCDEFGHIJKLMNOPQRSTUVWXYZ♥".split("");
+  const initial="HAECHI".split("").map(c=>chars.indexOf(c));
+  const dials=mountDials($("lock-dials"),chars,initial);
+
+  $("unlock-button").onclick=()=>{
+    if(locked)return;
+    dials.stop();
+
+    if(dials.word()==="HAPPY♥"){
+      $("lock-wrap").classList.add("unlocked");
+      win("찰칵! 장식 상자를 꺼낼 수 있겠어.",1100);
+    }else{
+      fail("아직 열리지 않았어.\n문에 붙은 메모를 다시 읽어보자.");
+    }
+  };
+
+  resetPuzzle=()=>{
+    dials.reset();
+    $("lock-wrap").classList.remove("unlocked");
+    setStatus("처음 글자는 HAECHI야.");
+  };
+  setStatus("HAECHI를 다른 글자로 바꿔봐.");
 }
+
+/* =========================
+   미션 2 · 끈 연결
+========================= */
+function threadPuzzle(card){
+  card.innerHTML=`
+    <p class="puzzle-instruction">새 끈을 표시 순서대로 이어줘.</p>
+    <div class="paper-clue">1 → 4 → 2 → 3</div>
+    <div class="thread-board" id="thread-board">
+      <img class="thread-star" src="${STAR.sleep}" alt="잠든 별">
+      <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+        <polyline id="thread-line" fill="none" stroke="#bd5d7b"
+                  stroke-width="1.8" stroke-linejoin="round"
+                  stroke-linecap="round"></polyline>
+      </svg>
+    </div>
+    <button class="assist" id="thread-assist">눌러서 연결하기</button>`;
+
+  const board=$("thread-board");
+  const image=board.querySelector("img");
+  image.onerror=()=>image.hidden=true;
+
+  const points=[
+    {x:22,y:24},
+    {x:78,y:24},
+    {x:22,y:77},
+    {x:78,y:77}
+  ];
+  const target=[0,3,1,2];
+  let path=[];
+  let dragging=false;
+  let tapMode=false;
+
+  points.forEach((point,index)=>{
+    const node=document.createElement("div");
+    node.className="thread-node";
+    node.style.left=point.x+"%";
+    node.style.top=point.y+"%";
+    node.textContent=index+1;
+    node.onclick=()=>{
+      if(tapMode&&!locked) add(index);
+    };
+    board.append(node);
+  });
+
+  function draw(pointer){
+    const list=path.map(index=>`${points[index].x},${points[index].y}`);
+    if(pointer&&path.length)list.push(`${pointer.x},${pointer.y}`);
+    $("thread-line").setAttribute("points",list.join(" "));
+    board.querySelectorAll(".thread-node").forEach((node,index)=>{
+      node.classList.toggle("done",path.includes(index));
+    });
+  }
+
+  function reset(){
+    path=[];
+    dragging=false;
+    draw();
+    setStatus(tapMode?"1부터 순서대로 눌러줘.":"1에서 시작해서 끈을 이어줘.");
+  }
+
+  function add(index){
+    if(path.includes(index))return;
+
+    if(index!==target[path.length]){
+      reset();
+      setStatus("끈이 엉켰어. 1부터 다시 이어볼까?");
+      return;
+    }
+
+    path.push(index);
+    draw();
+
+    if(path.length===target.length){
+      dragging=false;
+      win("튼튼하게 연결했어! 이제 트리에 걸어보자.");
+    }else setStatus(`${path.length} / 4 연결`);
+  }
+
+  function position(event){
+    const r=board.getBoundingClientRect();
+    return {
+      x:(event.clientX-r.left)/r.width*100,
+      y:(event.clientY-r.top)/r.height*100
+    };
+  }
+
+  function nearby(p){
+    return points.findIndex(q=>Math.hypot(p.x-q.x,p.y-q.y)<10);
+  }
+
+  board.onpointerdown=event=>{
+    if(tapMode||locked)return;
+    const p=position(event);
+    if(nearby(p)!==0)return;
+    reset();
+    dragging=true;
+    board.setPointerCapture(event.pointerId);
+    add(0);
+  };
+
+  board.onpointermove=event=>{
+    if(!dragging||locked)return;
+    const p=position(event);
+    const hit=nearby(p);
+    if(hit>=0)add(hit);
+    if(dragging)draw(p);
+  };
+
+  board.onpointerup=()=>{
+    if(!dragging)return;
+    dragging=false;
+    if(path.length<4)reset();
+  };
+  board.onpointercancel=reset;
+
+  $("thread-assist").onclick=()=>{
+    tapMode=!tapMode;
+    board.classList.toggle("tap-mode",tapMode);
+    $("thread-assist").textContent=tapMode?"드래그로 연결하기":"눌러서 연결하기";
+    reset();
+  };
+
+  resetPuzzle=reset;
+  reset();
+}
+
+/* =========================
+   미션 3 · 기억 렌즈
+========================= */
+function lensPuzzle(card){
+  card.innerHTML=`
+    <p class="puzzle-instruction">서울 전경에서 기억 속 탑을 찾아<br>렌즈의 위치와 크기를 맞춰줘.</p>
+    <div class="city-board" id="city-board">
+      <svg viewBox="0 0 330 265" preserveAspectRatio="none" aria-label="테스트용 서울 전경">
+        <rect width="330" height="265" fill="#eaf0df"/>
+        <path d="M0 168 Q80 125 163 170 T330 160 L330 211 Q245 220 160 199 T0 211Z"
+              fill="#a8d2df"/>
+        <path d="M0 83 Q45 50 85 84 Q130 13 176 68 Q225 32 280 78 L330 65 L330 140 L0 140"
+              fill="#b9cda8"/>
+        <g fill="#e6d6b9" stroke="#c0ab93" stroke-width="2">
+          <rect x="25" y="122" width="27" height="40" rx="3"/>
+          <rect x="66" y="106" width="32" height="58" rx="3"/>
+          <rect x="111" y="126" width="23" height="34" rx="3"/>
+          <rect x="265" y="117" width="34" height="43" rx="3"/>
+          <rect x="277" y="220" width="27" height="38" rx="3"/>
+          <rect x="43" y="222" width="31" height="39" rx="3"/>
+          <rect x="114" y="222" width="37" height="39" rx="3"/>
+        </g>
+        <path d="M202 150 L224 112 L246 150Z" fill="#8eb48a"/>
+        <path d="M224 87 L224 149" stroke="#947e91" stroke-width="5"/>
+        <rect x="211" y="106" width="26" height="15" rx="4"
+              fill="#d8c6d9" stroke="#947e91" stroke-width="3"/>
+        <path d="M172 185 L240 185" stroke="#e7d7b3" stroke-width="10"/>
+        <path d="M172 185 L240 185" stroke="#c0ae97" stroke-width="2"/>
+      </svg>
+      <div id="memory-lens" class="memory-lens" tabindex="0"
+           role="group" aria-label="기억 렌즈. 방향키로 이동">
+        <div class="lens-memory" id="lens-memory"></div>
+      </div>
+    </div>
+    <label class="zoom-control">작게
+      <input id="lens-zoom" type="range" min="80" max="160" value="100"
+             aria-label="기억 모양 크기">
+      크게
+    </label>
+    <button id="lens-check" class="primary puzzle-action">기억 확인</button>
+    <p class="puzzle-sub">현장 사진을 넣기 전의 테스트용 전경이야.</p>`;
+
+  const board=$("city-board"),lens=$("memory-lens");
+  let x=65,y=175,zoom=1,dragging=false,offsetX=0,offsetY=0;
+
+  function render(){
+    x=clamp(x,53,board.clientWidth-53);
+    y=clamp(y,53,board.clientHeight-53);
+    lens.style.left=(x-53)+"px";
+    lens.style.top=(y-53)+"px";
+    $("lens-memory").style.transform=`translate(-50%,-50%) scale(${zoom})`;
+  }
+
+  lens.onpointerdown=event=>{
+    if(locked)return;
+    const r=board.getBoundingClientRect();
+    offsetX=event.clientX-r.left-x;
+    offsetY=event.clientY-r.top-y;
+    dragging=true;
+    lens.setPointerCapture(event.pointerId);
+  };
+
+  lens.onpointermove=event=>{
+    if(!dragging)return;
+    const r=board.getBoundingClientRect();
+    x=event.clientX-r.left-offsetX;
+    y=event.clientY-r.top-offsetY;
+    render();
+  };
+  lens.onpointerup=lens.onpointercancel=()=>dragging=false;
+
+  lens.onkeydown=event=>{
+    const moves={ArrowLeft:[-7,0],ArrowRight:[7,0],ArrowUp:[0,-7],ArrowDown:[0,7]};
+    if(!moves[event.key])return;
+    event.preventDefault();
+    x+=moves[event.key][0];
+    y+=moves[event.key][1];
+    render();
+  };
+
+  $("lens-zoom").oninput=event=>{
+    zoom=Number(event.target.value)/100;
+    render();
+  };
+
+  $("lens-check").onclick=()=>{
+    if(locked)return;
+    const tx=board.clientWidth*224/330;
+    const ty=board.clientHeight*119/265;
+    const distance=Math.hypot(x-tx,y-ty);
+
+    if(distance<22&&Math.abs(zoom-1.25)<.1){
+      win("기억 속 모습과 겹쳐졌어!");
+    }else{
+      setStatus("위치와 크기가 조금 달라. 다시 겹쳐보자.");
+    }
+  };
+
+  resetPuzzle=()=>{
+    x=65;y=board.clientHeight*.69;zoom=1;
+    $("lens-zoom").value=100;
+    render();
+    setStatus("렌즈를 움직여 탑의 모양을 겹쳐줘.");
+  };
+
+  resetPuzzle();
+}
+
+/* =========================
+   스크래치 공통
+========================= */
+function mountScratch(container,onReveal){
+  const canvas=document.createElement("canvas");
+  container.append(canvas);
+  const ctx=canvas.getContext("2d",{willReadFrequently:true});
+
+  let revealed=false,drawing=false,lastPoint=null;
+  const cols=25,rows=18;
+  const visited=new Set();
+
+  function prepare(){
+    const ratio=Math.min(devicePixelRatio||1,2);
+    canvas.width=Math.round(container.clientWidth*ratio);
+    canvas.height=Math.round(container.clientHeight*ratio);
+    ctx.setTransform(ratio,0,0,ratio,0,0);
+    ctx.globalCompositeOperation="source-over";
+
+    const w=container.clientWidth,h=container.clientHeight;
+    const gradient=ctx.createLinearGradient(0,0,w,h);
+    gradient.addColorStop(0,"#e2dce4");
+    gradient.addColorStop(1,"#c5cadb");
+    ctx.fillStyle=gradient;
+    ctx.fillRect(0,0,w,h);
+
+    ctx.strokeStyle="#ffffff60";
+    ctx.lineWidth=1;
+    for(let y=12;y<h;y+=23){
+      ctx.beginPath();
+      ctx.moveTo(0,y);
+      ctx.lineTo(w,y-18);
+      ctx.stroke();
+    }
+
+    ctx.fillStyle="#8a8295";
+    ctx.font='18px "Gaegu", sans-serif';
+    ctx.textAlign="center";
+    ctx.fillText("손가락으로 살살 문질러줘",w/2,h/2);
+
+    revealed=false;
+    drawing=false;
+    lastPoint=null;
+    visited.clear();
+    canvas.hidden=false;
+  }
+
+  function reveal(){
+    if(revealed)return;
+    revealed=true;
+    drawing=false;
+    canvas.hidden=true;
+    onReveal();
+  }
+
+  function point(event){
+    const r=canvas.getBoundingClientRect();
+    return {x:event.clientX-r.left,y:event.clientY-r.top};
+  }
+
+  function mark(p){
+    const w=container.clientWidth,h=container.clientHeight;
+    const cellW=w/cols,cellH=h/rows;
+
+    for(let yy=-2;yy<=2;yy++){
+      for(let xx=-2;xx<=2;xx++){
+        const cx=Math.floor(p.x/cellW)+xx;
+        const cy=Math.floor(p.y/cellH)+yy;
+        if(cx>=0&&cx<cols&&cy>=0&&cy<rows){
+          const px=(cx+.5)*cellW,py=(cy+.5)*cellH;
+          if(Math.hypot(px-p.x,py-p.y)<25)visited.add(cy*cols+cx);
+        }
+      }
+    }
+
+    if(visited.size/(cols*rows)>.47)reveal();
+  }
+
+  function scratch(p){
+    if(revealed)return;
+    ctx.globalCompositeOperation="destination-out";
+    ctx.lineWidth=46;
+    ctx.lineCap="round";
+    ctx.lineJoin="round";
+    ctx.beginPath();
+    ctx.moveTo(lastPoint?lastPoint.x:p.x,lastPoint?lastPoint.y:p.y);
+    ctx.lineTo(p.x+.01,p.y+.01);
+    ctx.stroke();
+
+    if(lastPoint){
+      const distance=Math.hypot(p.x-lastPoint.x,p.y-lastPoint.y);
+      const count=Math.max(1,Math.ceil(distance/10));
+      for(let i=1;i<=count;i++){
+        mark({
+          x:lastPoint.x+(p.x-lastPoint.x)*i/count,
+          y:lastPoint.y+(p.y-lastPoint.y)*i/count
+        });
+      }
+    }else mark(p);
+
+    lastPoint=p;
+  }
+
+  canvas.onpointerdown=event=>{
+    if(locked||revealed)return;
+    drawing=true;
+    lastPoint=null;
+    canvas.setPointerCapture(event.pointerId);
+    scratch(point(event));
+  };
+  canvas.onpointermove=event=>{
+    if(drawing)scratch(point(event));
+  };
+  canvas.onpointerup=canvas.onpointercancel=()=>{
+    drawing=false;
+    lastPoint=null;
+  };
+
+  prepare();
+  return {reveal,reset:prepare};
+}
+
+/* =========================
+   미션 4 · 책
+========================= */
+function bookPuzzle(card){
+  card.innerHTML=`
+    <p class="puzzle-instruction">표지를 닦고, 숨은 말의<br>첫 글자를 맞춰 책을 열어줘.</p>
+    <div class="scratch-area" id="book-scratch">
+      <div class="scratch-under">
+        <div>별사탕 · 나무<br>라디오 · 무지개</div>
+        <small>첫 글자부터 차례대로</small>
+      </div>
+    </div>
+    <button id="book-assist" class="assist">표지 펼쳐보기</button>
+    <div class="book-panel">
+      <div id="book-dials" class="book-dials"></div>
+      <button id="book-open" class="primary puzzle-action">책 열기</button>
+    </div>`;
+
+  let revealed=false;
+  const scratch=mountScratch($("book-scratch"),()=>{
+    revealed=true;
+    setStatus("각 단어의 첫 글자를 차례대로 맞춰줘.");
+  });
+  const chars=["별","나","라","무","달","빛","꿈","집"];
+  const dials=mountDials($("book-dials"),chars,[4,5,6,7]);
+
+  $("book-assist").onclick=()=>scratch.reveal();
+  $("book-open").onclick=()=>{
+    if(locked)return;
+    dials.stop();
+
+    if(!revealed){
+      setStatus("먼저 표지를 닦아서 단어를 살펴보자.");
+      return;
+    }
+    if(dials.word()==="별나라무"){
+      win("책이 열렸어. 익숙한 그림이 보이는데?");
+    }else{
+      fail("단어 전체가 아니라 첫 글자만 읽어봐.");
+    }
+  };
+
+  resetPuzzle=()=>{
+    revealed=false;
+    scratch.reset();
+    dials.reset();
+    setStatus("표지의 먼지를 닦아줘.");
+  };
+  setStatus("표지의 먼지를 닦아줘.");
+}
+
+/* =========================
+   미션 5 · 현장 악보와 피아노
+========================= */
+function pianoPuzzle(card){
+  const target=[4,4,4,4,4,4,4,7,0,2,4];
+  const noteNames={
+    0:"도",1:"도♯",2:"레",3:"레♯",4:"미",5:"파",
+    6:"파♯",7:"솔",8:"솔♯",9:"라",10:"라♯",11:"시",12:"높은 도"
+  };
+
+  const whiteNotes=[
+    [0,"도"],[2,"레"],[4,"미"],[5,"파"],
+    [7,"솔"],[9,"라"],[11,"시"],[12,"도"]
+  ];
+  const blackNotes=[
+    [1,12.5],[3,25],[6,50],[8,62.5],[10,75]
+  ];
+
+  card.innerHTML=`
+    <p class="puzzle-instruction">
+      공연장에 있는 악보를 보고<br>별이 기억하는 노래를 연주해 줘.
+    </p>
+    <div class="music-progress" id="music-progress"></div>
+    <div class="piano-case">
+      <div class="piano-name">SEOUL GALLERY PIANO</div>
+      <div class="piano-keyboard">
+        <div class="white-keys">
+          ${whiteNotes.map(([note,label])=>`
+            <button class="white-key" data-note="${note}" aria-label="${noteNames[note]}">
+              <span>${label}</span>
+            </button>
+          `).join("")}
+        </div>
+        ${blackNotes.map(([note,left])=>`
+          <button class="black-key" data-note="${note}"
+                  style="left:${left}%"
+                  aria-label="${noteNames[note]}"></button>
+        `).join("")}
+      </div>
+    </div>
+    <div class="music-entered" id="music-entered">첫 음부터 눌러줘.</div>
+    <div class="test-score">
+      <small>테스트용 계이름 · 현장 악보 설치 후 숨길 수 있어요</small>
+      <p>미 미 미 / 미 미 미<br>미 솔 도 레 미</p>
+    </div>
+    <p class="puzzle-sub">빠르기는 상관없어. 음의 순서만 맞춰줘.<br>
+    연주 중에는 배경음악이 잠시 멈춰.</p>`;
+
+  let input=[];
+  let busy=false;
+  let roundToken=0;
+  let pointerSession=false;
+
+  const progress=$("music-progress");
+  const entered=$("music-entered");
+  const keys=[...card.querySelectorAll("[data-note]")];
+
+  function render(){
+    progress.innerHTML=target.map((_,i)=>
+      `<span class="music-dot ${i<input.length?"done":""}"></span>`
+    ).join("");
+
+    entered.textContent=input.length
+      ? input.map(n=>noteNames[n]).join(" · ")
+      : "첫 음부터 눌러줘.";
+  }
+
+  function press(note,key){
+    if(locked||busy)return;
+    initAudio();
+
+    const frequency=261.625565*Math.pow(2,note/12);
+    tone(frequency,.85,true,true);
+
+    key.classList.add("active");
+    const token=roundToken;
+    later(()=>key.classList.remove("active"),140);
+
+    if(note!==target[input.length]){
+      busy=true;
+      setStatus("그 음은 조금 달라. 첫 음부터 다시 해보자.");
+
+      later(()=>{
+        if(token!==roundToken)return;
+        input=[];
+        busy=false;
+        render();
+      },650);
+
+      return;
+    }
+
+    input.push(note);
+    render();
+    setStatus(`${input.length} / ${target.length} 음 연주`);
+
+    if(input.length===target.length){
+      busy=true;
+      setStatus("맞아, 이 노래야!");
+      later(()=>win("별의 기억 속 노래를 연주했어.",800),700);
+    }
+  }
+
+  keys.forEach(key=>{
+    const note=Number(key.dataset.note);
+
+    key.addEventListener("pointerdown",event=>{
+      if(event.button!==0&&event.pointerType==="mouse")return;
+      pointerSession=true;
+      event.preventDefault();
+      press(note,key);
+    });
+
+    key.addEventListener("click",event=>{
+      if(event.detail===0&&!pointerSession)press(note,key);
+      pointerSession=false;
+    });
+
+    key.addEventListener("keydown",event=>{
+      if(event.key==="Enter"||event.key===" "){
+        event.preventDefault();
+        if(!event.repeat)press(note,key);
+      }
+    });
+  });
+
+  const keyboardMap={
+    a:0,w:1,s:2,e:3,d:4,f:5,t:6,g:7,y:8,h:9,u:10,j:11,k:12
+  };
+
+  function computerKeyboard(event){
+    if(!$("modal").hidden||!$("notebook").hidden)return;
+    if(event.repeat||event.ctrlKey||event.altKey||event.metaKey)return;
+    if(["INPUT","SELECT","TEXTAREA","BUTTON"].includes(event.target.tagName))return;
+
+    const note=keyboardMap[event.key.toLowerCase()];
+    if(note===undefined)return;
+    event.preventDefault();
+    const key=keys.find(el=>Number(el.dataset.note)===note);
+    if(key)press(note,key);
+  }
+
+  document.addEventListener("keydown",computerKeyboard);
+  cleanups.push(()=>document.removeEventListener("keydown",computerKeyboard));
+
+  resetPuzzle=()=>{
+    roundToken++;
+    input=[];
+    busy=false;
+    stopNotes();
+    keys.forEach(key=>key.classList.remove("active"));
+    render();
+    setStatus("악보를 보고 첫 음부터 연주해 줘.");
+  };
+
+  render();
+  setStatus("악보를 보고 첫 음부터 연주해 줘.");
+}
+
+/* =========================
+   미션 6 · 소원 읽기
+========================= */
+function wishPuzzle(card){
+  const wishes=[
+    {
+      text:"강아지랑<br>같이 살고 싶어요.",
+      caption:"별이 가만히 메모를 들여다봤다. 어디선가 들어본 이야기 같았다."
+    },
+    {
+      text:"이번 겨울에는<br>큰 눈사람을 만들고 싶어요.",
+      caption:"별의 빛이 조금 밝아졌다. 오래전에도 눈 오는 날을 기다리는 목소리가 있었다."
+    },
+    {
+      text:"내년에도 가족이랑<br>새로운 곳에 놀러 가고 싶어요.",
+      caption:"새로운 이야기였다. 별은 마지막 줄까지 천천히 읽었다."
+    }
+  ];
+
+  let index=0;
+  let scratch=null;
+
+  function show(){
+    card.innerHTML=`
+      <p class="puzzle-instruction">뿌연 화면을 닦아서<br>가지에 달린 소원을 읽어줘.</p>
+      <div class="scratch-area" id="wish-scratch">
+        <div class="scratch-under">
+          <div class="wish-note">${wishes[index].text}</div>
+        </div>
+      </div>
+      <button class="assist" id="wish-assist">소원 펼쳐보기</button>
+      <div class="wish-caption" id="wish-caption"></div>
+      <button class="primary puzzle-action" id="wish-next" hidden>
+        ${index<2?"다음 소원":"다 읽었어"} <span class="arrow">›</span>
+      </button>`;
+
+    scratch=mountScratch($("wish-scratch"),()=>{
+      $("wish-caption").textContent=`(${wishes[index].caption})`;
+      setStatus(`${index+1} / 3 소원`);
+      later(()=>{
+        const button=$("wish-next");
+        if(button)button.hidden=false;
+      },850);
+    });
+
+    $("wish-assist").onclick=()=>scratch.reveal();
+    $("wish-next").onclick=()=>{
+      if(index<2){
+        index++;
+        show();
+      }else win("세 장의 소원을 읽었어.");
+    };
+
+    setStatus(`${index+1}번째 소원을 읽어볼까?`);
+  }
+
+  resetPuzzle=()=>{index=0;show()};
+  show();
+}
+
+/* =========================
+   미션 7 · 조명 연결
+========================= */
+function circuitPuzzle(card){
+  const U=1,R=2,D=4,L=8;
+  const solution=[10,10,12,6,10,9,3,10,10];
+  const initialTurns=[1,1,2,1,1,2,3,1,1];
+
+  function rotate(mask){
+    return ((mask<<1)&15)|((mask>>3)&1);
+  }
+  function turn(mask,count){
+    for(let n=0;n<count;n++)mask=rotate(mask);
+    return mask;
+  }
+
+  let cells=solution.map((mask,i)=>turn(mask,initialTurns[i]));
+  let waveToken=0;
+  let testing=false;
+
+  card.innerHTML=`
+    <p class="puzzle-instruction">조명 조각을 돌려서<br>전기가 별까지 흐르게 해줘.</p>
+    <img class="final-star" id="circuit-star" src="${STAR.awake}" alt="별">
+    <div class="circuit-labels"><span>시작 · 왼쪽 위</span><span>도착 · 오른쪽 아래</span></div>
+    <div class="circuit-board" id="circuit-board"></div>
+    <button id="circuit-check" class="primary puzzle-action">불 켜보기</button>`;
+
+  $("circuit-star").onerror=event=>event.target.hidden=true;
+
+  const board=$("circuit-board");
+
+  function connected(){
+    const visited=new Set();
+    if(!(cells[0]&L))return visited;
+
+    const queue=[0];
+    visited.add(0);
+
+    while(queue.length){
+      const index=queue.shift();
+      const row=Math.floor(index/3),col=index%3;
+      const neighbors=[
+        [U,index-3,D,row>0],
+        [R,index+1,L,col<2],
+        [D,index+3,U,row<2],
+        [L,index-1,R,col>0]
+      ];
+
+      neighbors.forEach(([direction,next,opposite,valid])=>{
+        if(valid&&(cells[index]&direction)&&(cells[next]&opposite)&&!visited.has(next)){
+          visited.add(next);
+          queue.push(next);
+        }
+      });
+    }
+
+    return visited;
+  }
+
+  function hasLeak(){
+    for(let i=0;i<9;i++){
+      const row=Math.floor(i/3),col=i%3;
+      const checks=[
+        [U,i-3,D,row>0,false],
+        [R,i+1,L,col<2,i===8],
+        [D,i+3,U,row<2,false],
+        [L,i-1,R,col>0,i===0]
+      ];
+
+      for(const [direction,next,opposite,inside,allowed] of checks){
+        if(!(cells[i]&direction))continue;
+        if(!inside&&!allowed)return true;
+        if(inside&&!(cells[next]&opposite))return true;
+      }
+    }
+    return false;
+  }
+
+  function render(){
+    board.innerHTML="";
+    cells.forEach((mask,index)=>{
+      const button=document.createElement("button");
+      button.className="circuit-cell";
+      button.setAttribute("aria-label",`${index+1}번째 조명 조각 돌리기`);
+      button.innerHTML=`
+        ${(mask&U)?'<span class="circuit-line up"></span>':""}
+        ${(mask&R)?'<span class="circuit-line right"></span>':""}
+        ${(mask&D)?'<span class="circuit-line down"></span>':""}
+        ${(mask&L)?'<span class="circuit-line left"></span>':""}
+        <span class="circuit-center"></span>`;
+
+      button.onclick=()=>{
+        if(locked||testing)return;
+        cells[index]=rotate(cells[index]);
+        render();
+        preview();
+        if(soundOn)tone(350,.035);
+      };
+      board.append(button);
+    });
+  }
+
+  function preview(){
+    const token=++waveToken;
+    const reach=[...connected()];
+    board.querySelectorAll(".circuit-cell").forEach(el=>el.classList.remove("lit"));
+
+    reach.forEach((index,order)=>{
+      later(()=>{
+        if(token!==waveToken)return;
+        board.children[index]?.classList.add("lit");
+      },reduceMotion?0:order*90);
+    });
+
+    setStatus(`${reach.length} / 9 조각에 전기가 닿았어.`);
+  }
+
+  $("circuit-check").onclick=()=>{
+    if(locked||testing)return;
+    testing=true;
+    $("circuit-check").disabled=true;
+    preview();
+
+    const complete=connected().size===9&&(cells[8]&R)&&!hasLeak();
+
+    later(()=>{
+      if(complete){
+        locked=true;
+        const star=$("circuit-star");
+        star.src=STAR.light;
+        star.classList.add("fly");
+        setStatus("조명이 이어지자 별이 밝게 빛나기 시작했어.");
+        successSound();
+        later(()=>go("after"),reduceMotion?400:1700);
+      }else{
+        testing=false;
+        $("circuit-check").disabled=false;
+        fail("중간에 끊긴 곳이 있어.\n조각의 끝과 끝을 이어줘.");
+      }
+    },reduceMotion?100:950);
+  };
+
+  resetPuzzle=()=>{
+    waveToken++;
+    testing=false;
+    cells=solution.map((mask,i)=>turn(mask,initialTurns[i]));
+    $("circuit-check").disabled=false;
+    render();
+    preview();
+  };
+
+  render();
+  preview();
+}
+
+/* =========================
+   아웃트로
+========================= */
+function renderOutro(){
+  const scene=background("outro.gif","image_08.png");
+  const card=document.createElement("section");
+  card.className="outro-card";
+  card.innerHTML=`
+    <h2>함께 꾸민 크리스마스</h2>
+    <p>오늘의 탐험은 여기까지!<br>
+    안내데스크에서 선물을 받아가세요.</p>
+    <button class="primary" id="outro-notebook">찾은 기억 다시 보기</button>
+    <button class="assist" id="outro-home">처음 화면으로</button>`;
+  scene.append(card);
+  $("screen").append(scene);
+
+  $("outro-notebook").onclick=openNotebook;
+  $("outro-home").onclick=resetToIntro;
+}
+
+/* =========================
+   모달·기억 노트
+========================= */
+function setInert(on){
+  $("screen").inert=on;
+  $("topbar").inert=on;
+  $("debug").inert=on;
+}
+
+function openModal(
+  title,
+  description,
+  onConfirm=null,
+  confirmLabel="확인",
+  onCancel=null,
+  cancelLabel="취소"
+){
+  if(!$("notebook").hidden)return;
+
+  lastFocus=document.activeElement;
+  $("modal-title").textContent=title;
+  $("modal-description").textContent=description;
+  $("modal-confirm").textContent=confirmLabel;
+  $("modal-cancel").textContent=cancelLabel;
+  $("modal-cancel").hidden=!onCancel;
+
+  $("modal-confirm").onclick=()=>{
+    closeModal();
+    if(onConfirm)onConfirm();
+  };
+
+  $("modal-cancel").onclick=()=>{
+    closeModal();
+    if(onCancel)onCancel();
+  };
+
+  $("modal").hidden=false;
+  setInert(true);
+  $("modal-confirm").focus();
+}
+
+function closeModal(){
+  $("modal").hidden=true;
+  setInert(false);
+  if(lastFocus?.isConnected)lastFocus.focus();
+}
+
 function openNotebook(){
-  if(transitioning||!$("modal").hidden||!$("notebook").hidden) return;
-  overlayFocus=document.activeElement;
-  $("notebook-count").textContent=`함께 찾은 이야기 ${state.earned.length}/7`;
-  $("notebook-items").innerHTML=MEMORY_NAMES.map((name,i)=>{
-    const earned=state.earned.includes(i);
-    return `<article class="memory-item ${earned?"":"locked"}">
-      <strong>${earned?"✦ "+esc(name):"○ 아직 찾지 못한 기억"}</strong>
-      <p>${earned?esc(MEMORY_TEXTS[i]):`${i+1}번째 미션에서 만나볼 수 있어요.`}</p>
-    </article>`;
+  if(!$("modal").hidden)return;
+  lastFocus=document.activeElement;
+
+  $("notebook-content").innerHTML=MEMORY_NAMES.map((title,index)=>{
+    const found=state.earned.includes(index);
+    return `
+      <div class="memory-entry">
+        <strong>${index+1}. ${found?escapeHTML(title):"아직 찾지 않은 기억"}</strong>
+        <p>${found?escapeHTML(MEMORY_TEXTS[index]):"탐험을 계속하면 나타나요."}</p>
+      </div>`;
   }).join("");
-  $("notebook").hidden=false;setInert(true);
+
+  $("notebook").hidden=false;
+  setInert(true);
   $("notebook-close").focus();
 }
+
 function closeNotebook(){
-  $("notebook").hidden=true;setInert(false);
-  if(overlayFocus?.isConnected) overlayFocus.focus();
+  $("notebook").hidden=true;
+  setInert(false);
+  if(lastFocus?.isConnected)lastFocus.focus();
 }
+
 $("notebook-button").onclick=openNotebook;
 $("notebook-close").onclick=closeNotebook;
 
-function renderOutro(){
-  $("screen").innerHTML=`
-    <section class="scene">
-      ${background("outro.gif","크리스마스 탐험 완료","image_08.png")}
-      <div class="outro-panel">
-        <span class="progress">일곱 미션 완료!</span>
-        <h1>오늘의 트리 꾸미기,<br>대성공!</h1>
-        <p>함께해 줘서 고마워요.<br>
-          이 화면을 안내데스크에 보여주고<br>
-          크리스마스 선물을 받아가세요!</p>
-        <small>선물 수령은 현장 운영 안내에 따라 진행됩니다.</small>
-        <button id="replay" class="primary">처음부터 다시 하기</button>
-      </div>
-    </section>`;
-  $("replay").onclick=()=>openModal("다시 시작할까요?","현재 진행을 초기화합니다.",
-    resetToIntro,"처음으로","🎄",()=>{},"취소");
-}
-function resetToIntro(){
-  resumePoint=null;
-  state={phase:"intro",stage:0,difficulty:"child",earned:[]};
-  try{localStorage.removeItem(SAVE_KEY)}catch(e){}
-  go("intro",0);
-}
-function setInert(value){
-  $("screen").inert=value;$("topbar").inert=value;$("debug").inert=value;
-}
-function openModal(title,text,fn,label="확인",icon="⭐",cancel=null,cancelLabel="취소"){
-  overlayFocus=document.activeElement;
-  modalCallback=fn;modalCancelCallback=cancel;
-  $("modal-title").textContent=title;$("modal-text").textContent=text;
-  $("modal-icon").textContent=icon;$("modal-ok").textContent=label;
-  $("modal-cancel").textContent=cancelLabel;$("modal-cancel").hidden=!cancel;
-  $("modal").hidden=false;setInert(true);$("modal-ok").focus();
-}
-function closeModal(accept){
-  const fn=accept?modalCallback:modalCancelCallback;
-  modalCallback=null;modalCancelCallback=null;
-  $("modal").hidden=true;setInert(false);
-  if(overlayFocus?.isConnected) overlayFocus.focus();
-  fn?.();
-}
-$("modal-ok").onclick=()=>closeModal(true);
-$("modal-cancel").onclick=()=>closeModal(false);
+document.addEventListener("keydown",event=>{
+  const overlay=!$("modal").hidden
+    ? $("modal")
+    : !$("notebook").hidden?$("notebook"):null;
 
-document.addEventListener("keydown",e=>{
-  const isNote=!$("notebook").hidden;
-  const isModal=!$("modal").hidden;
-  if(!isNote&&!isModal) return;
-  if(e.key==="Escape"){
-    if(isNote) closeNotebook();
-    else if(!$("modal-cancel").hidden) closeModal(false);
-  }
-  if(e.key==="Tab"){
-    const buttons=isNote?[$("notebook-close")]:
-      [$("modal-ok"),$("modal-cancel")].filter(b=>!b.hidden);
-    if(e.shiftKey&&document.activeElement===buttons[0]){
-      e.preventDefault();buttons.at(-1).focus();
-    }else if(!e.shiftKey&&document.activeElement===buttons.at(-1)){
-      e.preventDefault();buttons[0].focus();
-    }
-  }
-});
+  if(!overlay)return;
 
-TITLES.forEach((title,i)=>{
-  const o=document.createElement("option");o.value=i;o.textContent=`${i+1}. ${title}`;
-  $("jump").append(o);
-});
-$("jump-go").onclick=()=>{
-  if(TEST_MODE&&!transitioning) go("puzzle",Number($("jump").value));
-};
-$("pass").onclick=()=>{
-  if(TEST_MODE&&!locked&&!transitioning) go("after");
-};
-$("home").onclick=()=>openModal(
-  "처음으로 돌아갈까요?","현재 진행을 초기화합니다.",
-  resetToIntro,"처음으로","🎄",()=>{},"취소"
-);
-
-/* Web Audio: 외부 음원 없이 배경음악 합성 */
-let audio=null,master=null,reverb=null,noiseBuffer=null;
-let musicOn=false,soundOn=false,musicTimer=null;
-let beatIndex=0,nextBeatTime=0;
-const voices=new Set();
-const EIGHTH=60/112/2;
-const hz=midi=>440*Math.pow(2,(midi-69)/12);
-
-function unlockAudio(){
-  try{
-    const Constructor=window.AudioContext||window.webkitAudioContext;
-    if(!Constructor) return false;
-    if(!audio){
-      audio=new Constructor();
-      master=audio.createGain();master.gain.value=.7;
-      const compressor=audio.createDynamicsCompressor();
-      compressor.threshold.value=-18;compressor.knee.value=18;
-      compressor.ratio.value=3;compressor.attack.value=.006;compressor.release.value=.2;
-      master.connect(compressor);compressor.connect(audio.destination);
-
-      reverb=audio.createConvolver();
-      const length=Math.floor(audio.sampleRate*.8);
-      const impulse=audio.createBuffer(2,length,audio.sampleRate);
-      for(let c=0;c<2;c++){
-        const d=impulse.getChannelData(c);
-        for(let i=0;i<length;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/length,3)*.18;
-      }
-      reverb.buffer=impulse;
-      const wet=audio.createGain();wet.gain.value=.12;
-      reverb.connect(wet);wet.connect(master);
-
-      noiseBuffer=audio.createBuffer(1,Math.floor(audio.sampleRate*.12),audio.sampleRate);
-      const d=noiseBuffer.getChannelData(0);
-      for(let i=0;i<d.length;i++) d[i]=Math.random()*2-1;
-    }
-    if(audio.state==="suspended") audio.resume().catch(()=>{});
-    return true;
-  }catch(e){return false}
-}
-function voice(midi,duration,volume,type,time,group,bright=false){
-  if(!audio) return;
-  const t=Math.max(time,audio.currentTime);
-  const oscillator=audio.createOscillator(),gain=audio.createGain();
-  const filter=audio.createBiquadFilter();
-  oscillator.type=type;oscillator.frequency.value=hz(midi);
-  filter.type="lowpass";filter.frequency.value=bright?6000:2200;
-  gain.gain.setValueAtTime(.0001,t);
-  gain.gain.exponentialRampToValueAtTime(Math.max(.001,volume),t+.012);
-  gain.gain.exponentialRampToValueAtTime(.0001,t+Math.max(.04,duration));
-  oscillator.connect(filter);filter.connect(gain);gain.connect(master);
-  if(bright) gain.connect(reverb);
-  const item={node:oscillator,group};voices.add(item);
-  oscillator.onended=()=>{
-    oscillator.disconnect();filter.disconnect();gain.disconnect();voices.delete(item);
-  };
-  oscillator.start(t);oscillator.stop(t+duration+.03);
-}
-function synth(midi,duration=.3,volume=.04,type="triangle",delay=0){
-  if(unlockAudio()) voice(midi,duration,volume,type,audio.currentTime+delay,"game");
-}
-function bell(midi,duration=.6,volume=.05,group="game",time=null){
-  if(!unlockAudio()) return;
-  const t=time??audio.currentTime;
-  voice(midi,duration,volume,"sine",t,group,true);
-  voice(midi+12,duration*.45,volume*.23,"sine",t+.004,group,true);
-  voice(midi+19,duration*.25,volume*.06,"sine",t+.007,group,true);
-}
-function shaker(time,volume=.004){
-  if(!audio) return;
-  const source=audio.createBufferSource(),gain=audio.createGain();
-  const filter=audio.createBiquadFilter();
-  source.buffer=noiseBuffer;filter.type="highpass";filter.frequency.value=6500;
-  gain.gain.setValueAtTime(volume,time);
-  gain.gain.exponentialRampToValueAtTime(.0001,time+.055);
-  source.connect(filter);filter.connect(gain);gain.connect(master);
-  const item={node:source,group:"bgm"};voices.add(item);
-  source.onended=()=>{
-    source.disconnect();filter.disconnect();gain.disconnect();voices.delete(item);
-  };
-  source.start(time);source.stop(time+.08);
-}
-function stopGroup(group){
-  voices.forEach(v=>{if(v.group===group){try{v.node.stop()}catch(e){}}});
-}
-function sfx(frequency,duration=.06,volume=.02){
-  if(soundOn&&unlockAudio()){
-    voice(69+12*Math.log2(frequency/440),duration,volume,"sine",audio.currentTime,"game");
-  }
-}
-function successSound(){
-  if(!soundOn||!unlockAudio()) return;
-  [72,76,79,84].forEach((n,i)=>bell(n,.5,.04,"game",audio.currentTime+i*.09));
-}
-const melodyA=[
-  76,76,76,null,76,76,76,null,
-  76,79,72,74,76,null,null,null,
-  77,77,77,77,77,76,76,76,
-  76,74,74,76,74,null,79,null
-];
-const melodyB=[
-  76,76,76,null,76,76,76,null,
-  76,79,72,74,76,null,null,null,
-  77,77,77,77,77,76,76,76,
-  79,79,77,74,72,null,null,null
-];
-const chords=[
-  [60,64,67],[60,64,67],[65,69,72],[55,59,62],
-  [60,64,67],[57,60,64],[65,69,72],[55,59,62]
-];
-function scheduleBeat(index,time){
-  if(state.phase==="puzzle"&&state.stage===4) return;
-  const cycle=Math.floor(index/32),step=index%32,bar=Math.floor(index/8);
-  const chord=chords[(cycle%2)*4+bar];
-  const melody=cycle%2===0?melodyA:melodyB;
-  const scale=state.phase==="epilogue"?.75:1;
-  const n=melody[step];
-  if(n!==null){
-    bell(n,.4,.032*scale,"bgm",time);
-    voice(n-12,.19,.007*scale,"triangle",time,"bgm");
-  }
-  if(step%8===0||step%8===4){
-    voice(step%8===0?chord[0]-24:chord[2]-24,.35,.025*scale,"triangle",time,"bgm");
-  }
-  if(step%4===2){
-    chord.forEach((value,i)=>voice(value,.16,.011*scale,"sine",time+i*.008,"bgm"));
-  }
-  if(cycle%2===1&&step%2===1){
-    voice(chord[(step+bar)%3]+12,.2,.011*scale,"sine",time,"bgm",true);
-  }
-  shaker(time,step%2===0?.004:.002);
-  if(step%8===7) bell(chord[2]+24,.2,.007*scale,"bgm",time);
-  if((state.stage===6||state.phase==="outro")&&step%8===0){
-    bell(chord[0]+24,.65,.012,"bgm",time);
-  }
-}
-function musicTick(){
-  if(!audio||audio.state!=="running") return;
-  if(nextBeatTime<audio.currentTime-.2) nextBeatTime=audio.currentTime+.04;
-  while(nextBeatTime<audio.currentTime+.15){
-    scheduleBeat(beatIndex++,nextBeatTime);nextBeatTime+=EIGHTH;
-  }
-}
-function updateMusic(){
-  clearInterval(musicTimer);musicTimer=null;stopGroup("bgm");
-  $("music-toggle").textContent=musicOn?"♫ ON":"♫ OFF";
-  $("music-toggle").setAttribute("aria-pressed",String(musicOn));
-  if(musicOn&&!document.hidden&&unlockAudio()){
-    nextBeatTime=audio.currentTime+.05;
-    musicTimer=setInterval(musicTick,30);musicTick();
-  }
-}
-$("music-toggle").onclick=()=>{
-  if(!unlockAudio()){
-    openModal("音楽 안내".replace("音楽","음악"),"이 환경에서는 오디오를 사용할 수 없어요.",()=>{});
+  if(event.key==="Escape"){
+    event.preventDefault();
+    if(overlay.id==="notebook")closeNotebook();
     return;
   }
-  musicOn=!musicOn;updateMusic();
-};
-$("sound-toggle").onclick=()=>{
-  soundOn=!soundOn;unlockAudio();
-  $("sound-toggle").textContent=soundOn?"효과음 ON":"효과음 OFF";
-  $("sound-toggle").setAttribute("aria-pressed",String(soundOn));
-};
-document.addEventListener("visibilitychange",()=>{
-  if(document.hidden){stopGroup("game");stopGroup("bgm")}
-  updateMusic();
+
+  if(event.key==="Tab"){
+    const focusable=[...overlay.querySelectorAll("button:not([hidden])")];
+    const first=focusable[0],last=focusable[focusable.length-1];
+
+    if(event.shiftKey&&document.activeElement===first){
+      event.preventDefault();
+      last.focus();
+    }else if(!event.shiftKey&&document.activeElement===last){
+      event.preventDefault();
+      first.focus();
+    }
+  }
 });
 
-/* 시작 */
-resumePoint=readSave();
-updateChrome();
-renderIntro();
+function toast(text){
+  $("toast").textContent=text;
+  $("toast").hidden=false;
+  later(()=>$("toast").hidden=true,2100);
+}
+
+/* =========================
+   테스트·처음으로
+========================= */
+$("stage-select").innerHTML=TITLES.map((title,index)=>
+  `<option value="${index}">${index+1}. ${escapeHTML(title)}</option>`
+).join("");
+
+$("jump-button").onclick=()=>{
+  if(transitioning)return;
+  go("puzzle",Number($("stage-select").value));
+};
+
+$("pass-button").onclick=()=>{
+  if(transitioning)return;
+
+  if(["guide","arrival","puzzle"].includes(state.phase)){
+    go("after");
+  }else if(state.phase==="after"){
+    state.stage<6?go("guide",state.stage+1):go("epilogue");
+  }else if(state.phase==="epilogue"){
+    go("outro");
+  }
+};
+
+$("home-button").onclick=()=>{
+  openModal(
+    "처음으로 돌아갈까?",
+    "현재 진행 기록을 지우고 처음부터 시작해.",
+    resetToIntro,
+    "처음으로",
+    ()=>{},
+    "계속 탐험"
+  );
+};
+
+/* 화면을 바꿀 때 남은 토스트도 함께 정리 */
+const originalCleanup=cleanup;
+cleanup=function(){
+  $("toast").hidden=true;
+  originalCleanup();
+};
+
+go("intro",0);
 </script>
 </body>
 </html>
