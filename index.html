@@ -3115,5 +3115,1224 @@ cleanup=function(){
 
 go("intro",0);
 </script>
+<style>
+/* 난이도 버튼: 메시지·배경은 유지하고 좌우 배치 */
+.difficulty-options{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+}
+.difficulty-options button{
+  min-width:0;
+  padding:13px 7px;
+  font-size:18px;
+  line-height:1.3;
+}
+.difficulty-options span{
+  font-size:12px;
+  line-height:1.4;
+}
+
+/* 대화: 본문 1px 확대, 프로필 액자 복원 */
+.message{font-size:18px}
+.dialogue{cursor:pointer}
+.portrait{
+  left:9px;
+  bottom:16px;
+  width:86px;
+  height:105px;
+  padding:4px;
+  border:3px solid #fffaf0;
+  border-radius:14px 10px 13px 10px;
+  background:#f9e4ec;
+  box-shadow:0 0 0 1px #d5a4b4,3px 5px 0 #95677825;
+  transform:rotate(-5deg);
+  overflow:hidden;
+}
+.portrait img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  filter:none;
+}
+.dialogue-copy{left:113px}
+.portrait:before,.portrait:after{content:none!important}
+
+/* 分홍색 세로형 자물쇠 */
+.lock-wrap{
+  max-width:345px;
+  margin:18px auto 0;
+  padding-top:65px;
+}
+.lock-shackle{
+  top:0;
+  height:119px;
+  width:49%;
+  left:25.5%;
+  border-width:15px;
+  border-color:#adb1bf;
+  box-shadow:inset 4px 2px 0 #f2f2f6,3px 0 0 #858897;
+}
+.lock-body{
+  padding:23px 11px 25px;
+  border:3px solid #b56687;
+  border-radius:20px;
+  background:linear-gradient(130deg,#ffdeec,#eca4c2 55%,#f9cddd);
+  box-shadow:inset 0 4px 0 #fff1f7,0 7px 0 #b76d8d;
+}
+.lock-label{
+  color:#9c5b76;
+  margin-bottom:16px;
+}
+.lock-body .dial-face{
+  height:82px;
+  color:#94516e;
+  border-color:#b6899c;
+  background:linear-gradient(#dcbac9,#fff9fc 33%,#fff9fc 67%,#dcbac9);
+}
+.lock-body .dial button{
+  min-height:29px;
+  color:#995775;
+  background:#fff4faaf;
+}
+
+/* 2번: 별 확대 */
+.thread-board{height:300px}
+.thread-board .thread-star{
+  width:94%;
+  height:96%;
+  left:3%;
+  top:2%;
+}
+.thread-node{
+  width:37px;
+  height:37px;
+  background:#fffdf3ed;
+}
+
+/* 이동 안내: 자동 종료 없이 도착 버튼으로 진행 */
+.route-screen .background{
+  animation:routeImageIn .65s ease-out both;
+}
+@keyframes routeImageIn{
+  from{opacity:.3;transform:scale(1.025)}
+  to{opacity:1;transform:scale(1)}
+}
+.route-screen .route-note{top:83px}
+.route-footer{
+  position:absolute;
+  z-index:8;
+  left:18px;
+  right:18px;
+  bottom:22px;
+  padding:15px;
+  border:2px solid #e0c5b4;
+  border-radius:16px;
+  background:#fffaf0f2;
+  text-align:center;
+  box-shadow:var(--shadow);
+}
+.route-footer p{
+  margin:0 0 13px;
+  font-size:17px;
+  line-height:1.4;
+}
+.route-footer button{width:100%}
+.route-loading{
+  display:flex;
+  justify-content:center;
+  gap:7px;
+  margin-bottom:12px;
+}
+.route-loading i{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#d6a2b6;
+  animation:routeDot 1.2s ease-in-out infinite;
+}
+.route-loading i:nth-child(2){animation-delay:.15s}
+.route-loading i:nth-child(3){animation-delay:.3s}
+@keyframes routeDot{
+  50%{opacity:.3;transform:translateY(-3px)}
+}
+
+/* 4번 책장 */
+.field-clue{
+  margin:8px 0 12px;
+  padding:9px 11px;
+  border:1px dashed #cda6b0;
+  border-radius:9px;
+  background:#fff4e3;
+  font-size:15px;
+  line-height:1.45;
+  text-align:center;
+}
+.field-clue small{
+  display:block;
+  color:#a47d89;
+  font-size:11px;
+  margin-bottom:3px;
+}
+.bookshelf{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:8px;
+  padding:16px 11px 8px;
+  border:3px solid #b58c75;
+  border-bottom:13px solid #aa7c62;
+  border-radius:12px 12px 4px 4px;
+  background:linear-gradient(#e9d1b6,#f7e5ce);
+}
+.book-slot{
+  height:154px;
+  min-width:0;
+  padding:0;
+  border:2px dashed #c3a18a;
+  border-radius:6px;
+  background:#fff7e950;
+  color:#a18779;
+}
+.book-slot.filled{border:0;background:transparent}
+.book-pool{
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  gap:12px;
+  min-height:160px;
+  padding:18px 4px 5px;
+}
+.book-piece{
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:52px;
+  height:139px;
+  border:2px solid #855e6b70;
+  border-left-width:6px;
+  border-radius:5px 8px 8px 5px;
+  background:var(--book-color);
+  box-shadow:3px 3px 0 #77566820;
+  color:#684953;
+  padding:10px 3px;
+  touch-action:none;
+  user-select:none;
+}
+.book-piece:before{
+  content:"";
+  position:absolute;
+  top:8px;
+  left:4px;
+  right:4px;
+  height:3px;
+  border-top:1px solid #ffffffa0;
+  border-bottom:1px solid #ffffffa0;
+}
+.book-piece span{
+  writing-mode:vertical-rl;
+  text-orientation:upright;
+  letter-spacing:2px;
+  font-size:17px;
+  pointer-events:none;
+}
+.book-piece.selected{
+  outline:3px solid #bf7293;
+  outline-offset:4px;
+  transform:translateY(-5px);
+}
+.book-slot .book-piece{
+  width:100%;
+  height:100%;
+}
+.book-piece.dragging{opacity:.65}
+.book-help{text-align:center;font-size:14px;color:#997a85;margin:12px 0}
+
+/* 5·7번: 문제 내부 스크롤 없이 배치 */
+.puzzle-scene[data-stage="4"] .puzzle-card,
+.puzzle-scene[data-stage="6"] .puzzle-card{
+  top:68px;
+  bottom:109px;
+  padding:11px;
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+  overflow:hidden;
+}
+.puzzle-scene[data-stage="4"] .puzzle-dock,
+.puzzle-scene[data-stage="6"] .puzzle-dock{gap:5px;bottom:9px}
+.puzzle-scene[data-stage="4"] .status,
+.puzzle-scene[data-stage="6"] .status{
+  min-height:29px;
+  padding:5px 8px;
+  font-size:14px;
+}
+.puzzle-scene[data-stage="4"] .dock-buttons button,
+.puzzle-scene[data-stage="6"] .dock-buttons button{padding:6px}
+.puzzle-scene[data-stage="4"] .puzzle-instruction,
+.puzzle-scene[data-stage="6"] .puzzle-instruction{
+  font-size:18px;
+  line-height:1.3;
+  margin:0;
+  flex-shrink:0;
+}
+.puzzle-scene[data-stage="4"] .music-progress{padding:5px 0;flex-shrink:0}
+.puzzle-scene[data-stage="4"] .music-dot{width:10px;height:10px}
+.puzzle-scene[data-stage="4"] .piano-case{
+  width:100%;
+  flex:1;
+  min-height:116px;
+  max-height:225px;
+  margin:3px 0 7px;
+  padding:9px 7px 7px;
+}
+.puzzle-scene[data-stage="4"] .piano-name{margin-bottom:7px}
+.puzzle-scene[data-stage="4"] .piano-keyboard{height:calc(100% - 21px)}
+.puzzle-scene[data-stage="4"] .black-key{height:61%}
+.puzzle-scene[data-stage="4"] .black-key.active{height:63%}
+.puzzle-scene[data-stage="4"] .music-entered{
+  min-height:21px;
+  padding:0;
+  font-size:14px;
+  flex-shrink:0;
+}
+.puzzle-scene[data-stage="4"] .test-score{
+  margin:0;
+  padding:7px 3px;
+  flex-shrink:0;
+}
+.puzzle-scene[data-stage="4"] .test-score small{font-size:10px;margin-bottom:3px}
+.puzzle-scene[data-stage="4"] .test-score p{
+  white-space:nowrap;
+  font-size:clamp(12px,3.8vw,17px);
+  line-height:1.35;
+}
+.puzzle-scene[data-stage="4"] .puzzle-sub{display:none}
+.puzzle-scene[data-stage="6"] .final-star{
+  width:80px;
+  height:48px;
+  margin:0 auto;
+  flex-shrink:0;
+}
+.puzzle-scene[data-stage="6"] .circuit-labels{
+  font-size:12px;
+  padding:0;
+  flex-shrink:0;
+}
+.puzzle-scene[data-stage="6"] .circuit-board{
+  flex-shrink:0;
+  margin:2px auto;
+  gap:6px;
+}
+.puzzle-scene[data-stage="6"] .circuit-cell{aspect-ratio:auto}
+.puzzle-scene[data-stage="6"] .puzzle-action{
+  margin:0;
+  padding:7px;
+  min-height:36px;
+  font-size:17px;
+  flex-shrink:0;
+}
+
+/* 6번 투명 조각 */
+.wish-board{
+  position:relative;
+  width:min(100%,300px);
+  aspect-ratio:1;
+  margin:12px auto;
+  overflow:hidden;
+  border:2px solid #d6b8bd;
+  border-radius:15px;
+  background:
+    linear-gradient(#e5cfd633 1px,transparent 1px),
+    linear-gradient(90deg,#e5cfd633 1px,transparent 1px),
+    #fff8ef;
+  background-size:24px 24px;
+  touch-action:none;
+}
+.wish-target{
+  position:absolute;
+  width:60%;
+  height:60%;
+  left:20%;
+  top:20%;
+  border:1px dashed #c6adb8;
+  border-radius:50%;
+  pointer-events:none;
+}
+.wish-target:before,.wish-target:after{
+  content:"";
+  position:absolute;
+  background:#c6adb8;
+}
+.wish-target:before{width:14px;height:1px;left:calc(50% - 7px);top:50%}
+.wish-target:after{width:1px;height:14px;left:50%;top:calc(50% - 7px)}
+.wish-layer{
+  position:absolute;
+  width:84%;
+  height:84%;
+  transform:translate(-50%,-50%);
+  pointer-events:none;
+}
+.wish-layer svg{width:100%;height:100%;overflow:visible}
+.wish-layer.active{
+  filter:drop-shadow(0 0 3px #bd75966b);
+}
+.wish-tabs{display:flex;gap:6px;justify-content:center}
+.wish-tabs button,.wish-controls button{
+  border:1px solid #d2abb9;
+  border-radius:9px;
+  padding:8px;
+  color:#8e5871;
+  background:#fff8f1;
+  font-size:15px;
+}
+.wish-tabs button{flex:1}
+.wish-tabs button.selected{background:#f5d5e2;border-color:#b87592}
+.wish-controls{display:flex;justify-content:center;gap:7px;margin:10px 0}
+
+/* 배경 앨범 */
+.album-viewer{
+  position:relative;
+  width:100%;
+  height:min(51dvh,450px);
+  margin:12px 0;
+  background:#f5e6e9;
+  border:1px solid #dfc3bd;
+  border-radius:12px;
+  overflow:hidden;
+  touch-action:pan-y;
+}
+.album-viewer img{width:100%;height:100%;object-fit:contain;display:block}
+.album-missing{
+  position:absolute;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:#a1808e;
+}
+.album-viewer img{position:relative}
+.album-nav{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+.album-nav button{
+  border:1px solid #d3a7b8;
+  background:#fff5ed;
+  color:#9d5876;
+  border-radius:10px;
+  padding:7px 14px;
+  font-size:17px;
+}
+.album-caption{min-height:55px}
+.overlay-card .album-caption p{font-size:16px;margin:5px 0}
+.album-caption strong{font-size:20px;color:#b36783}
+
+@media(max-height:700px){
+  .message{font-size:17px}
+  .portrait{width:79px;height:95px}
+  .dialogue-copy{left:104px}
+  .thread-board{height:250px}
+  .book-slot{height:127px}
+  .book-piece{height:117px;width:47px}
+  .book-pool{min-height:135px;gap:10px}
+  .lock-wrap{padding-top:52px;margin-top:10px}
+  .lock-shackle{height:100px}
+  .lock-body{padding:15px 9px 18px}
+  .lock-body .dial-face{height:69px}
+}
+</style>
+<script>
+(() => {
+  /* 대화창 전체 터치로 진행 */
+  playDialogue = function(scene,lines,onDone,lastLabel="계속하기"){
+    const box=document.createElement("section");
+    box.className="dialogue";
+    box.innerHTML=`
+      <div class="portrait"><img alt=""></div>
+      <div class="dialogue-copy">
+        <div class="speaker"></div>
+        <div class="message"></div>
+      </div>
+      <button class="dialogue-next" hidden></button>`;
+    scene.append(box);
+
+    const portrait=box.querySelector(".portrait");
+    const image=portrait.querySelector("img");
+    const speaker=box.querySelector(".speaker");
+    const message=box.querySelector(".message");
+    const next=box.querySelector(".dialogue-next");
+
+    let index=0,complete=false,ended=false;
+    let touchX=0,touchY=0,moved=false;
+
+    function show(){
+      if(typingTimer)clearInterval(typingTimer);
+      typingTimer=null;
+      complete=false;
+      next.hidden=true;
+      message.textContent="";
+      message.scrollTop=0;
+
+      const line=lines[index];
+      const narration=!line.name;
+      box.classList.toggle("narration",narration);
+      portrait.hidden=narration;
+      speaker.hidden=narration;
+      speaker.textContent=line.name||"";
+
+      if(line.name){
+        image.hidden=false;
+        image.onerror=()=>image.hidden=true;
+        image.src=line.name==="별"
+          ? ((state.stage===6&&state.phase==="after")||state.phase==="epilogue"
+              ? STAR.light:STAR.awake)
+          : CHAR[line.name];
+        image.alt=line.name;
+      }else{
+        image.removeAttribute("src");
+        image.alt="";
+      }
+
+      const full=narration?`(${line.text})`:line.text;
+      const chars=Array.from(full);
+      let cursor=0;
+
+      function finish(){
+        if(typingTimer)clearInterval(typingTimer);
+        typingTimer=null;
+        message.textContent=full;
+        complete=true;
+        finishTyping=null;
+        next.innerHTML=
+          `${escapeHTML(index===lines.length-1?lastLabel:"다음")} <span class="arrow">›</span>`;
+        next.hidden=false;
+      }
+
+      finishTyping=finish;
+      if(reduceMotion){finish();return}
+
+      typingTimer=setInterval(()=>{
+        if(cursor<chars.length)message.textContent+=chars[cursor++];
+        else finish();
+      },25);
+    }
+
+    function advance(){
+      if(ended)return;
+      if(!complete){
+        if(finishTyping)finishTyping();
+        return;
+      }
+      if(index<lines.length-1){
+        index++;
+        show();
+      }else{
+        ended=true;
+        onDone();
+      }
+    }
+
+    /* 본문을 스크롤한 경우에는 다음 대사로 넘기지 않음 */
+    box.addEventListener("pointerdown",event=>{
+      touchX=event.clientX;
+      touchY=event.clientY;
+      moved=false;
+    });
+    box.addEventListener("pointermove",event=>{
+      if(Math.hypot(event.clientX-touchX,event.clientY-touchY)>9)moved=true;
+    });
+    box.addEventListener("click",()=>{
+      if(!moved)advance();
+      moved=false;
+    });
+
+    /* 버튼에 별도 클릭을 달지 않아 중복 진행 방지 */
+    show();
+  };
+
+  /* 안내 대화와 실제 이동 화면 분리 */
+  renderGuide = function(){
+    if(state.stage===0){
+      renderDialogue([
+        say("해치","안녕! 잘 왔어. 지금 트리를 꾸미는 중이야."),
+        say("해치","장식 상자부터 가지러 가자. 나랑 같이 가줄래?")
+      ],transitionToArrival,"장식 상자 찾으러 가기");
+    }else{
+      transitionToArrival();
+    }
+  };
+
+  transitionToArrival = function(){
+    cleanup();
+    locked=false;
+    transitioning=false;
+    updateChrome();
+
+    const stage=state.stage;
+    const scene=background(
+      `route_${String(stage+1).padStart(2,"0")}.png`,
+      imageFile(stage)
+    );
+    scene.classList.add("route-screen");
+    chapter(scene,stage,"이동 안내");
+
+    const noteBox=document.createElement("div");
+    noteBox.className="route-note";
+    noteBox.innerHTML=`
+      <strong>${escapeHTML(PLACES[stage])}</strong>
+      <p>${escapeHTML(GUIDE_LINES[stage])}</p>
+      <small>현장 안내 이미지 확인 후 이동해 주세요.</small>`;
+
+    const footer=document.createElement("section");
+    footer.className="route-footer";
+    footer.innerHTML=`
+      <div class="route-loading" aria-hidden="true"><i></i><i></i><i></i></div>
+      <p>장소에 도착하면 아래 버튼을 눌러줘.</p>
+      <button class="primary">도착했어 <span class="arrow">›</span></button>`;
+
+    let done=false;
+    footer.querySelector("button").onclick=()=>{
+      if(done)return;
+      done=true;
+      go("arrival");
+    };
+
+    scene.append(noteBox,footer);
+    $("screen").append(scene);
+
+    /* 시간 경과에 따라 자동으로 넘어가지 않음 */
+  };
+
+  /* 새로운 문제에 맞춘 대사 */
+  ARRIVAL[3]=[
+    say("백호","책을 찾으러 왔어? 어떤 책인데?"),
+    say("해치","별이 작은 손이랑 책장을 기억한대."),
+    say("별","책들이 나란히 꽂혀 있었어. 색깔도 조금씩 달랐고."),
+    say("백호","그럼 책장부터 살펴보자. 같은 순서로 놓아보면 생각날지도 몰라."),
+    say("해치","현장 단서를 보고 화면 속 책들을 차례대로 꽂아줘!")
+  ];
+
+  AFTER[3]=[
+    note("책들이 나란히 놓이자, 책 한 권이 펼쳐졌다. 침대와 창문이 그려져 있었다."),
+    say("별","아… 내 자리가 저기였어. 아이의 침대맡!"),
+    say("별","크리스마스가 지나도 나를 치우지 않았어. 잘 때도 옆에 두고."),
+    say("해치","그 별이 마음에 쏙 들었나 보다."),
+    say("별","잠들기 전에는 노래도 불러줬는데. 처음이… 미, 미, 미…"),
+    say("해치","그 노래, 공연장에서 한번 연주해 보자. 다음 부분도 떠오를지 몰라!")
+  ];
+
+  ARRIVAL[5]=[
+    say("해치","봐! 나뭇잎처럼 달린 게 전부 소원이야."),
+    say("현무","여기 세 장부터 읽어봐. 아래에 작은 표시도 있어."),
+    say("별","강아지, 눈사람… 저쪽 카드도 궁금해."),
+    say("해치","카드의 표시를 보고 투명 조각을 겹쳐보자. 어떤 모양이 나올까?")
+  ];
+
+  HINTS[3]=[
+    "현장에서 지정된 책들의 순서를 확인해 줘.",
+    "책을 끌어 옮기거나, 책을 누른 다음 빈칸을 눌러도 돼.",
+    "테스트 순서: 한강 산책 → 달빛 동화 → 서울의 밤 → 작은 창문"
+  ];
+  HINTS[5]=[
+    "현장 소원 카드에서 각 조각의 방향을 확인해 줘.",
+    "조각을 선택하고 가운데로 옮긴 뒤 방향을 맞춰봐.",
+    "테스트 방향: 강아지 위쪽 / 눈사람 오른쪽 / 가족 왼쪽"
+  ];
+
+  /* 오답 팝업 정리 */
+  fail = function(text){
+    const card=$("puzzle-card");
+    if(card){
+      card.classList.remove("shake");
+      void card.offsetWidth;
+      card.classList.add("shake");
+    }
+    openModal("다시 한번 해볼까?",text);
+  };
+
+  /* 배경 이미지 앨범 */
+  openNotebook = function(){
+    if(!$("modal").hidden)return;
+    lastFocus=document.activeElement;
+
+    $("notebook-title").textContent="함께 찾은 기억";
+    const titles=[...MEMORY_NAMES,"별이 올라간 자리"];
+    const captions=[
+      ...MEMORY_TEXTS,
+      "트리 아래에는 친구들이, 높은 곳에는 작은 별이 남았다."
+    ];
+    let index=0;
+
+    $("notebook-content").innerHTML=`
+      <div class="album-viewer" id="album-viewer" tabindex="0"
+           aria-label="기억 앨범. 좌우 방향키 또는 스와이프로 이동">
+        <div class="album-missing">이미지를 준비하고 있어요.</div>
+        <img id="album-image" alt="">
+      </div>
+      <div class="album-caption">
+        <strong id="album-title"></strong>
+        <p id="album-description"></p>
+      </div>
+      <div class="album-nav">
+        <button id="album-prev" aria-label="이전 이미지">‹ 이전</button>
+        <span id="album-count"></span>
+        <button id="album-next" aria-label="다음 이미지">다음 ›</button>
+      </div>`;
+
+    const image=$("album-image");
+    const viewer=$("album-viewer");
+
+    function show(){
+      image.hidden=false;
+      image.onerror=()=>image.hidden=true;
+      image.src=`image_${String(index+1).padStart(2,"0")}.png`;
+      image.alt=titles[index];
+      $("album-title").textContent=titles[index];
+      $("album-description").textContent=captions[index];
+      $("album-count").textContent=`${index+1} / 8`;
+      $("album-prev").disabled=index===0;
+      $("album-next").disabled=index===7;
+    }
+
+    function move(delta){
+      index=clamp(index+delta,0,7);
+      show();
+    }
+
+    $("album-prev").onclick=()=>move(-1);
+    $("album-next").onclick=()=>move(1);
+
+    let startX=0,startY=0;
+    viewer.onpointerdown=event=>{
+      startX=event.clientX;
+      startY=event.clientY;
+      viewer.setPointerCapture(event.pointerId);
+    };
+    viewer.onpointerup=event=>{
+      const dx=event.clientX-startX,dy=event.clientY-startY;
+      if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy)*1.3){
+        move(dx<0?1:-1);
+      }
+    };
+    viewer.onkeydown=event=>{
+      if(event.key==="ArrowLeft"||event.key==="ArrowRight"){
+        event.preventDefault();
+        move(event.key==="ArrowRight"?1:-1);
+      }
+    };
+
+    $("notebook").hidden=false;
+    setInert(true);
+    show();
+    viewer.focus();
+  };
+
+  $("notebook-button").onclick=openNotebook;
+})();
+</script>
+  <script>
+(() => {
+  /* =========================
+     4번: 현장 책 순서 맞추기
+  ========================= */
+  bookPuzzle = function(card){
+    const books=[
+      {id:"river",title:"한강 산책",color:"#b7d5e4"},
+      {id:"night",title:"서울의 밤",color:"#eab8cc"},
+      {id:"window",title:"작은 창문",color:"#bfd3b4"},
+      {id:"moon",title:"달빛 동화",color:"#f0d89b"}
+    ];
+
+    /* 현장 단서 확정 후 이 순서만 교체 */
+    const answer=["river","moon","night","window"];
+    const poolOrder=["night","window","river","moon"];
+    let slots=[null,null,null,null];
+    let selected=null;
+    let gesture=null;
+    let ignoreClick=false;
+
+    card.innerHTML=`
+      <p class="puzzle-instruction">
+        현장 책장 단서를 보고<br>같은 순서로 책을 꽂아줘.
+      </p>
+      <div class="field-clue">
+        <small>테스트용 현장 단서</small>
+        왼쪽부터<br>
+        한강 산책 → 달빛 동화 → 서울의 밤 → 작은 창문
+      </div>
+      <div class="bookshelf" id="book-shelf"></div>
+      <div class="book-pool" id="new-book-pool"></div>
+      <p class="book-help">끌어 놓기 또는 책 선택 → 자리 선택</p>
+      <button class="primary puzzle-action" id="books-check">책장 확인</button>`;
+
+    const shelf=$("book-shelf");
+    const pool=$("new-book-pool");
+
+    function removeFromSlots(id){
+      slots=slots.map(value=>value===id?null:value);
+    }
+
+    function place(id,index){
+      const oldIndex=slots.indexOf(id);
+      const replaced=slots[index];
+
+      if(oldIndex===index)return;
+      if(oldIndex>=0)slots[oldIndex]=replaced;
+      slots[index]=id;
+      selected=null;
+      render();
+      setStatus(`${slots.filter(Boolean).length} / 4권 배치`);
+    }
+
+    function piece(id){
+      const book=books.find(b=>b.id===id);
+      const el=document.createElement("div");
+      el.className="book-piece"+(selected===id?" selected":"");
+      el.dataset.book=id;
+      el.style.setProperty("--book-color",book.color);
+      el.setAttribute("role","button");
+      el.tabIndex=0;
+      el.setAttribute("aria-label",book.title);
+      el.innerHTML=`<span>${escapeHTML(book.title)}</span>`;
+
+      el.onclick=event=>{
+        event.stopPropagation();
+        if(locked||ignoreClick)return;
+        selected=selected===id?null:id;
+        render();
+        setStatus(selected
+          ? `${book.title}을 놓을 자리를 눌러줘.`
+          : "책을 골라줘.");
+      };
+
+      el.onkeydown=event=>{
+        if(event.key==="Enter"||event.key===" "){
+          event.preventDefault();
+          el.click();
+        }
+      };
+
+      el.onpointerdown=event=>{
+        if(locked)return;
+        gesture={
+          id,
+          x:event.clientX,
+          y:event.clientY,
+          moved:false,
+          pointer:event.pointerId,
+          el
+        };
+        el.setPointerCapture(event.pointerId);
+      };
+
+      el.onpointermove=event=>{
+        if(!gesture||gesture.id!==id)return;
+        if(Math.hypot(event.clientX-gesture.x,event.clientY-gesture.y)>8){
+          gesture.moved=true;
+          el.classList.add("dragging");
+          setStatus("책을 원하는 칸 위에 놓아줘.");
+        }
+      };
+
+      el.onpointerup=event=>{
+        if(!gesture||gesture.id!==id)return;
+        const dragged=gesture.moved;
+        gesture=null;
+        el.classList.remove("dragging");
+
+        if(!dragged)return;
+
+        ignoreClick=true;
+        later(()=>ignoreClick=false,220);
+        const target=document.elementFromPoint(event.clientX,event.clientY);
+        const slot=target?.closest("[data-book-slot]");
+
+        if(slot&&shelf.contains(slot)){
+          place(id,Number(slot.dataset.bookSlot));
+        }else if(target&&pool.contains(target)){
+          removeFromSlots(id);
+          selected=null;
+          render();
+        }else{
+          selected=id;
+          render();
+          setStatus("놓을 자리를 눌러줘.");
+        }
+      };
+
+      el.onpointercancel=()=>{
+        gesture=null;
+        el.classList.remove("dragging");
+      };
+
+      return el;
+    }
+
+    function render(){
+      shelf.innerHTML="";
+      pool.innerHTML="";
+
+      slots.forEach((id,index)=>{
+        const slot=document.createElement("div");
+        slot.className="book-slot"+(id?" filled":"");
+        slot.dataset.bookSlot=index;
+        slot.setAttribute("role","button");
+        slot.setAttribute("aria-label",`${index+1}번째 책 자리`);
+        slot.tabIndex=0;
+
+        if(id)slot.append(piece(id));
+        else slot.textContent=index+1;
+
+        slot.onclick=()=>{
+          if(locked||ignoreClick)return;
+          if(selected)place(selected,index);
+          else if(id){
+            selected=id;
+            render();
+          }
+        };
+        slot.onkeydown=event=>{
+          if(event.target!==slot)return;
+          if(event.key==="Enter"||event.key===" "){
+            event.preventDefault();
+            slot.click();
+          }
+        };
+        shelf.append(slot);
+      });
+
+      poolOrder.filter(id=>!slots.includes(id)).forEach(id=>pool.append(piece(id)));
+    }
+
+    $("books-check").onclick=()=>{
+      if(locked)return;
+      if(slots.some(id=>!id)){
+        setStatus("책 네 권을 모두 꽂아줘.");
+        return;
+      }
+      if(slots.every((id,index)=>id===answer[index])){
+        win("책장이 기억 속 모습과 같아졌어!");
+      }else{
+        fail("순서가 조금 달라.\n현장 단서의 왼쪽부터 다시 확인해 봐.");
+      }
+    };
+
+    resetPuzzle=()=>{
+      slots=[null,null,null,null];
+      selected=null;
+      gesture=null;
+      ignoreClick=false;
+      render();
+      setStatus("현장 단서를 보고 책 네 권을 꽂아줘.");
+    };
+
+    resetPuzzle();
+  };
+
+  /* =========================
+     6번: 소원 카드 조각 겹치기
+  ========================= */
+  wishPuzzle = function(card){
+    const names=["강아지","눈사람","가족"];
+    const colors=["#bc7896","#7da8b3","#c39c59"];
+
+    /* 회전: 0=위, 1=오른쪽, 2=아래, 3=왼쪽 */
+    const answerTurns=[0,1,3];
+    const start=[
+      {x:32,y:65,r:2},
+      {x:70,y:38,r:0},
+      {x:31,y:34,r:1}
+    ];
+
+    let pieces=start.map(p=>({...p}));
+    let active=0;
+    let dragging=false;
+    let offsetX=0,offsetY=0;
+    let solving=false;
+
+    /*
+      별 외곽선을 세 조각으로 나눔.
+      현장 카드의 방향에 맞추고 중심을 겹치면 별이 완성됨.
+    */
+    const points=[
+      [150,28],[179,111],[267,113],[197,166],[221,252],
+      [150,202],[79,252],[103,166],[33,113],[121,111],[150,28]
+    ];
+
+    const segments=[
+      points.slice(0,5),
+      points.slice(4,8),
+      points.slice(7,11)
+    ];
+
+    card.innerHTML=`
+      <p class="puzzle-instruction">
+        현장의 소원 카드 세 장을 찾아<br>조각의 방향을 맞추고 겹쳐줘.
+      </p>
+      <div class="field-clue">
+        <small>테스트용 현장 단서 · 작은 표시의 방향</small>
+        강아지: 위쪽 / 눈사람: 오른쪽 / 가족: 왼쪽
+      </div>
+      <div class="wish-tabs" id="wish-tabs"></div>
+      <div class="wish-board" id="new-wish-board">
+        <div class="wish-target"></div>
+      </div>
+      <div class="wish-controls">
+        <button id="wish-left">왼쪽 회전</button>
+        <button id="wish-center">가운데 놓기</button>
+        <button id="wish-right">오른쪽 회전</button>
+      </div>
+      <p class="puzzle-sub">조각 선택 → 드래그로 이동 → 방향 맞추기</p>
+      <button class="primary puzzle-action" id="wish-check">겹친 모양 확인</button>`;
+
+    const board=$("new-wish-board");
+    const tabs=$("wish-tabs");
+    const layers=[];
+
+    names.forEach((name,index)=>{
+      const tab=document.createElement("button");
+      tab.textContent=name;
+      tab.onclick=()=>{
+        if(locked||solving)return;
+        active=index;
+        render();
+      };
+      tabs.append(tab);
+
+      const layer=document.createElement("div");
+      layer.className="wish-layer";
+      const path=segments[index].map(p=>p.join(",")).join(" ");
+      layer.innerHTML=`
+        <svg viewBox="0 0 300 300" aria-hidden="true">
+          <g>
+            <circle cx="150" cy="150" r="114"
+              fill="${colors[index]}0c" stroke="${colors[index]}55"
+              stroke-width="2" stroke-dasharray="5 7"/>
+            <polyline points="${path}" fill="none"
+              stroke="${colors[index]}" stroke-width="10"
+              stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M150 56 L143 70 L157 70Z" fill="${colors[index]}"/>
+          </g>
+        </svg>`;
+      board.append(layer);
+      layers.push(layer);
+    });
+
+    function render(){
+      [...tabs.children].forEach((tab,index)=>{
+        tab.classList.toggle("selected",index===active);
+        tab.setAttribute("aria-pressed",String(index===active));
+      });
+
+      layers.forEach((layer,index)=>{
+        const p=pieces[index];
+        layer.style.left=p.x+"%";
+        layer.style.top=p.y+"%";
+        layer.style.zIndex=index===active?5:index+1;
+        layer.classList.toggle("active",index===active);
+
+        /*
+          윤곽은 정답 각도에서 이어지도록 보정.
+          방향 표시는 조각 자체의 회전각을 따라 움직임.
+        */
+        const group=layer.querySelector("g");
+        group.setAttribute(
+          "transform",
+          `rotate(${(p.r-answerTurns[index])*90} 150 150)`
+        );
+
+        /* 방향 삼각형은 실제 카드 방향과 일치 */
+        const arrow=layer.querySelector("path");
+        arrow.setAttribute(
+          "transform",
+          `rotate(${answerTurns[index]*90} 150 150)`
+        );
+      });
+    }
+
+    function boardPosition(event){
+      const r=board.getBoundingClientRect();
+      return {
+        x:(event.clientX-r.left)/r.width*100,
+        y:(event.clientY-r.top)/r.height*100
+      };
+    }
+
+    board.onpointerdown=event=>{
+      if(locked||solving)return;
+      const p=boardPosition(event);
+      offsetX=p.x-pieces[active].x;
+      offsetY=p.y-pieces[active].y;
+      dragging=true;
+      board.setPointerCapture(event.pointerId);
+    };
+
+    board.onpointermove=event=>{
+      if(!dragging||locked||solving)return;
+      const p=boardPosition(event);
+      pieces[active].x=clamp(p.x-offsetX,15,85);
+      pieces[active].y=clamp(p.y-offsetY,15,85);
+      render();
+    };
+
+    board.onpointerup=board.onpointercancel=()=>{
+      if(!dragging)return;
+      dragging=false;
+      const p=pieces[active];
+      if(Math.hypot(p.x-50,p.y-50)<7){
+        p.x=50;
+        p.y=50;
+      }
+      render();
+    };
+
+    function rotate(delta){
+      if(locked||solving)return;
+      pieces[active].r=(pieces[active].r+delta+4)%4;
+      render();
+    }
+
+    $("wish-left").onclick=()=>rotate(-1);
+    $("wish-right").onclick=()=>rotate(1);
+
+    $("wish-center").onclick=()=>{
+      if(locked||solving)return;
+      pieces[active].x=50;
+      pieces[active].y=50;
+      render();
+      setStatus(`${names[active]} 조각을 가운데에 놓았어.`);
+    };
+
+    $("wish-check").onclick=()=>{
+      if(locked||solving)return;
+
+      const positioned=pieces.every(
+        p=>Math.hypot(p.x-50,p.y-50)<7
+      );
+      const rotated=pieces.every(
+        (p,index)=>p.r===answerTurns[index]
+      );
+
+      if(positioned&&rotated){
+        solving=true;
+        pieces.forEach(p=>{p.x=50;p.y=50});
+        render();
+        board.style.backgroundColor="#fff1cf";
+        setStatus("서로 다른 소원이 모여 별 모양이 됐어.");
+        later(()=>win("소원 세 장을 함께 읽었어.",900),600);
+      }else if(!positioned){
+        setStatus("조각의 중심을 가운데 표시 위로 모아줘.");
+      }else{
+        setStatus("위치는 맞았어. 현장 카드에 적힌 방향을 확인해 봐.");
+      }
+    };
+
+    resetPuzzle=()=>{
+      pieces=start.map(p=>({...p}));
+      active=0;
+      dragging=false;
+      solving=false;
+      board.style.backgroundColor="";
+      render();
+      setStatus("카드의 방향을 보고 세 조각을 겹쳐줘.");
+    };
+
+    resetPuzzle();
+  };
+
+  /* =========================
+     5번 피아노 레이아웃 압축
+  ========================= */
+  const previousPianoPuzzle=pianoPuzzle;
+
+  pianoPuzzle = function(card){
+    previousPianoPuzzle(card);
+
+    card.querySelector(".puzzle-instruction").innerHTML=
+      "공연장 악보를 보고<br>별이 기억하는 노래를 연주해 줘.";
+
+    const score=card.querySelector(".test-score");
+    score.querySelector("small").textContent="테스트용 계이름";
+    score.querySelector("p").textContent=
+      "미 미 미 / 미 미 미 / 미 솔 도 레 미";
+
+    const originalReset=resetPuzzle;
+    resetPuzzle=()=>{
+      originalReset();
+      setStatus("악보 순서대로 연주해 줘. 빠르기는 상관없어.");
+    };
+
+    setStatus("악보 순서대로 연주해 줘. 빠르기는 상관없어.");
+  };
+
+  /* =========================
+     7번 회로 크기 자동 조정
+  ========================= */
+  const previousCircuitPuzzle=circuitPuzzle;
+
+  circuitPuzzle = function(card){
+    previousCircuitPuzzle(card);
+
+    card.querySelector(".puzzle-instruction").innerHTML=
+      "조각을 돌려 조명을 이어줘.";
+
+    const board=$("circuit-board");
+
+    function fit(){
+      if(!card.isConnected)return;
+
+      const style=getComputedStyle(card);
+      const paddingY=parseFloat(style.paddingTop)+parseFloat(style.paddingBottom);
+      const paddingX=parseFloat(style.paddingLeft)+parseFloat(style.paddingRight);
+      const gap=parseFloat(style.rowGap)||0;
+      const others=[...card.children].filter(el=>el!==board);
+
+      let used=paddingY+gap*Math.max(0,card.children.length-1)+8;
+
+      others.forEach(el=>{
+        const s=getComputedStyle(el);
+        used+=el.offsetHeight+
+          (parseFloat(s.marginTop)||0)+
+          (parseFloat(s.marginBottom)||0);
+      });
+
+      const size=Math.max(
+        36,
+        Math.floor(Math.min(
+          265,
+          card.clientWidth-paddingX,
+          card.clientHeight-used
+        ))
+      );
+
+      board.style.width=size+"px";
+      board.style.height=size+"px";
+    }
+
+    const observer=new ResizeObserver(fit);
+    observer.observe(card);
+    cleanups.push(()=>observer.disconnect());
+    fit();
+    later(fit,50);
+  };
+
+  /* =========================
+     미션별 CSS 식별값 연결
+  ========================= */
+  const previousRenderPuzzle=renderPuzzle;
+
+  renderPuzzle = function(){
+    previousRenderPuzzle();
+
+    const scene=$("screen").querySelector(".puzzle-scene");
+    if(scene)scene.dataset.stage=String(state.stage);
+
+    /* CSS 적용 후 반응형 크기 계산 */
+    window.dispatchEvent(new Event("resize"));
+  };
+})();
+</script>
 </body>
 </html>
