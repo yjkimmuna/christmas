@@ -1071,8 +1071,8 @@ const STAR = {
 };
 
 const CHAR = {
-  "해치":"haechi.gif",
-  "주작":"ju.gif",
+  "해치":"haechi.png",
+  "주작":"ju.png",
   "청룡":"cheongryong.png",
   "백호":"baekho.png",
   "현무":"hyeonmu.png",
@@ -1602,7 +1602,7 @@ function renderIntro(){
   const image=document.createElement("img");
   image.className="intro-image";
   image.alt="해치 크리스마스";
-  image.src="intro.gif";
+  image.src="intro.png";
 
   const title=document.createElement("div");
   title.className="intro-title";
@@ -1905,7 +1905,7 @@ function transitionToArrival(){
   el.innerHTML=`
     <div class="travel-caption">${escapeHTML(PLACES[state.stage])}에 도착!</div>
     <div class="travel-line"></div>
-    <img class="travel-character" src="haechi.gif" alt="">
+    <img class="travel-character" src="haechi.png" alt="">
     <button class="travel-skip">계속하기 <span class="arrow">›</span></button>`;
 
   const image=el.querySelector("img");
@@ -2948,7 +2948,7 @@ function circuitPuzzle(card){
    아웃트로
 ========================= */
 function renderOutro(){
-  const scene=background("outro.gif","image_08.png");
+  const scene=background("outro.png","image_08.png");
   const card=document.createElement("section");
   card.className="outro-card";
   card.innerHTML=`
